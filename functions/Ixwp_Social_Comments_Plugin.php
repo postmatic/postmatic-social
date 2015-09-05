@@ -52,8 +52,7 @@ class Ixwp_Social_Comments_Plugin
             add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
             add_filter('wp_get_current_commenter', array($this, 'wp_get_current_commenter'));
             add_filter('comments_open', array($this, 'comments_open'), 10, 2);
-            add_action('comment_form_top', array($this, 'comment_form_top'));
-            add_action('comment_form_comments_closed', array($this, 'comment_form_comments_closed'));
+            add_action('comment_form_after', array($this, 'comment_form_after'));
             add_action('preprocess_comment', array($this, 'preprocess_comment'));
         }
     }
@@ -149,73 +148,53 @@ class Ixwp_Social_Comments_Plugin
             return $open;
         }
         if ($open) {
-            // $tabs = $this->tabs;
-            // $plugin_settings = $tabs[Ixwp_Generic_Settings_Tab::$ID]->get_settings();
-            // $plugin_status = $plugin_settings[Ixwp_Generic_Settings_Tab::$PLUGIN_STATUS];
-            $commenter = $this->sc_get_current_commenter();
+            // FK Enable plugin by default 
+            // FK Always show comments 
+            $ixwp_sc_post_protected = true;
+            return true;
 
-        // FK Enable plugin by default
-                    $ixwp_sc_post_protected = true;
-                    return isset($commenter);
-                    /*
-            switch ($plugin_status) {
-                case 'on_all':
-                    $ixwp_sc_post_protected = true;
-                    return isset($commenter);
-                case 'on_custom':
-                {
-                    $protected_posts = $plugin_settings[Ixwp_Generic_Settings_Tab::$POSTS_ID];
-                    if (in_array($post_id, $protected_posts)) {
-                        $ixwp_sc_post_protected = true;
-                        return isset($commenter);
-                    } else {
-                        return $open;
-                    }
-                }
-                default:
-                    return $open;
-            }
-            */
         } else {
             return $open;
         }
     }
 
-    function comment_form_top()
+    function comment_form_after()
     {
         global $ixwp_sc_post_protected;
-        if($ixwp_sc_post_protected){
-            if (array_key_exists('post_id', $_REQUEST)) {
-                $post_id = $_REQUEST['post_id'];
-            } else {
-                $post_id = get_the_ID();
-            }
-            $referrer = esc_attr(get_permalink($post_id));
-            $logout_url = admin_url('admin-ajax.php?action=ixwp-sc-logout&amp;_wp_http_referer=' . $referrer . '#ixwp-social-comment-wrapper');
-            echo '<div id="ixwp-social-comment-wrapper">';
-            echo '<p class="ixwp-social-comment-logout">';
-            echo '<a href="' . $logout_url . '">' . __('Logout', IXWP_SOCIAL_COMMENTS_NAME) . '</a>';
-            echo '</p>';
-            echo '</div>';
-        }
-    }
 
-    function comment_form_comments_closed()
-    {
-        global $ixwp_sc_post_protected;
-        if ($ixwp_sc_post_protected) {
-            echo '<div id="ixwp-social-comment-wrapper">';
-            echo '<p class="ix-social-comment-authenticate">' . __('To leave a comment, you need to authenticate.', IXWP_SOCIAL_COMMENTS_NAME) . '</p>';
-            echo '<div class="ixwp-social-comment-buttons">';
-            $tabs = $this->tabs;
-            foreach ($tabs as $id => $instance) {
-                if ($instance instanceof Ixwp_Social_Network_Authenticator) {
-                    echo $instance->get_auth_button();
+        // If comments Enabled:
+        if($ixwp_sc_post_protected){
+            
+            // If user logged in show logout button
+            $commenter = $this->sc_get_current_commenter();
+            if (isset($commenter)) {
+                if (array_key_exists('post_id', $_REQUEST)) {
+                    $post_id = $_REQUEST['post_id'];
+                } else {
+                    $post_id = get_the_ID();
                 }
+                $referrer = esc_attr(get_permalink($post_id));
+                $logout_url = admin_url('admin-ajax.php?action=ixwp-sc-logout&amp;_wp_http_referer=' . $referrer . '#ixwp-social-comment-wrapper');
+                echo '<div id="ixwp-social-comment-wrapper">';
+                echo '<p class="ixwp-social-comment-logout">';
+                echo '<a href="' . $logout_url . '">' . __('Logout', IXWP_SOCIAL_COMMENTS_NAME) . '</a>';
+                echo '</p>';
+                echo '</div>';
             }
-            echo '</div>';
-            echo '<p class="ixwp-social-comment-wait" style="display: none;"><i class="fa fa-spinner fa-spin"></i> ' . __('Please wait while you are being authenticated...', IXWP_SOCIAL_COMMENTS_NAME) . '</p>';
-            echo '</div>';
+            // Else show Social Buttons
+            else {
+                echo '<div id="ixwp-social-comment-wrapper">';
+                echo '<div class="ixwp-social-comment-buttons">';
+                $tabs = $this->tabs;
+                foreach ($tabs as $id => $instance) {
+                    if ($instance instanceof Ixwp_Social_Network_Authenticator) {
+                        echo $instance->get_auth_button();
+                    }
+                }
+                echo '</div>';
+                echo '<p class="ixwp-social-comment-wait" style="display: none;"><i class="fa fa-spinner fa-spin"></i> ' . __('Please wait while you are being authenticated...', IXWP_SOCIAL_COMMENTS_NAME) . '</p>';
+                echo '</div>';
+            }
         }
     }
 
