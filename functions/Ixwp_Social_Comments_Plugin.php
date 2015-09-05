@@ -19,7 +19,9 @@ class Ixwp_Social_Comments_Plugin
         $this->messages = array();
         $this->tabs = array();
         $generic_settings_tab = new Ixwp_Generic_Settings_Tab();
-        $this->tabs[$generic_settings_tab->get_id()] = $generic_settings_tab;
+
+        // FK Hide general settings page 
+        // $this->tabs[$generic_settings_tab->get_id()] = $generic_settings_tab;
         foreach ($supported_sn as $sn_id) {
             $class_name = 'Ixwp_' . ucfirst($sn_id) . '_Authenticator';
             include_once($class_name . '.php');
@@ -145,10 +147,15 @@ class Ixwp_Social_Comments_Plugin
             return $open;
         }
         if ($open) {
-            $tabs = $this->tabs;
-            $plugin_settings = $tabs[Ixwp_Generic_Settings_Tab::$ID]->get_settings();
-            $plugin_status = $plugin_settings[Ixwp_Generic_Settings_Tab::$PLUGIN_STATUS];
+            // $tabs = $this->tabs;
+            // $plugin_settings = $tabs[Ixwp_Generic_Settings_Tab::$ID]->get_settings();
+            // $plugin_status = $plugin_settings[Ixwp_Generic_Settings_Tab::$PLUGIN_STATUS];
             $commenter = $this->sc_get_current_commenter();
+
+        // FK Enable plugin by default
+                    $ixwp_sc_post_protected = true;
+                    return isset($commenter);
+                    /*
             switch ($plugin_status) {
                 case 'on_all':
                     $ixwp_sc_post_protected = true;
@@ -166,6 +173,7 @@ class Ixwp_Social_Comments_Plugin
                 default:
                     return $open;
             }
+            */
         } else {
             return $open;
         }
@@ -251,6 +259,10 @@ class Ixwp_Social_Comments_Plugin
         $tabs = $this->tabs;
         $plugin_settings = $tabs[Ixwp_Generic_Settings_Tab::$ID]->get_settings();
         $plugin_status = $plugin_settings[Ixwp_Generic_Settings_Tab::$PLUGIN_STATUS];
+
+        // FK Enable plugin by default
+        return true;
+        /*
         switch ($plugin_status) {
             case 'on_all':
                 return true;
@@ -261,6 +273,7 @@ class Ixwp_Social_Comments_Plugin
             }
         }
         return false;
+        */
     }
 
 }
