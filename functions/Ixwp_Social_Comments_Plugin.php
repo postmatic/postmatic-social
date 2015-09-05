@@ -71,6 +71,8 @@ class Ixwp_Social_Comments_Plugin
         $form_action = $page_id . '-action';
         $tabs = $this->tabs;
         echo '<div class="wrap">';
+        // FK add postmatic image
+        echo '<div style="position: absolute;right: 50px;"><img src="http://gopostmatic.com/wp-content/uploads/2015/03/logo.png"></div>';
         echo '<div class="icon32" id="icon-themes"></div>';
         echo '<h2>' . __('Comments Social Login Settings', IXWP_SOCIAL_COMMENTS_NAME) . '</h2>';
         echo '<div class="updated below-h2 ixwp-flexslider-list-message" style="display: none;"><p></p></div>';
