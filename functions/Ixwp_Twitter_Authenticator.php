@@ -160,7 +160,10 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
             'oauth_nonce' => time(),
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => time(),
-            'oauth_version' => '1.0');
+            'oauth_version' => '1.0',
+            // By FK include email
+            'include_email' => 'true'
+            );
 
 
         $oauth_signature_data = $this->build_signature_data($verify_credentials_url, 'GET', $oauth_request_params);
@@ -189,9 +192,12 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
             $response_body = json_decode($response['body'], true);
             if ($response_body && is_array($response_body)) {
                 return array(
+                    // By FK include network
+                    'network' => 'Twitter',
                     'display_name' => $response_body['screen_name'],
                     'username' => $response_body['name'],
-                    'email' => '',
+                    // By FK include email
+                    'email' => $response_body['email'],
                     'avatar_url' => $response_body['profile_image_url'],
                     'profile_url' => $response_body['url']
                 );

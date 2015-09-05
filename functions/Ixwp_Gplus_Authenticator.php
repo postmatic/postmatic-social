@@ -102,6 +102,8 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
                     $email = $emails[0]['value'];
                 }
                 return array(
+                    // By FK include network
+                    'network' => 'Google Plus',
                     'display_name' => $response_body['displayName'],
                     'username' => $response_body['name']['givenName'],
                     'email' => $email,

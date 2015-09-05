@@ -177,6 +177,7 @@ class Ixwp_Social_Comments_Plugin
                 $logout_url = admin_url('admin-ajax.php?action=ixwp-sc-logout&amp;_wp_http_referer=' . $referrer . '#ixwp-social-comment-wrapper');
                 echo '<div id="ixwp-social-comment-wrapper">';
                 echo '<p class="ixwp-social-comment-logout">';
+                echo __('You are authenticated as '.$commenter['display_name'].' in '.$commenter['network'].'. ', IXWP_SOCIAL_COMMENTS_NAME);
                 echo '<a href="' . $logout_url . '">' . __('Logout', IXWP_SOCIAL_COMMENTS_NAME) . '</a>';
                 echo '</p>';
                 echo '</div>';
