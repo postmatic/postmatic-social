@@ -1,0 +1,42 @@
+#ixwp-social-comment-wrapper {
+	margin: 2em 0;	
+}
+
+.ixwp-sc-button {
+	display: inline-block;
+	margin: 0 5px 5px 0;	
+	padding: 8px 20px;
+	border-radius: 3px;
+	white-space: nowrap;
+	color: #fff !important;
+	text-decoration: none;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+        line-height: normal;
+        cursor: pointer;
+        outline: none;
+        overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+}
+
+.ixwp-sc-button .fa {
+	margin-right: 10px;
+}
+
+.ixwp-sc-wordpress-button {
+	background-color: #00aadc;
+}
+
+.ixwp-sc-twitter-button {
+	background-color: #0084b4;
+}
+
+.ixwp-sc-googleplus-button {
+	background-color: #dd4b39;
+}
+
+.ixwp-sc-button:hover,
+.ixwp-sc-button:active {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+}
