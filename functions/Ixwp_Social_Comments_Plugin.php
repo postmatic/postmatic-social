@@ -19,7 +19,6 @@ class Ixwp_Social_Comments_Plugin
         $this->messages = array();
         $this->tabs = array();
         $generic_settings_tab = new Ixwp_Generic_Settings_Tab();
-
         // FK Hide general settings page 
         // $this->tabs[$generic_settings_tab->get_id()] = $generic_settings_tab;
         foreach ($supported_sn as $sn_id) {
@@ -168,7 +167,7 @@ class Ixwp_Social_Comments_Plugin
         if($ixwp_sc_post_protected && isset($commenter)){
             
         
-            if (array_key_exists('post_id', $_REQUEST)) {
+           if (array_key_exists('post_id', $_REQUEST)) {
                 $post_id = $_REQUEST['post_id'];
             } else {
                 $post_id = get_the_ID();
@@ -207,7 +206,6 @@ class Ixwp_Social_Comments_Plugin
             echo '</div>';
             echo '<p class="ixwp-social-comment-wait" style="display: none;"><i class="fa fa-spinner fa-spin"></i> ' . __('Please wait while you are being authenticated...', IXWP_SOCIAL_COMMENTS_NAME) . '</p>';
             echo '</div>';
-       
         }
     }
 
