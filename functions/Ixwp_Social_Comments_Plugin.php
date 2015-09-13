@@ -211,7 +211,7 @@ class Ixwp_Social_Comments_Plugin
 
     function preprocess_comment($comment_data)
     {
-        if (is_array($comment_data) && $this->are_post_comments_protected(get_the_ID())) {
+        if (is_array($comment_data)) {
             $sc_commenter = $this->sc_get_current_commenter();
             if (isset($sc_commenter)) {
                 return array_merge($comment_data, array(
@@ -244,28 +244,6 @@ class Ixwp_Social_Comments_Plugin
         global $ixwp_sc_session;
         $commenter = $ixwp_sc_session[IXWP_SOCIAL_COMMENTS_SESSION_USER];
         return isset($commenter) ? $commenter : NULL;
-    }
-
-    protected function are_post_comments_protected($post_id)
-    {
-        $tabs = $this->tabs;
-        $plugin_settings = $tabs[Ixwp_Generic_Settings_Tab::$ID]->get_settings();
-        $plugin_status = $plugin_settings[Ixwp_Generic_Settings_Tab::$PLUGIN_STATUS];
-
-        // FK Enable plugin by default
-        return true;
-        /*
-        switch ($plugin_status) {
-            case 'on_all':
-                return true;
-            case 'on_custom':
-            {
-                $protected_posts = $plugin_settings[Ixwp_Generic_Settings_Tab::$POSTS_ID];
-                return in_array($post_id, $protected_posts);
-            }
-        }
-        return false;
-        */
     }
 
 }
