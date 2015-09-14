@@ -173,11 +173,11 @@ class Ixwp_Social_Comments_Plugin
                 $post_id = get_the_ID();
             }
             $referrer = esc_attr(get_permalink($post_id));
-            $logout_url = admin_url('admin-ajax.php?action=ixwp-sc-logout&amp;_wp_http_referer=' . $referrer . '#ixwp-social-comment-wrapper');
-            echo '<div id="ixwp-social-comment-wrapper">';
-            echo '<p class="ixwp-social-comment-logout">';
-            echo __('You are authenticated as '.$commenter['display_name'].' in '.$commenter['network'].'. ', IXWP_SOCIAL_COMMENTS_NAME);
-            echo '<a href="' . $logout_url . '">' . __('Logout', IXWP_SOCIAL_COMMENTS_NAME) . '</a>';
+            $logout_url = admin_url('admin-ajax.php?action=ixwp-sc-logout&amp;_wp_http_referer=' . $referrer . '#postmatic-social-comment-wrapper');
+            echo '<div id="postmatic-social-comment-wrapper">';
+            echo '<p class="postmatic-social-comment-logout">';
+            echo __('You are connected as '.$commenter['display_name'].' from '.$commenter['network'].'. ', IXWP_SOCIAL_COMMENTS_NAME);
+            echo '<a href="' . $logout_url . '">' . __('Disconnect', IXWP_SOCIAL_COMMENTS_NAME) . '</a>';
             echo '</p>';
             echo '</div>';
 
