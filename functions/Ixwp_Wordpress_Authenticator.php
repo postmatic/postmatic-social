@@ -141,8 +141,8 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
         echo '<table class="form-table"><tbody>';
 
         echo '<tr>';
-        echo '<th><label>' . __('Documentation', IXWP_SOCIAL_COMMENTS_NAME) . '</label></th>';
-        echo '<td><a href="' . IXWP_SOCIAL_COMMENTS_HELP_URL . '#' . $sc_id . '-config" target="_blank">' . IXWP_SOCIAL_COMMENTS_HELP_URL . '#' . $sc_id . '-config</a></td>';
+        echo '<th><label>' . __('Need help?', IXWP_SOCIAL_COMMENTS_NAME) . '</label></th>';
+        echo '<td><a href="http://docs.gopostmatic.com/article/185-setup">How to enable wordpress.com authentication.</a></td>';
         echo '</tr>';
 
         $oauth_callback = $this->get_oauth_callback();

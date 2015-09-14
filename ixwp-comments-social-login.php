@@ -16,7 +16,7 @@ define('IXWP_SOCIAL_COMMENTS_PATH', plugin_dir_path(__FILE__));
 define('IXWP_SOCIAL_COMMENTS_URL', plugin_dir_url(__FILE__));
 define('IXWP_SOCIAL_COMMENTS_HTTP_PROTOCOL', is_ssl() ? 'https' : 'http');
 define('IXWP_SOCIAL_COMMENTS_SESSION_USER', 'user');
-define('IXWP_SOCIAL_COMMENTS_HELP_URL', 'http://www.ixtendo.com/comments-with-social-login-wp-plugin');
+define('IXWP_SOCIAL_COMMENTS_HELP_URL', 'http://docs.gopostmatic.com/article/185-setup');
 
 require_once(IXWP_SOCIAL_COMMENTS_PATH . '/functions/Ixwp_Social_Comments_Session.php');
 require_once(IXWP_SOCIAL_COMMENTS_PATH . '/functions/Ixwp_Social_Comments_Plugin.php');
