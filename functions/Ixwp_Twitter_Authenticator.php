@@ -191,13 +191,21 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
         } else {
             $response_body = json_decode($response['body'], true);
             if ($response_body && is_array($response_body)) {
+                // By FK Get email or Generate instead
+                if (isset($response_body['email']) && !empty($response_body['email'])) {
+                    $email = $response_body['email'];
+                }
+                else {
+                    $email = $response_body['screen_name'] . wp_rand(10000,99000) ."@twitter.com";
+                }
+
                 return array(
                     // By FK include network
                     'network' => 'Twitter',
                     'display_name' => $response_body['screen_name'],
                     'username' => $response_body['name'],
                     // By FK include email
-                    'email' => $response_body['email'],
+                    'email' => $email,
                     'avatar_url' => $response_body['profile_image_url'],
                     'profile_url' => $response_body['url']
                 );
