@@ -80,6 +80,7 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
 
     protected function get_user_details($access_token)
     {
+        // global $ixwp_sc_session;
         $settings = $this->get_settings();
         $api_url = $settings[Ixwp_Gplus_Authenticator::$API_URL];
         $user_details_url = $api_url . 'plus/v1/people/me';
@@ -87,6 +88,7 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
             array('timeout' => 120,
                 'headers' => array('Authorization' => 'Bearer ' . $access_token),
                 'sslverify' => false));
+        // $ixwp_sc_session["debug"] = $response;
         if (is_wp_error($response)) {
             $error_string = $response->get_error_message();
             throw new Exception($error_string);

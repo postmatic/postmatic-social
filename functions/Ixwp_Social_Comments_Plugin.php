@@ -52,7 +52,7 @@ class Ixwp_Social_Comments_Plugin
             add_filter('wp_get_current_commenter', array($this, 'wp_get_current_commenter'));
             add_filter('comments_open', array($this, 'comments_open'), 10, 2);
             add_action('comment_form_top', array($this, 'comment_form_top'));
-            add_action('comment_form_after', array($this, 'comment_form_after'));
+            // add_action('comment_form_after', array($this, 'comment_form_after'));
             add_action('preprocess_comment', array($this, 'preprocess_comment'));
         }
     }
@@ -160,11 +160,16 @@ class Ixwp_Social_Comments_Plugin
 
   function comment_form_top()
     {
+
+        // global $ixwp_sc_session;
+        // var_dump($ixwp_sc_session["debug"]);
+
         global $ixwp_sc_post_protected;
         $commenter = $this->sc_get_current_commenter();
 
         // If comments Enabled and logged in 
-        if($ixwp_sc_post_protected && isset($commenter)){
+        if ($ixwp_sc_post_protected )
+            if(isset($commenter)){
             
         
            if (array_key_exists('post_id', $_REQUEST)) {
@@ -185,16 +190,7 @@ class Ixwp_Social_Comments_Plugin
             echo '<style>.comment-form-author, .comment-form-email, .comment-form-url {display:none;}</style>';
         
         }
-    }
-
-    function comment_form_after()
-    {
-        global $ixwp_sc_post_protected;
-        $commenter = $this->sc_get_current_commenter();
-
-        // If comments Enabled and not logged in
-        if($ixwp_sc_post_protected && !isset($commenter)){
-            
+        else {
             echo '<div id="ixwp-social-comment-wrapper">';
             echo '<div class="ixwp-social-comment-buttons">';
             $tabs = $this->tabs;
