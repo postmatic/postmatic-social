@@ -26,7 +26,7 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
             'client_id' => $client_id,
             'redirect_uri' => $this->get_oauth_callback(),
             'response_type' => 'code',
-            'scope' => 'global',
+            'scope' => 'auth',
         ));
         $authorize_url = $api_url . 'oauth2/authorize?' . $query_string;
         header('Location: ' . $authorize_url);
