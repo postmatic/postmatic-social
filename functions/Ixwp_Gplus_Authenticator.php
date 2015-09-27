@@ -4,6 +4,7 @@ require_once('Ixwp_Social_Network_Authenticator.php');
 
 class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
 {
+    public $network = "gplus";
 
     private static $ENABLED = 'ixwp_enabled';
     private static $API_URL = 'ixwp_api_url';

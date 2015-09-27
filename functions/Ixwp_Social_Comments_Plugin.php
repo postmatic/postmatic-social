@@ -194,9 +194,13 @@ class Ixwp_Social_Comments_Plugin
             echo '<div id="ixwp-social-comment-wrapper">';
             echo '<div class="ixwp-social-comment-buttons">';
             $tabs = $this->tabs;
+            // Get Settings
+            $settings = get_option("ixwp_social_comments");
             foreach ($tabs as $id => $instance) {
                 if ($instance instanceof Ixwp_Social_Network_Authenticator) {
-                    echo $instance->get_auth_button();
+                    // Show if enabled
+                    if ($settings[$instance->network]['ixwp_enabled'] == "on")
+                        echo $instance->get_auth_button();
                 }
             }
             echo '</div>';

@@ -4,6 +4,8 @@ require_once('Ixwp_Social_Network_Authenticator.php');
 
 class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
 {
+    public $network = "twitter";
+
     private static $ENABLED = 'ixwp_enabled';
     private static $API_URL = 'ixwp_api_url';
     private static $API_VERSION = '1.1';
