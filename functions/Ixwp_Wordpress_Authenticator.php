@@ -92,6 +92,7 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
             $response_body = json_decode($response['body'], true);
             if ($response_body && is_array($response_body)) {
                 return array(
+                    'network' => "WordPress",
                     'display_name' => $response_body['display_name'],
                     'username' => $response_body['username'],
                     'email' => $response_body['email'],

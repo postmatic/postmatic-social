@@ -55,7 +55,13 @@ jQuery(document).ready(function ($) {
                         if (accessTokenRequestUrl.indexOf('action=ixwp-' + scId + '-access-token') > 0) {
                             clearInterval(handle);
                             popup.close();
+
+                            // By FK for FB
+                            var q = accessTokenRequestUrl.indexOf("#");
+                            accessTokenRequestUrl = accessTokenRequestUrl.slice(0,q);
+
                             accessTokenRequestUrl = accessTokenRequestUrl + '&post_id=' + postId;
+
                             ixwpscLoadCommentForm($, accessTokenRequestUrl);
                         }
                     }

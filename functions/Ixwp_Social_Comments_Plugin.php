@@ -163,7 +163,7 @@ class Ixwp_Social_Comments_Plugin
 
         // global $ixwp_sc_session;
         // var_dump($ixwp_sc_session["debug"]);
-
+        
         global $ixwp_sc_post_protected;
         $commenter = $this->sc_get_current_commenter();
 

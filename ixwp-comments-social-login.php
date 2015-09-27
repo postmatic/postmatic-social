@@ -5,11 +5,11 @@ Plugin URI: https://wordpress.org/plugins/ixwp-comments-social-login/
 Description: This plugin allows you to add authentication using social media networks (Twitter, WordPress, Google+, etc.) for the users who want to comment on your blog. To get started: 1) Click the "Activate" link at the left of this description, 2) Click the "Social Login" link under the Comments left menu.
 Author: Ixtendo
 Author URI: http://www.ixtendo.com
-Version: 1.10
+Version: 1.11
 License: GPLv2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-define('IXWP_SOCIAL_COMMENTS_VERSION', '1.10');
+define('IXWP_SOCIAL_COMMENTS_VERSION', '1.11');
 define('IXWP_SOCIAL_COMMENTS_NAME', 'ixwp_social_comments');
 define('IXWP_SOCIAL_COMMENTS_SETTINGS_NAME', 'ixwp_social_comments');
 define('IXWP_SOCIAL_COMMENTS_PATH', plugin_dir_path(__FILE__));
@@ -28,7 +28,7 @@ if (!function_exists('ixwp_social_comments_plugin_loaded')) {
         $GLOBALS['ixwp_sc_post_protected'] = false;
         $GLOBALS['ixwp_sc_session'] = Ixwp_Social_Comments_Session::get_instance();
         load_plugin_textdomain(IXWP_SOCIAL_COMMENTS_NAME, false, 'languages');
-        $GLOBALS[IXWP_SOCIAL_COMMENTS_NAME] = new Ixwp_Social_Comments_Plugin(array("wordpress", "gplus", "twitter"));
+        $GLOBALS[IXWP_SOCIAL_COMMENTS_NAME] = new Ixwp_Social_Comments_Plugin(array("wordpress", "gplus", "twitter","facebook"));
     }
 }
 
