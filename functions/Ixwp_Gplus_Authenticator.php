@@ -7,8 +7,12 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
     public $network = "gplus";
 
     private static $ENABLED = 'ixwp_enabled';
-    private static $API_URL = 'ixwp_api_url';
     private static $CLIENT_ID = 'ixwp_client_id';
+    private static $CLIENT_SECRET = 'ixwp_client_secret';
+
+    private static $REQUEST_URL = 'https://accounts.google.com/o/oauth2/auth';
+    private static $ACCESS_URL = 'https://www.googleapis.com/oauth2/v3/token';
+    private static $API_URL = 'https://www.googleapis.com/plus/v1/people/me';
 
     public function __construct()
     {
@@ -25,13 +29,13 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
                     'type' => 'switch',
                     'default_value' => 'off'
                 ),
-                Ixwp_Gplus_Authenticator::$API_URL => array(
-                    'title' => __('API URL', IXWP_SOCIAL_COMMENTS_NAME),
-                    'type' => 'text',
-                    'default_value' => 'https://www.googleapis.com/'
-                ),
                 Ixwp_Gplus_Authenticator::$CLIENT_ID => array(
                     'title' => __('Client ID', IXWP_SOCIAL_COMMENTS_NAME),
+                    'type' => 'text',
+                    'default_value' => ''
+                ),
+                Ixwp_Gplus_Authenticator::$CLIENT_SECRET => array(
+                    'title' => __('Client Secret', IXWP_SOCIAL_COMMENTS_NAME),
                     'type' => 'text',
                     'default_value' => ''
                 ),
@@ -61,20 +65,60 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
 
     protected function process_token_request()
     {
-        //implemented by Google API using popup
+        $settings = $this->get_settings();
+        $url = Ixwp_Gplus_Authenticator::$REQUEST_URL;
+        $client_id = $settings[Ixwp_Gplus_Authenticator::$CLIENT_ID];
+        $query_string = $this->to_query_string(array(
+            'response_type' => 'code',
+            'client_id' => $client_id,
+            'redirect_uri' => $this->get_oauth_callback(),
+            'scope' => 'email',
+        ));
+        $authorize_url = $url . '?' . $query_string;
+        header('Location: ' . $authorize_url);
     }
 
     protected function process_access_token_request()
     {
-        global $ixwp_sc_post_protected;
-        global $ixwp_sc_session;
-        if (array_key_exists('access_token', $_REQUEST) && array_key_exists('post_id', $_REQUEST)) {
+        if (array_key_exists('code', $_REQUEST) && array_key_exists('post_id', $_REQUEST)) {
+
+            global $ixwp_sc_post_protected;
+            global $ixwp_sc_session;
+
             $post_id = intval($_REQUEST['post_id']);
-            $access_token = $_REQUEST['access_token'];
-            $user_details = $this->get_user_details($access_token);
-            $ixwp_sc_session[IXWP_SOCIAL_COMMENTS_SESSION_USER] = $user_details;
-            $ixwp_sc_post_protected = true;
-            comment_form(array(), $post_id);
+            $settings = $this->get_settings();
+            $url = Ixwp_Gplus_Authenticator::$ACCESS_URL;
+            $client_id = $settings[Ixwp_Gplus_Authenticator::$CLIENT_ID];
+            $client_secret = $settings[Ixwp_Gplus_Authenticator::$CLIENT_SECRET];
+            $query_string = $this->to_query_string(array(
+                'code' => $_REQUEST['code'] ,
+                'client_id' => $client_id,
+                'client_secret' => $client_secret,
+                'redirect_uri' => $this->get_oauth_callback(),
+                'grant_type' => 'authorization_code'
+            ));
+            $response = wp_remote_post($url, array(
+                'body' => $query_string,
+                'sslverify' => false));
+
+            if (is_wp_error($response)) {
+                $error_string = $response->get_error_message();
+                throw new Exception($error_string);
+            } else {
+                $response_body = json_decode($response['body'], true);
+                if ($response_body && is_array($response_body) && array_key_exists('access_token', $response_body)
+                ) {
+                    $access_token = $response_body['access_token'];
+                    $user_details = $this->get_user_details($access_token);
+                    $ixwp_sc_session['user'] = $user_details;
+                    $ixwp_sc_post_protected = true;
+                    comment_form(array(), $post_id);
+                    die();
+                } else {
+                    throw new Exception(__('Missing the access_token parameter', IXWP_SOCIAL_COMMENTS_NAME));
+                }
+            }
+        } else {
             die();
         }
     }
@@ -83,13 +127,12 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
     {
         // global $ixwp_sc_session;
         $settings = $this->get_settings();
-        $api_url = $settings[Ixwp_Gplus_Authenticator::$API_URL];
-        $user_details_url = $api_url . 'plus/v1/people/me';
-        $response = wp_remote_get($user_details_url,
+        $url = Ixwp_Gplus_Authenticator::$API_URL;
+        $response = wp_remote_get($url,
             array('timeout' => 120,
                 'headers' => array('Authorization' => 'Bearer ' . $access_token),
                 'sslverify' => false));
-        // $ixwp_sc_session["debug"] = $response;
+        
         if (is_wp_error($response)) {
             $error_string = $response->get_error_message();
             throw new Exception($error_string);
@@ -118,7 +161,7 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
             }
         }
     }
-
+/*
     function custom_footer()
     {
         $settings = $this->get_settings();
@@ -138,11 +181,12 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
         echo "</script>";
         echo '<script src="https://apis.google.com/js/client:platform.js?onload=ixwpscRenderGooglePlusSigninButton" async defer></script>';
     }
-
+*/
     function get_auth_button($settings = array())
     {
         $oauth_callback = $this->get_oauth_callback();
-        $btn = '<div id="ixwp-sc-googleplus-button" class="ixwp-sc-button ixwp-sc-googleplus-button" data-post-id="' . get_the_ID() . '" data-access-token-request-url="' . esc_attr($oauth_callback) . '"><i class="fa fa-google-plus"></i>Google+</div>';
+        $website_url = admin_url('admin-ajax.php') . '?action=ixwp-gplus-request-token';
+        $btn = '<div id="ixwp-sc-googleplus-button" data-sc-id="gplus" class="ixwp-sc-button ixwp-sc-googleplus-button" data-post-id="' . get_the_ID() . '" data-access-token-request-url="' . esc_attr($oauth_callback) . '" href="'.$website_url.'"><i class="fa fa-google-plus"></i>Google+</div>';
         return $btn;
     }
     /**

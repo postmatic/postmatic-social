@@ -61,7 +61,6 @@ jQuery(document).ready(function ($) {
                             accessTokenRequestUrl = accessTokenRequestUrl.slice(0,q);
 
                             accessTokenRequestUrl = accessTokenRequestUrl + '&post_id=' + postId;
-
                             ixwpscLoadCommentForm($, accessTokenRequestUrl);
                         }
                     }
