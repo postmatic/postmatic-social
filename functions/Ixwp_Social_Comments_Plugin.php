@@ -20,7 +20,7 @@ class Ixwp_Social_Comments_Plugin
         $this->tabs = array();
         $generic_settings_tab = new Ixwp_Generic_Settings_Tab();
         // FK Hide general settings page 
-        // $this->tabs[$generic_settings_tab->get_id()] = $generic_settings_tab;
+        $this->tabs[$generic_settings_tab->get_id()] = $generic_settings_tab;
         foreach ($supported_sn as $sn_id) {
             $class_name = 'Ixwp_' . ucfirst($sn_id) . '_Authenticator';
             include_once($class_name . '.php');
