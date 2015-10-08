@@ -96,7 +96,6 @@ class Ixwp_Social_Comments_Plugin
         echo '<input type="hidden" name="tab" value="' . $selected_tab_id . '">';
         wp_nonce_field($form_action, $page_id);
         $tabs[$selected_tab_id]->render_settings_admin_page();
-        echo '<p><input type="submit" class="button-primary" value="' . __('Save Settings', IXWP_SOCIAL_COMMENTS_NAME) . '"></p>';
         echo '</form>';
         echo '</div>';
 
