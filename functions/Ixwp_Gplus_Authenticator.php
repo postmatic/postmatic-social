@@ -186,7 +186,7 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
     {
         $oauth_callback = $this->get_oauth_callback();
         $website_url = admin_url('admin-ajax.php') . '?action=ixwp-gplus-request-token';
-        $btn = '<div id="ixwp-sc-googleplus-button" data-sc-id="gplus" class="ixwp-sc-button ixwp-sc-googleplus-button" data-post-id="' . get_the_ID() . '" data-access-token-request-url="' . esc_attr($oauth_callback) . '" href="'.$website_url.'"><i class="fa fa-google-plus"></i>Google+</div>';
+        $btn = '<div id="postmatic-sc-googleplus-button" data-sc-id="gplus" class="postmatic-sc-button postmatic-sc-googleplus-button" data-post-id="' . get_the_ID() . '" data-access-token-request-url="' . esc_attr($oauth_callback) . '" href="'.$website_url.'"><i class="fa fa-google-plus"></i></div>';
         return $btn;
     }
     /**

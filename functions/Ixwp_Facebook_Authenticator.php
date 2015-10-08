@@ -163,8 +163,8 @@ class Ixwp_Facebook_Authenticator extends Ixwp_Social_Network_Authenticator
     function get_auth_button($settings = array())
     {
         $default_settings = $this->get_default_settings();
-        $website_url = admin_url('admin-ajax.php') . '?action=ixwp-facebook-request-token';
-        $btn = '<a class="ixwp-sc-button ixwp-sc-facebook-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="Facebook" href="' . $website_url . '"><i class="fa fa-facebook"></i>Facebook</a>';
+        $website_url = admin_url('admin-ajax.php') . '?action=postmatic-facebook-request-token';
+        $btn = '<a class="postmatic-sc-button postmatic-sc-facebook-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="Facebook" href="' . $website_url . '"><i class="fa fa-facebook"></i></a>';
         return $btn;
     }
 }

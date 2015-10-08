@@ -165,7 +165,7 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
     {
         $default_settings = $this->get_default_settings();
         $website_url = admin_url('admin-ajax.php') . '?action=ixwp-wordpress-request-token';
-        $btn = '<a class="ixwp-sc-button ixwp-sc-wordpress-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="WordPress" href="' . $website_url . '"><i class="fa fa-wordpress"></i>WordPress</a>';
+        $btn = '<a class="postmatic-sc-button postmatic-sc-wordpress-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="WordPress" href="' . $website_url . '"><i class="fa fa-wordpress"></i></a>';
         return $btn;
     }
 

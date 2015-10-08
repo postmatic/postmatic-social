@@ -51,7 +51,7 @@ class Ixwp_Social_Comments_Plugin
             add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
             add_filter('wp_get_current_commenter', array($this, 'wp_get_current_commenter'));
             add_filter('comments_open', array($this, 'comments_open'), 10, 2);
-            add_action('comment_form_top', array($this, 'comment_form_top'));
+            add_action('comment_form_field_{$author}', array($this, 'comment_form_field_{$author}'));
             // add_action('comment_form_after', array($this, 'comment_form_after'));
             add_action('preprocess_comment', array($this, 'preprocess_comment'));
         }
@@ -96,6 +96,7 @@ class Ixwp_Social_Comments_Plugin
         echo '<input type="hidden" name="tab" value="' . $selected_tab_id . '">';
         wp_nonce_field($form_action, $page_id);
         $tabs[$selected_tab_id]->render_settings_admin_page();
+        echo '<p><input type="submit" class="button-primary" value="' . __('Save Settings', IXWP_SOCIAL_COMMENTS_NAME) . '"></p>';
         echo '</form>';
         echo '</div>';
 
@@ -180,7 +181,7 @@ class Ixwp_Social_Comments_Plugin
             $logout_url = admin_url('admin-ajax.php?action=ixwp-sc-logout&amp;_wp_http_referer=' . $referrer . '#postmatic-social-comment-wrapper');
             echo '<div id="postmatic-social-comment-wrapper">';
             echo '<p class="postmatic-social-comment-logout">';
-            echo __('You are connected as '.$commenter['display_name'].' from '.$commenter['network'].'. ', IXWP_SOCIAL_COMMENTS_NAME);
+            echo __('You are authenticated as '.$commenter['display_name'].' via '.$commenter['network'].'. ', IXWP_SOCIAL_COMMENTS_NAME);
             echo '<a href="' . $logout_url . '">' . __('Disconnect', IXWP_SOCIAL_COMMENTS_NAME) . '</a>';
             echo '</p>';
             echo '</div>';
@@ -190,8 +191,8 @@ class Ixwp_Social_Comments_Plugin
         
         }
         else {
-            echo '<div id="ixwp-social-comment-wrapper">';
-            echo '<div class="ixwp-social-comment-buttons">';
+            echo '<div id="postmatic-social-comment-wrapper">';
+            echo '<div class="postmatic-social-comment-buttons">';
             $tabs = $this->tabs;
             // Get Settings
             $settings = get_option("ixwp_social_comments");
@@ -203,7 +204,7 @@ class Ixwp_Social_Comments_Plugin
                 }
             }
             echo '</div>';
-            echo '<p class="ixwp-social-comment-wait" style="display: none;"><i class="fa fa-spinner fa-spin"></i> ' . __('Please wait while you are being authenticated...', IXWP_SOCIAL_COMMENTS_NAME) . '</p>';
+            echo '<p class="postmatic-social-comment-wait" style="display: none;"><i class="fa fa-spinner fa-spin"></i> ' . __('Please wait while you are being authenticated...', IXWP_SOCIAL_COMMENTS_NAME) . '</p>';
             echo '</div>';
         }
     }

@@ -270,7 +270,7 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
     {
         $default_settings = $this->get_default_settings();
         $website_url = admin_url('admin-ajax.php') . '?action=ixwp-twitter-request-token';
-        $btn = '<a class="ixwp-sc-button ixwp-sc-twitter-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="Twitter" href="' . $website_url . '"><i class="fa fa-twitter"></i>Twitter</a>';
+        $btn = '<a class="postmatic-sc-button postmatic-sc-twitter-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="Twitter" href="' . $website_url . '"><i class="fa fa-twitter"></i></a>';
         return $btn;
 
     }
