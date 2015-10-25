@@ -57,8 +57,9 @@ jQuery(document).ready(function ($) {
                             popup.close();
 
                             // By FK for FB
-                            var q = accessTokenRequestUrl.indexOf("#");
-                            accessTokenRequestUrl = accessTokenRequestUrl.slice(0,q);
+                            var q = accessTokenRequestUrl.indexOf("#");                            
+                            if (q != -1)
+                                accessTokenRequestUrl = accessTokenRequestUrl.slice(0,q);
 
                             accessTokenRequestUrl = accessTokenRequestUrl + '&post_id=' + postId;
                             ixwpscLoadCommentForm($, accessTokenRequestUrl);
