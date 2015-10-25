@@ -15,9 +15,11 @@
  http://www.ixtendo.com
  */
 function ixwpscLoadCommentForm($, accessTokenRequestUrl) {
-    var container = $('#respond');
+    var container = $( '#respond' );
+    var comment = $( '#comment' ).val();
     $.get(accessTokenRequestUrl, function (data) {
         container.replaceWith($(data));
+        $( '#comment' ).val( comment ).focus();
     });
 }
 
