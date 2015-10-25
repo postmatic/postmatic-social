@@ -15,11 +15,15 @@
  http://www.ixtendo.com
  */
 function ixwpscLoadCommentForm($, accessTokenRequestUrl) {
-    var container = $( '#respond' );
-    var comment = $( '#comment' ).val();
+<<<<<<< HEAD
+    var container = $('#respond');
+=======
+    var container = $('#postmatic-social-comment-wrapper');
+    container.find('.postmatic-social-comment-buttons').hide();
+    container.find('.postmatic-social-comment-wait').show();
+>>>>>>> origin/master
     $.get(accessTokenRequestUrl, function (data) {
         container.replaceWith($(data));
-        $( '#comment' ).val( comment ).focus();
     });
 }
 

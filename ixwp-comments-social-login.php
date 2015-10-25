@@ -9,7 +9,7 @@ Version: 1.12
 License: GPLv2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-define('IXWP_SOCIAL_COMMENTS_VERSION', '1.12');
+define('IXWP_SOCIAL_COMMENTS_VERSION', '1.16');
 define('IXWP_SOCIAL_COMMENTS_NAME', 'ixwp_social_comments');
 define('IXWP_SOCIAL_COMMENTS_SETTINGS_NAME', 'ixwp_social_comments');
 define('IXWP_SOCIAL_COMMENTS_PATH', plugin_dir_path(__FILE__));
