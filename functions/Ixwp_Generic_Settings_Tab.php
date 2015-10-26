@@ -16,7 +16,7 @@ class Ixwp_Generic_Settings_Tab extends Ixwp_Social_Comments_Tab
     function get_default_settings()
     {
         return array("id" => Ixwp_Generic_Settings_Tab::$ID,
-            "title" => '<i class="fa fa-home"></i> ' . __("Introduction", IXWP_SOCIAL_COMMENTS_NAME),
+            "title" => '<i class="fa fa-home"></i> ' . __("Introduction", 'postmatic-social'),
             "fields" => array()
         );
     }

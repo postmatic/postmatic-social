@@ -25,17 +25,17 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
             "title" => '<i class="fa fa-google-plus"></i> Google+',
             "fields" => array(
                 Ixwp_Gplus_Authenticator::$ENABLED => array(
-                    'title' => __('Status', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Status', 'postmatic-social'),
                     'type' => 'switch',
                     'default_value' => 'off'
                 ),
                 Ixwp_Gplus_Authenticator::$CLIENT_ID => array(
-                    'title' => __('Client ID', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Client ID', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 ),
                 Ixwp_Gplus_Authenticator::$CLIENT_SECRET => array(
-                    'title' => __('Client Secret', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Client Secret', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 ),
@@ -51,7 +51,7 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
         echo '<table class="form-table"><tbody>';
 
         echo '<tr>';
-        echo '<th><label>' . __('Documentation', IXWP_SOCIAL_COMMENTS_NAME) . '</label></th>';
+        echo '<th><label>' . __('Documentation', 'postmatic-social') . '</label></th>';
         echo '<td><a href="' . IXWP_SOCIAL_COMMENTS_HELP_URL . '#' . $sc_id . '-config" target="_blank">' . IXWP_SOCIAL_COMMENTS_HELP_URL . '#' . $sc_id . '-config</a></td>';
         echo '</tr>';
 
@@ -115,7 +115,7 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
                     comment_form(array(), $post_id);
                     die();
                 } else {
-                    throw new Exception(__('Missing the access_token parameter', IXWP_SOCIAL_COMMENTS_NAME));
+                    throw new Exception(__('Missing the access_token parameter', 'postmatic-social'));
                 }
             }
         } else {
@@ -157,7 +157,7 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
                     'profile_url' => $response_body['url']
                 );
             } else {
-                throw new Exception(__('Could not get the user details', IXWP_SOCIAL_COMMENTS_NAME));
+                throw new Exception(__('Could not get the user details', 'postmatic-social'));
             }
         }
     }

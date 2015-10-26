@@ -76,7 +76,7 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
                 $oauth_token = $response_body_arguments['oauth_token'];
                 header('Location: ' . $authenticate_url . '?oauth_token=' . $oauth_token);
             } else {
-                throw new Exception(__('Missing the oauth_token parameter', IXWP_SOCIAL_COMMENTS_NAME));
+                throw new Exception(__('Missing the oauth_token parameter', 'postmatic-social'));
             }
         }
     }
@@ -139,7 +139,7 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
                     $ixwp_sc_post_protected = true;
                     comment_form(array(), $post_id);
                 } else {
-                    throw new Exception(__('Missing the oauth_token or oauth_verifier parameters', IXWP_SOCIAL_COMMENTS_NAME));
+                    throw new Exception(__('Missing the oauth_token or oauth_verifier parameters', 'postmatic-social'));
                 }
             }
         } else {
@@ -212,7 +212,7 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
                     'profile_url' => $response_body['url']
                 );
             } else {
-                throw new Exception(__('Could not get the user details', IXWP_SOCIAL_COMMENTS_NAME));
+                throw new Exception(__('Could not get the user details', 'postmatic-social'));
             }
         }
     }
@@ -223,22 +223,22 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
             "title" => '<i class="fa fa-twitter"></i> Twitter',
             "fields" => array(
                 Ixwp_Twitter_Authenticator::$ENABLED => array(
-                    'title' => __('Status', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Status', 'postmatic-social'),
                     'type' => 'switch',
                     'default_value' => 'off'
                 ),
                 Ixwp_Twitter_Authenticator::$API_URL => array(
-                    'title' => __('API URL', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('API URL', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => 'https://api.twitter.com/'
                 ),
                 Ixwp_Twitter_Authenticator::$CONSUMER_KEY => array(
-                    'title' => __('Consumer Key (API Key)', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Consumer Key (API Key)', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 ),
                 Ixwp_Twitter_Authenticator::$CONSUMER_SECRET => array(
-                    'title' => __('Consumer Secret (API Secret)', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Consumer Secret (API Secret)', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 ),
@@ -254,7 +254,7 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
         echo '<table class="form-table"><tbody>';
 
         echo '<tr>';
-        echo '<th><label>' . __('Documentation', IXWP_SOCIAL_COMMENTS_NAME) . '</label></th>';
+        echo '<th><label>' . __('Documentation', 'postmatic-social') . '</label></th>';
         echo '<td><a href="' . IXWP_SOCIAL_COMMENTS_HELP_URL . '#' . $sc_id . '-config" target="_blank">' . IXWP_SOCIAL_COMMENTS_HELP_URL . '#' . $sc_id . '-config</a></td>';
         echo '</tr>';
 

@@ -28,7 +28,7 @@ class Ixwp_Social_Comments_Plugin {
 	}
 
 	function get_title() {
-		return __( 'Social Login', IXWP_SOCIAL_COMMENTS_NAME );
+		return __( 'Social Login', 'postmatic-social' );
 	}
 
 	function get_slug() {
@@ -64,7 +64,7 @@ class Ixwp_Social_Comments_Plugin {
 		// FK add postmatic image
 		echo '<div style="position: absolute;right: 25px; top: 25px;"><a href="https://gopostmatic.com" target="_blank"><img src="http://gopostmatic.com/wp-content/uploads/2015/03/logo.png" width="125"></a></div>';
 		echo '<div class="icon32" id="icon-themes"></div>';
-		echo '<h2 style="margin: 25px 0;">' . __( 'Postmatic Social Commenting', IXWP_SOCIAL_COMMENTS_NAME ) . '</h2>';
+		echo '<h2 style="margin: 25px 0;">' . __( 'Postmatic Social Commenting', 'postmatic-social' ) . '</h2>';
 		echo '<div class="updated below-h2 ixwp-flexslider-list-message" style="display: none;"><p></p></div>';
 		echo '<div class="error below-h2 ixwp-flexslider-list-message" style="display: none;"><p></p></div>';
 
@@ -87,7 +87,7 @@ class Ixwp_Social_Comments_Plugin {
 		echo '<input type="hidden" name="tab" value="' . $selected_tab_id . '">';
 		wp_nonce_field( $form_action, $page_id );
 		$tabs[$selected_tab_id]->render_settings_admin_page();
-		echo '<p><input type="submit" class="button-primary" value="' . __( 'Save Settings', IXWP_SOCIAL_COMMENTS_NAME ) . '"></p>';
+		echo '<p><input type="submit" class="button-primary" value="' . __( 'Save Settings', 'postmatic-social' ) . '"></p>';
 		echo '</form>';
 		echo '</div>';
 
@@ -172,11 +172,11 @@ class Ixwp_Social_Comments_Plugin {
 			$content .= '<div id="postmatic-social-comment-wrapper">';
 			$content .= '<p class="postmatic-social-comment-logout">';
 			$content .= sprintf(
-				__( 'You are authenticated as %s via %s.', IXWP_SOCIAL_COMMENTS_NAME ),
+				__( 'You are authenticated as %s via %s.', 'postmatic-social' ),
 				$commenter['display_name'],
 				$commenter['network']
 			);
-			$content .= '<a href="' . $logout_url . '">' . __( 'Disconnect', IXWP_SOCIAL_COMMENTS_NAME ) . '</a>';
+			$content .= '<a href="' . $logout_url . '">' . __( 'Disconnect', 'postmatic-social' ) . '</a>';
 			$content .= '</p>';
 			$content .= '</div>';
 
@@ -200,7 +200,7 @@ class Ixwp_Social_Comments_Plugin {
 			$content .= '</div>';
 			$content .= '<p class="postmatic-social-comment-wait" style="display: none;">';
 			$content .= '<i class="fa fa-spinner fa-spin"></i> ';
-			$content .= __( 'Please wait while you are being authenticated...', IXWP_SOCIAL_COMMENTS_NAME ) . '</p>';
+			$content .= __( 'Please wait while you are being authenticated...', 'postmatic-social' ) . '</p>';
 			$content .= '</div>';
 		}
 
