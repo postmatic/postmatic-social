@@ -237,7 +237,7 @@ class Ixwp_Social_Comments_Plugin {
 
 	function sc_get_current_commenter() {
 		global $ixwp_sc_session;
-		$commenter = $ixwp_sc_session[IXWP_SOCIAL_COMMENTS_SESSION_USER];
+		$commenter = $ixwp_sc_session[POSTMATIC_SOCIAL_SESSION_USER];
 		return isset( $commenter ) ? $commenter : NULL;
 	}
 

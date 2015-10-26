@@ -255,7 +255,7 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
 
         echo '<tr>';
         echo '<th><label>' . __('Documentation', 'postmatic-social') . '</label></th>';
-        echo '<td><a href="' . IXWP_SOCIAL_COMMENTS_HELP_URL . '#' . $sc_id . '-config" target="_blank">' . IXWP_SOCIAL_COMMENTS_HELP_URL . '#' . $sc_id . '-config</a></td>';
+        echo '<td><a href="' . POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config" target="_blank">' . POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config</a></td>';
         echo '</tr>';
 
         foreach ($default_settings["fields"] as $field_id => $field_meta) {

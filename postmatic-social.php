@@ -145,8 +145,8 @@ class Postmatic_Social {
 	}
 }
 
-define('IXWP_SOCIAL_COMMENTS_SESSION_USER', 'user');
-define('IXWP_SOCIAL_COMMENTS_HELP_URL', 'http://docs.gopostmatic.com/article/185-setup');
+define('POSTMATIC_SOCIAL_SESSION_USER', 'user');
+define('POSTMATIC_SOCIAL_HELP_URL', 'http://docs.gopostmatic.com/article/185-setup');
 
 require_once( Postmatic_Social::get_plugin_dir( '/functions/Ixwp_Social_Comments_Session.php' ) );
 require_once( Postmatic_Social::get_plugin_dir( '/functions/Ixwp_Social_Comments_Plugin.php') );
