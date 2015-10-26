@@ -1,6 +1,19 @@
 #postmatic-social-comment-wrapper {
 	float: right;
+	margin-top: -5px;
 }
+
+.postmatic-social-comment-buttons:before {
+	content: 'Connect:';
+	font-size: 85%;
+	top: -3px;
+	font-weight: normal;
+	position:relative;
+	margin-right: 5px;
+	opacity: .75;
+	
+}
+
 
 .postmatic-sc-button {
 	display: inline-block;
@@ -8,10 +21,10 @@
 	padding: 7px;
 	border-radius: 20px;
 	text-decoration: none;
-        line-height: normal;
-        cursor: pointer;
-        outline: none;
-        overflow: hidden;
+    line-height: normal;
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
 	vertical-align: middle;
 	min-width:30px;
 	background:#fff;
@@ -20,31 +33,31 @@
 .postmatic-sc-button .fa {
 	display:block;
 	text-align:center;
-	font-size: 110%;
+	font-size: 115%;
 }
 
 .postmatic-sc-wordpress-button {
-	color: #00aadc;
+	color: #21759b;
 }
 
 .postmatic-sc-twitter-button {
-	color: #0084b4;
+	color: #00C4F4;
 }
 
 .postmatic-sc-googleplus-button {
-	color: #dd4b39;
+	color: #DC4E41;
 }
 .postmatic-sc-facebook-button {
     color: #3b5998;
 }
 
 .postmatic-sc-wordpress-button:hover {
-	background-color: #00aadc;
+	background-color: #21759b;
 	color: #fff;
 }
 
 .postmatic-sc-twitter-button:hover {
-	background-color: #0084b4;
+	background-color: #00C4F4;
 	color: #fff;
 }
 
@@ -53,6 +66,6 @@
 	color: #fff;
 }
 .postmatic-sc-facebook-button:hover {
-    background-color: #3b5998;
+    background-color: #DC4E41;
 	color: #fff;
 }
