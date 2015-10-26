@@ -140,14 +140,13 @@ class Postmatic_Social {
 	public function plugins_loaded() {
 		$GLOBALS['ixwp_sc_post_protected'] = false;
         $GLOBALS['ixwp_sc_session'] = Ixwp_Social_Comments_Session::get_instance();
-        load_plugin_textdomain(IXWP_SOCIAL_COMMENTS_NAME, false, 'languages');
-        $GLOBALS[IXWP_SOCIAL_COMMENTS_NAME] = new Ixwp_Social_Comments_Plugin(array("wordpress", "gplus", "twitter","facebook"));	
+        load_plugin_textdomain('postmatic-social', false, 'languages');
+        $GLOBALS['postmatic-social'] = new Ixwp_Social_Comments_Plugin(array("wordpress", "gplus", "twitter","facebook"));	
 	}
 }
 
 
 define('IXWP_SOCIAL_COMMENTS_VERSION', '1.16');
-define('IXWP_SOCIAL_COMMENTS_NAME', 'ixwp_social_comments');
 define('IXWP_SOCIAL_COMMENTS_SETTINGS_NAME', 'ixwp_social_comments');
 define('IXWP_SOCIAL_COMMENTS_PATH', plugin_dir_path(__FILE__));
 define('IXWP_SOCIAL_COMMENTS_URL', plugin_dir_url(__FILE__));

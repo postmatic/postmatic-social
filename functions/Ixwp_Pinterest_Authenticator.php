@@ -17,16 +17,16 @@ class Ixwp_Pinterest_Authenticator extends Ixwp_Social_Network_Authenticator
             "title" => '<i class="fa fa-pinterest"></i> Pinterest',
             "fields" => array(
                 Ixwp_Pinterest_Authenticator::$ENABLED => array(
-                    'title' => __('Status', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Status', 'postmatic-social'),
                     'type' => 'select',
                     'default_value' => 'off',
                     'possible_values' => array(
-                        'on' => __('Enabled', IXWP_SOCIAL_COMMENTS_NAME),
-                        'off' => __('Disabled', IXWP_SOCIAL_COMMENTS_NAME)
+                        'on' => __('Enabled', 'postmatic-social'),
+                        'off' => __('Disabled', 'postmatic-social')
                     )
                 ),
                 Ixwp_Pinterest_Authenticator::$API_URL => array(
-                    'title' => __('API URL', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('API URL', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => 'https://pinterest.com/'
                 ),

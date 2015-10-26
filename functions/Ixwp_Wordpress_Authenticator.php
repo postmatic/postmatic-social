@@ -68,7 +68,7 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
                     comment_form(array(), $post_id);
                     die();
                 } else {
-                    throw new Exception(__('Missing the access_token parameter', IXWP_SOCIAL_COMMENTS_NAME));
+                    throw new Exception(__('Missing the access_token parameter', 'postmatic-social'));
                 }
             }
         } else {
@@ -100,7 +100,7 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
                     'profile_url' => $response_body['profile_URL']
                 );
             } else {
-                throw new Exception(__('Could not get the user details', IXWP_SOCIAL_COMMENTS_NAME));
+                throw new Exception(__('Could not get the user details', 'postmatic-social'));
             }
         }
     }
@@ -112,22 +112,22 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
             "title" => '<i class="fa fa-wordpress"></i> WordPress',
             "fields" => array(
                 Ixwp_Wordpress_Authenticator::$ENABLED => array(
-                    'title' => __('Status', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Status', 'postmatic-social'),
                     'type' => 'switch',
                     'default_value' => 'off'
                 ),
                 Ixwp_Wordpress_Authenticator::$API_URL => array(
-                    'title' => __('API URL', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('API URL', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => 'https://public-api.wordpress.com/'
                 ),
                 Ixwp_Wordpress_Authenticator::$CLIENT_ID => array(
-                    'title' => __('Client ID', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Client ID', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 ),
                 Ixwp_Wordpress_Authenticator::$CLIENT_SECRET => array(
-                    'title' => __('Client Secret', IXWP_SOCIAL_COMMENTS_NAME),
+                    'title' => __('Client Secret', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 )
@@ -143,13 +143,13 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
         echo '<table class="form-table"><tbody>';
 
         echo '<tr>';
-        echo '<th><label>' . __('Need help?', IXWP_SOCIAL_COMMENTS_NAME) . '</label></th>';
+        echo '<th><label>' . __('Need help?', 'postmatic-social') . '</label></th>';
         echo '<td><a href="http://docs.gopostmatic.com/article/185-setup">How to enable wordpress.com authentication.</a></td>';
         echo '</tr>';
 
         $oauth_callback = $this->get_oauth_callback();
         echo '<tr>';
-        echo '<th><label>' . __('Redirection URL', IXWP_SOCIAL_COMMENTS_NAME) . '</label></th>';
+        echo '<th><label>' . __('Redirection URL', 'postmatic-social') . '</label></th>';
         echo '<td><strong>' . htmlentities($oauth_callback) . '</strong></td>';
         echo '</tr>';
 
