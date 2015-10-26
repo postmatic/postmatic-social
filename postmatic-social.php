@@ -146,7 +146,6 @@ class Postmatic_Social {
 }
 
 
-define('IXWP_SOCIAL_COMMENTS_SETTINGS_NAME', 'ixwp_social_comments');
 define('IXWP_SOCIAL_COMMENTS_PATH', plugin_dir_path(__FILE__));
 define('IXWP_SOCIAL_COMMENTS_URL', plugin_dir_url(__FILE__));
 define('IXWP_SOCIAL_COMMENTS_HTTP_PROTOCOL', is_ssl() ? 'https' : 'http');

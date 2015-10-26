@@ -18,7 +18,7 @@ abstract class Ixwp_Social_Comments_Tab
     {
         $default_settings = $this->get_default_settings();
         $tab_id = $default_settings['id'];
-        $all_settings = get_option(IXWP_SOCIAL_COMMENTS_SETTINGS_NAME);
+        $all_settings = get_option('postmatic-social');
         if (!isset($all_settings) || !is_array($all_settings)) {
             $all_settings = array();
         }
@@ -48,12 +48,12 @@ abstract class Ixwp_Social_Comments_Tab
                 $settings[$field_id] = $field_meta['default_value'];
             }
         }
-        $all_settings = get_option(IXWP_SOCIAL_COMMENTS_SETTINGS_NAME);
+        $all_settings = get_option('postmatic-social');
         if (!isset($all_settings) || !is_array($all_settings)) {
             $all_settings = array();
         }
         $all_settings[$tab_id] = $settings;
-        update_option(IXWP_SOCIAL_COMMENTS_SETTINGS_NAME, $all_settings);
+        update_option('postmatic-social', $all_settings);
     }
 
     abstract function get_default_settings();
