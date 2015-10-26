@@ -145,7 +145,6 @@ class Postmatic_Social {
 	}
 }
 
-define('IXWP_SOCIAL_COMMENTS_HTTP_PROTOCOL', is_ssl() ? 'https' : 'http');
 define('IXWP_SOCIAL_COMMENTS_SESSION_USER', 'user');
 define('IXWP_SOCIAL_COMMENTS_HELP_URL', 'http://docs.gopostmatic.com/article/185-setup');
 

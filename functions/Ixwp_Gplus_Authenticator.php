@@ -161,27 +161,7 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
             }
         }
     }
-/*
-    function custom_footer()
-    {
-        $settings = $this->get_settings();
-        $client_id = $settings[Ixwp_Gplus_Authenticator::$CLIENT_ID];
-        $server_name = apply_filters('ixwp_social_comments_server_name', IXWP_SOCIAL_COMMENTS_HTTP_PROTOCOL . '://' . $_SERVER['SERVER_NAME']);
-        parent::custom_footer();
-        echo "<script type=\"text/javascript\">";
-        echo "function ixwpscRenderGooglePlusSigninButton() {
-    gapi.signin.render('ixwp-sc-googleplus-button', {
-      'callback': 'ixwpscGooglePlusSigninCallback',
-      'clientid': '$client_id',
-      'cookiepolicy': '$server_name',
-      'scope': 'email',
-      'approvalprompt': 'force'
-    });
-}";
-        echo "</script>";
-        echo '<script src="https://apis.google.com/js/client:platform.js?onload=ixwpscRenderGooglePlusSigninButton" async defer></script>';
-    }
-*/
+
     function get_auth_button($settings = array())
     {
         $oauth_callback = $this->get_oauth_callback();
