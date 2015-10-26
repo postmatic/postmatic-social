@@ -174,7 +174,7 @@ class Ixwp_Social_Comments_Plugin {
 			$content .= '<div id="postmatic-social-comment-wrapper">';
 			$content .= '<p class="postmatic-social-comment-logout">';
 			$content .= sprintf(
-				__( 'You are authenticated as %s via %s.', IXWP_SOCIAL_COMMENTS_NAME ),
+				__( 'You are commenting as %s via your %s account. ', IXWP_SOCIAL_COMMENTS_NAME ),
 				$commenter['display_name'],
 				$commenter['network']
 			);
