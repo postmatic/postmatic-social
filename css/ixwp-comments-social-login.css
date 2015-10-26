@@ -1,6 +1,12 @@
 #postmatic-social-comment-wrapper {
 	float: right;
 	margin-top: -5px;
+	font-size: 15px;
+}
+
+#epoch-wrap #postmatic-social-comment-wrapper {
+	float: none;
+	margin: 0;
 }
 
 .postmatic-social-comment-buttons:before {
@@ -33,7 +39,6 @@
 .postmatic-sc-button .fa {
 	display:block;
 	text-align:center;
-	font-size: 115%;
 }
 
 .postmatic-sc-wordpress-button {
