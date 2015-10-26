@@ -1,13 +1,150 @@
 <?php
 /*
-Plugin Name: Comments with Social Login
-Plugin URI: https://wordpress.org/plugins/ixwp-comments-social-login/
+Plugin Name: Postmatic Social
+Plugin URI: https://wordpress.org/plugins/postmatic-social/
 Description: This plugin allows you to add authentication using social media networks (Twitter, WordPress, Google+, etc.) for the users who want to comment on your blog. To get started: 1) Click the "Activate" link at the left of this description, 2) Click the "Social Login" link under the Comments left menu.
-Author: Ixtendo
-Author URI: http://www.ixtendo.com
-Version: 1.12
-License: GPLv2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-*/
+Author: Postmatic
+Author URI: https://gopostmatic.com/
+Version: 1.0
+* Text Domain: postmatic-social
+ * License:     GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * Domain Path: /languages
+ */
+class Postmatic_Social {
+    /**
+	* Holds the class instance.
+	*
+	* @since 1.0.0
+	* @access static
+	* @var Postmatic_Social $instance
+	*/
+	private static $instance = null;
+	
+	/**
+	* Retrieve a class instance.
+	*
+	* Retrieve a class instance.
+	*
+	* @since 5.0.0 
+	* @access static
+	*
+	* @return MPSUM_Updates_Manager Instance of the class.
+	*/
+	public static function get_instance() {
+		if ( null == self::$instance ) {
+			self::$instance = new self;
+		}
+		return self::$instance;
+	} //end get_instance
+	
+	/**
+	* Retrieve the plugin basename.
+	*
+	* Retrieve the plugin basename.
+	*
+	* @since 1.0.0
+	* @access static
+	*
+	* @return string plugin basename
+	*/
+	public static function get_plugin_basename() {
+		return plugin_basename( __FILE__ );	
+	}
+	
+	/**
+	* Class constructor.
+	*
+	* Set up internationalization, auto-loader, and plugin initialization.
+	*
+	* @since 1.0.0
+	* @access private
+	*
+	*/
+	private function __construct() {
+		/* Localization Code */
+		load_plugin_textdomain( 'postmatic-social', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		
+		spl_autoload_register( array( $this, 'loader' ) );
+		
+		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+	} //end constructor
+
+	/**
+	* Return the absolute path to an asset.
+	*
+	* Return the absolute path to an asset based on a relative argument.
+	*
+	* @since 1.0.0
+	* @access static
+	*
+	* @param string  $path Relative path to the asset.
+	* @return string Absolute path to the relative asset.
+	*/
+	public static function get_plugin_dir( $path = '' ) {
+		$dir = rtrim( plugin_dir_path(__FILE__), '/' );
+		if ( !empty( $path ) && is_string( $path) )
+			$dir .= '/' . ltrim( $path, '/' );
+		return $dir;		
+	}
+	
+	/**
+	* Return the web path to an asset.
+	*
+	* Return the web path to an asset based on a relative argument.
+	*
+	* @since 1.0.0
+	* @access static
+	*
+	* @param string  $path Relative path to the asset.
+	* @return string Web path to the relative asset.
+	*/
+	public static function get_plugin_url( $path = '' ) {
+		$dir = rtrim( plugin_dir_url(__FILE__), '/' );
+		if ( !empty( $path ) && is_string( $path) )
+			$dir .= '/' . ltrim( $path, '/' );
+		return $dir;	
+	}   
+    
+    /**
+	* Auto-loads classes.
+	*
+	* Auto-load classes that belong to this plugin.
+	*
+	* @since 1.0.0
+	* @access private
+	*
+	* @param string  $class_name The name of the class.
+	*/
+	private function loader( $class_name ) {
+		if ( class_exists( $class_name, false ) || false === strpos( $class_name, 'POSTMATIC-SOCIAL' ) ) {
+			return;
+		}
+		$file = Postmatic_Social::get_plugin_dir( "includes/{$class_name}.php" );
+		if ( file_exists( $file ) ) {
+			include_once( $file );
+		}	
+	}
+	
+	/**
+	* Initialize the plugin and its dependencies.
+	*
+	* Initialize the plugin and its dependencies.
+	*
+	* @since 1.0.0 
+	* @access public
+	* @see __construct
+	* @internal Uses plugins_loaded action
+	*
+	*/
+	public function plugins_loaded() {
+		$GLOBALS['ixwp_sc_post_protected'] = false;
+        $GLOBALS['ixwp_sc_session'] = Ixwp_Social_Comments_Session::get_instance();
+        load_plugin_textdomain(IXWP_SOCIAL_COMMENTS_NAME, false, 'languages');
+        $GLOBALS[IXWP_SOCIAL_COMMENTS_NAME] = new Ixwp_Social_Comments_Plugin(array("wordpress", "gplus", "twitter","facebook"));	
+	}
+}
+
 
 define('IXWP_SOCIAL_COMMENTS_VERSION', '1.16');
 define('IXWP_SOCIAL_COMMENTS_NAME', 'ixwp_social_comments');
@@ -21,35 +158,4 @@ define('IXWP_SOCIAL_COMMENTS_HELP_URL', 'http://docs.gopostmatic.com/article/185
 require_once(IXWP_SOCIAL_COMMENTS_PATH . '/functions/Ixwp_Social_Comments_Session.php');
 require_once(IXWP_SOCIAL_COMMENTS_PATH . '/functions/Ixwp_Social_Comments_Plugin.php');
 
-add_action('plugins_loaded', 'ixwp_social_comments_plugin_loaded');
-if (!function_exists('ixwp_social_comments_plugin_loaded')) {
-    function ixwp_social_comments_plugin_loaded()
-    {
-        $GLOBALS['ixwp_sc_post_protected'] = false;
-        $GLOBALS['ixwp_sc_session'] = Ixwp_Social_Comments_Session::get_instance();
-        load_plugin_textdomain(IXWP_SOCIAL_COMMENTS_NAME, false, 'languages');
-        $GLOBALS[IXWP_SOCIAL_COMMENTS_NAME] = new Ixwp_Social_Comments_Plugin(array("wordpress", "gplus", "twitter","facebook"));
-    }
-}
-
-/*
-register_activation_hook(__FILE__, 'ixwp_comments_social_login_activate');
-if (!function_exists('ixwp_comments_social_login_activate')) {
-    function ixwp_comments_social_login_activate()
-    {
-        add_option(IXWP_SOCIAL_COMMENTS_NAME . '_plugin_status', 'on');
-    }
-}
-
-add_action('admin_init', 'ixwp_comments_social_login_plugin_redirect');
-if (!function_exists('ixwp_comments_social_login_plugin_redirect')) {
-    function ixwp_comments_social_login_plugin_redirect()
-    {
-        if (is_admin() && get_option(IXWP_SOCIAL_COMMENTS_NAME . '_plugin_status') == 'on') {
-            delete_option(IXWP_SOCIAL_COMMENTS_NAME . '_plugin_status');
-            $plugin_url = admin_url('edit-comments.php?page=ixwp-comments-social-login');
-            wp_redirect($plugin_url);
-        }
-    }
-}
-*/
+Postmatic_Social::get_instance();
