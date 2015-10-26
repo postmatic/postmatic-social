@@ -112,20 +112,18 @@ class Ixwp_Social_Comments_Plugin {
 	}
 
 	function admin_enqueue_scripts() {
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'ixwp-comments-social-login-admin', IXWP_SOCIAL_COMMENTS_URL . '/js/ixwp-comments-social-login-admin.js', array( 'jquery' ), IXWP_SOCIAL_COMMENTS_VERSION, true );
+		wp_enqueue_script( 'postmatic-social-login-admin', Postmatic_Social::get_plugin_url( '/js/ixwp-comments-social-login-admin.js' ), array( 'jquery' ), '20151026', true );
 		//styles
-		wp_enqueue_style( 'ixwp-font-awesome', IXWP_SOCIAL_COMMENTS_URL . '/css/font-awesome.min.css', array(), IXWP_SOCIAL_COMMENTS_VERSION );
-		wp_enqueue_style( 'ixwp-comments-social-login-toggles', IXWP_SOCIAL_COMMENTS_URL . '/css/toggles-full.css', array(), IXWP_SOCIAL_COMMENTS_VERSION );
-		wp_enqueue_style( 'ixwp-comments-social-login', IXWP_SOCIAL_COMMENTS_URL . '/css/ixwp-comments-social-login.css', array( 'ixwp-font-awesome', 'ixwp-comments-social-login-toggles' ), IXWP_SOCIAL_COMMENTS_VERSION );
+		wp_enqueue_style( 'postmatic-social-font-awesome', Postmatic_Social::get_plugin_url( '/css/font-awesome.min.css' ), array(), '20151026' );
+		wp_enqueue_style( 'postmatic-social-login-toggles', Postmatic_Social::get_plugin_url( '/css/toggles-full.css' ), array(), '20151026' );
+		wp_enqueue_style( 'postmatic-social-login', Postmatic_Social::get_plugin_url( '/css/ixwp-comments-social-login.css' ), array( 'postmatic-social-font-awesome', 'postmatic-social-login-toggles' ),  '20151026' );
 	}
 
 	function wp_enqueue_scripts() {
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'ixwp-comments-social-login', IXWP_SOCIAL_COMMENTS_URL . '/js/ixwp-comments-social-login.js', array( 'jquery' ), IXWP_SOCIAL_COMMENTS_VERSION, true );
+		wp_enqueue_script( 'ixwp-comments-social-login', Postmatic_Social::get_plugin_url( '/js/ixwp-comments-social-login.js' ), array( 'jquery' ), '20151026', true );
 		//styles
-		wp_enqueue_style( 'ixwp-font-awesome', IXWP_SOCIAL_COMMENTS_URL . '/css/font-awesome.min.css', array(), IXWP_SOCIAL_COMMENTS_VERSION );
-		wp_enqueue_style( 'ixwp-comments-social-login', IXWP_SOCIAL_COMMENTS_URL . '/css/ixwp-comments-social-login.css', array( 'ixwp-font-awesome' ), IXWP_SOCIAL_COMMENTS_VERSION );
+		wp_enqueue_style( 'postmatic-social-font-awesome', Postmatic_Social::get_plugin_url( '/css/font-awesome.min.css' ), array(), '20151026' );
+		wp_enqueue_style( 'postmatic-social-login', Postmatic_Social::get_plugin_url( '/css/ixwp-comments-social-login.css' ), array( 'postmatic-social-font-awesome' ),  '20151026' );
 	}
 
 
