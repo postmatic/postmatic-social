@@ -28,7 +28,7 @@ class Ixwp_Social_Comments_Plugin {
 	}
 
 	function get_title() {
-		return __( 'Social Login', IXWP_SOCIAL_COMMENTS_NAME );
+		return __( 'Postmatic Social', IXWP_SOCIAL_COMMENTS_NAME );
 	}
 
 	function get_slug() {
@@ -53,7 +53,7 @@ class Ixwp_Social_Comments_Plugin {
 	function register_menu() {
 		$title = $this->get_title();
 		$slug = $this->get_slug();
-		add_comments_page( $title, $title, 'manage_options', $slug, array( $this, 'render_plugin_page' ) );
+		add_options_page( $title, $title, 'manage_options', $slug, array( $this, 'render_plugin_page' ) );
 	}
 
 	function render_plugin_page() {
