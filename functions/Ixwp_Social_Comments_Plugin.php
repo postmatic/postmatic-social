@@ -32,7 +32,7 @@ class Ixwp_Social_Comments_Plugin {
 	}
 
 	function get_slug() {
-		return 'ixwp-comments-social-login';
+		return 'postmatic-social';
 	}
 
 	function register_actions() {
