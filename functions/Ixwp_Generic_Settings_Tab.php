@@ -24,7 +24,7 @@ class Ixwp_Generic_Settings_Tab extends Ixwp_Social_Comments_Tab
     function render_settings_admin_page()
     {
 
-        include_once(IXWP_SOCIAL_COMMENTS_PATH . '/templates/settings-intro.php');
+        include_once( Postmatic_Social::get_plugin_dir( '/templates/settings-intro.php' ) );
         
         $default_settings = $this->get_default_settings();
         $settings = $this->get_settings();
