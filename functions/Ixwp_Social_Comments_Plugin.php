@@ -79,7 +79,7 @@ class Ixwp_Social_Comments_Plugin {
 		echo '<h2 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab_id => $tab_instance ) {
 			$tab_title = $tab_instance->get_title();
-			echo '<a class="nav-tab' . ( $selected_tab_id == $tab_id ? ' nav-tab-active' : '' ) . '" href="' . admin_url( "edit-comments.php?page=$page_id&amp;tab=$tab_id" ) . '">' . $tab_title . '</a>';
+			echo '<a class="nav-tab' . ( $selected_tab_id == $tab_id ? ' nav-tab-active' : '' ) . '" href="' . admin_url( "options-general.php?page=$page_id&amp;tab=$tab_id" ) . '">' . $tab_title . '</a>';
 		}
 		echo '</h2>';
 		echo '<div style="margin-left: 10px; margin-top: 10px;">';
