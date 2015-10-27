@@ -64,9 +64,7 @@ class Postmatic_Social {
 	private function __construct() {
 		/* Localization Code */
 		load_plugin_textdomain( 'postmatic-social', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-		
-		spl_autoload_register( array( $this, 'loader' ) );
-		
+				
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 	} //end constructor
 
@@ -106,25 +104,6 @@ class Postmatic_Social {
 		return $dir;	
 	}   
     
-    /**
-	* Auto-loads classes.
-	*
-	* Auto-load classes that belong to this plugin.
-	*
-	* @since 1.0.0
-	* @access private
-	*
-	* @param string  $class_name The name of the class.
-	*/
-	private function loader( $class_name ) {
-		if ( class_exists( $class_name, false ) || false === strpos( $class_name, 'POSTMATIC-SOCIAL' ) ) {
-			return;
-		}
-		$file = Postmatic_Social::get_plugin_dir( "includes/{$class_name}.php" );
-		if ( file_exists( $file ) ) {
-			include_once( $file );
-		}	
-	}
 	
 	/**
 	* Initialize the plugin and its dependencies.
