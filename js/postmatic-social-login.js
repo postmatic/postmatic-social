@@ -10,16 +10,74 @@
     var f=e.pageX;a.c.on("mousemove",a.a.d,function(b){c=b.pageX-f;a.active?(b=c,0<c&&(b=0),c<d&&(b=d)):(b=c+d,0>c&&(b=d),c>-d&&(b=0));a.a.e.css("margin-left",b)});a.a.d.on("mouseup",b);a.a.f.on("mouseleave",b)})};k.prototype.toggle=function(b){this.active!==b&&(b=this.active=!this.active,this.c.data("toggle-active",b),this.a.off.toggleClass("active",!b),this.a.on.toggleClass("active",b),this.l.prop("checked",b),this.c.trigger(this.b.event,b),this.h||(b=b?0:-this.i+this.g,this.a.e.stop().animate({marginLeft:b},
     this.b.animate)))};f.fn.toggles=function(b){return this.each(function(){new k(f(this),b)})}}"function"===typeof define&&define.amd?define(["jquery"],l):l(h.jQuery||h.Zepto||h.ender||h.$||$)})(this);
 
-jQuery(document).ready(function ($) {
-    $('.ixwp-sc-toggle').each(function(){
-        var $this = $(this);
-        var inputEl = $('#'+($this.data('inputId')));
-        var toggleOn = (inputEl.val() === 'on');
-        $this.toggles({on: toggleOn}).on('toggle', function(){
-            var active = $(this).data('toggleActive');
-            inputEl.val(active? 'on' : 'off');
-        });
+/*
+ Ixtendo Social Comments
+ http://www.ixtendo.com
+ */
+function pmsLoadCommentForm($, accessTokenRequestUrl) {
+    var container = $( '#respond' );
+    var comment = $( '#comment' ).val();
+    $.get(accessTokenRequestUrl, function (data) {
+        container.replaceWith($(data));
+        $( '#comment' ).val( comment ).focus();
     });
+}
+
+function pmsGooglePlusSigninCallback(authResult) {
+    if (authResult.access_token) {
+        var $ = jQuery;
+        var gplusButton = $('#postmatic-sc-googleplus-button');
+        var accessTokenRequestUrl = gplusButton.data('accessTokenRequestUrl');
+        var postId = gplusButton.data('postId');
+        accessTokenRequestUrl = accessTokenRequestUrl + '&access_token=' + authResult.access_token + '&post_id=' + postId;
+        pmsLoadCommentForm($, accessTokenRequestUrl);
+    }
+}
+
+jQuery(document).ready(function ($) {
+
+    $('.postmatic-sc-toggle').toggles();
+
+    $('.postmatic-sc-button').on('click', function (evt) {
+        var scId = $(this).data('scId');
+        if(scId) {
+            var postId = $(this).data('postId');
+            var windowUrl = $(this).attr("href");
+            var windowName = $(this).attr("name");
+            var windowSize = 'width=650,height=550,scrollbars=yes';
+            var popup = window.open(windowUrl, windowName, windowSize);
+            var handle;
+
+            var checkPopupLocation = function () {
+                try {
+                    if (popup && popup.location) {
+                        var accessTokenRequestUrl = popup.location.href;
+                        if (accessTokenRequestUrl.indexOf('action=pms-' + scId + '-access-token') > 0) {
+                            clearInterval(handle);
+                            popup.close();
+
+                            // By FK for FB
+                            var q = accessTokenRequestUrl.indexOf("#");                            
+                            if (q != -1)
+                                accessTokenRequestUrl = accessTokenRequestUrl.slice(0,q);
+
+                            accessTokenRequestUrl = accessTokenRequestUrl + '&post_id=' + postId;
+                            pmsLoadCommentForm($, accessTokenRequestUrl);
+                        }
+                    }
+                } catch (e) {
+
+                }
+            };
+
+            handle = setInterval(checkPopupLocation, 100);
+            evt.preventDefault();
+            return false;
+        }else{
+            return true;
+        }
+    });
+
 });
 
 

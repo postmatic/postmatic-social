@@ -1,15 +1,15 @@
 <?php
 
-require_once('Ixwp_Social_Network_Authenticator.php');
+require_once('Postmatic_Social_Network_Authenticator.php');
 
-class Ixwp_Facebook_Authenticator extends Ixwp_Social_Network_Authenticator
+class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_Authenticator
 {
     public $network = "facebook";
 
-    private static $ENABLED = 'ixwp_enabled';
-    private static $API_URL = 'ixwp_api_url';
-    private static $CLIENT_ID = 'ixwp_client_id';
-    private static $CLIENT_SECRET = 'ixwp_client_secret';
+    private static $ENABLED = 'pms_enabled';
+    private static $API_URL = 'pms_api_url';
+    private static $CLIENT_ID = 'pms_client_id';
+    private static $CLIENT_SECRET = 'pms_client_secret';
 
     public function __construct()
     {
@@ -21,27 +21,27 @@ class Ixwp_Facebook_Authenticator extends Ixwp_Social_Network_Authenticator
         return array("id" => "facebook",
             "title" => '<i class="fa fa-facebook"></i> Facebook',
             "fields" => array(
-                Ixwp_Facebook_Authenticator::$ENABLED => array(
-                    'title' => __('Status', IXWP_SOCIAL_COMMENTS_NAME),
+                Postmatic_Social_Facebook_Authenticator::$ENABLED => array(
+                    'title' => __('Status', 'postmatic-social'),
                     'type' => 'switch',
                     'default_value' => 'off',
                     'possible_values' => array(
-                        'on' => __('Enabled', IXWP_SOCIAL_COMMENTS_NAME),
-                        'off' => __('Disabled', IXWP_SOCIAL_COMMENTS_NAME)
+                        'on' => __('Enabled', 'postmatic-social'),
+                        'off' => __('Disabled', 'postmatic-social')
                     )
                 ),
-                Ixwp_Facebook_Authenticator::$API_URL => array(
-                    'title' => __('API URL', IXWP_SOCIAL_COMMENTS_NAME),
+                Postmatic_Social_Facebook_Authenticator::$API_URL => array(
+                    'title' => __('API URL', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => 'https://www.facebook.com/dialog/oauth'
                 ),
-                Ixwp_Facebook_Authenticator::$CLIENT_ID => array(
-                    'title' => __('Client ID', IXWP_SOCIAL_COMMENTS_NAME),
+                Postmatic_Social_Facebook_Authenticator::$CLIENT_ID => array(
+                    'title' => __('Client ID', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 ),
-                Ixwp_Facebook_Authenticator::$CLIENT_SECRET => array(
-                    'title' => __('Client Secret', IXWP_SOCIAL_COMMENTS_NAME),
+                Postmatic_Social_Facebook_Authenticator::$CLIENT_SECRET => array(
+                    'title' => __('Client Secret', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 )
@@ -57,13 +57,13 @@ class Ixwp_Facebook_Authenticator extends Ixwp_Social_Network_Authenticator
         echo '<table class="form-table"><tbody>';
 
         // echo '<tr>';
-        // echo '<th><label>' . __('Need help?', IXWP_SOCIAL_COMMENTS_NAME) . '</label></th>';
+        // echo '<th><label>' . __('Need help?', 'postmatic-social') . '</label></th>';
         // echo '<td><a href="http://docs.gopostmatic.com/article/185-setup">How to enable wordpress.com authentication.</a></td>';
         // echo '</tr>';
 
         $oauth_callback = $this->get_oauth_callback();
         echo '<tr>';
-        echo '<th><label>' . __('Redirection URL', IXWP_SOCIAL_COMMENTS_NAME) . '</label></th>';
+        echo '<th><label>' . __('Redirection URL', 'postmatic-social') . '</label></th>';
         echo '<td><strong>' . htmlentities($oauth_callback) . '</strong></td>';
         echo '</tr>';
 
@@ -78,8 +78,8 @@ class Ixwp_Facebook_Authenticator extends Ixwp_Social_Network_Authenticator
     protected function process_token_request()
     {
         $settings = $this->get_settings();
-        $api_url = $settings[Ixwp_Facebook_Authenticator::$API_URL];
-        $client_id = $settings[Ixwp_Facebook_Authenticator::$CLIENT_ID];
+        $api_url = $settings[Postmatic_Social_Facebook_Authenticator::$API_URL];
+        $client_id = $settings[Postmatic_Social_Facebook_Authenticator::$CLIENT_ID];
 
         $query_string = $this->to_query_string(array(
             'response_type' => 'code',
@@ -94,12 +94,12 @@ class Ixwp_Facebook_Authenticator extends Ixwp_Social_Network_Authenticator
     protected function process_access_token_request()
     {
         if (array_key_exists('code', $_REQUEST) && array_key_exists('post_id', $_REQUEST)) {
-            global $ixwp_sc_post_protected;
-            global $ixwp_sc_session;
+            global $pms_post_protected;
+            global $pms_session;
             $post_id = intval($_REQUEST['post_id']);
             $settings = $this->get_settings();
-            $client_id = $settings[Ixwp_Facebook_Authenticator::$CLIENT_ID];
-            $client_secret = $settings[Ixwp_Facebook_Authenticator::$CLIENT_SECRET];
+            $client_id = $settings[Postmatic_Social_Facebook_Authenticator::$CLIENT_ID];
+            $client_secret = $settings[Postmatic_Social_Facebook_Authenticator::$CLIENT_SECRET];
             $request_token_url = "https://graph.facebook.com/v2.4/oauth/access_token";
 
             $query_string = $this->to_query_string(array(
@@ -119,12 +119,12 @@ class Ixwp_Facebook_Authenticator extends Ixwp_Social_Network_Authenticator
                 ) {
                     $access_token = $response_body['access_token'];
                     $user_details = $this->get_user_details($access_token);
-                    $ixwp_sc_session['user'] = $user_details;
-                    $ixwp_sc_post_protected = true;
+                    $pms_session['user'] = $user_details;
+                    $pms_post_protected = true;
                     comment_form(array(), $post_id);
                     die();
                 } else {
-                    throw new Exception(__('Missing the access_token parameter', IXWP_SOCIAL_COMMENTS_NAME));
+                    throw new Exception(__('Missing the access_token parameter', 'postmatic-social'));
                 }
             }
         } else {
@@ -155,7 +155,7 @@ class Ixwp_Facebook_Authenticator extends Ixwp_Social_Network_Authenticator
                     'avatar_url' => $response_body['picture']['url'],
                 );
             } else {
-                throw new Exception(__('Could not get the user details', IXWP_SOCIAL_COMMENTS_NAME));
+                throw new Exception(__('Could not get the user details', 'postmatic-social'));
             }
         }
     }

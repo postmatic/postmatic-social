@@ -1,8 +1,8 @@
 <?php
 
-require_once('Ixwp_Social_Comments_Tab.php');
+require_once('Postmatic_Social_Comments_Tab.php');
 
-abstract class Ixwp_Social_Network_Authenticator extends Ixwp_Social_Comments_Tab
+abstract class Postmatic_Social_Network_Authenticator extends Postmatic_Social_Comments_Tab
 {
 
     public function __construct()
@@ -14,9 +14,9 @@ abstract class Ixwp_Social_Network_Authenticator extends Ixwp_Social_Comments_Ta
     {
         $sn_id = $this->get_id();
         if (!is_user_logged_in()) {
-            add_action('wp_ajax_nopriv_ixwp-' . $sn_id . '-request-token', array($this, 'request_token'));
-            add_action('wp_ajax_nopriv_ixwp-' . $sn_id . '-access-token', array($this, 'access_token'));
-            add_action('wp_ajax_nopriv_ixwp-sc-logout', array($this, 'logout'));
+            add_action('wp_ajax_nopriv_pms-' . $sn_id . '-request-token', array($this, 'request_token'));
+            add_action('wp_ajax_nopriv_pms-' . $sn_id . '-access-token', array($this, 'access_token'));
+            add_action('wp_ajax_nopriv_pms-logout', array($this, 'logout'));
             add_action('wp_footer', array($this, 'custom_footer'));
         }
     }
@@ -25,8 +25,8 @@ abstract class Ixwp_Social_Network_Authenticator extends Ixwp_Social_Comments_Ta
     {
         $referrer = wp_get_referer();
         if ($referrer) {
-            global $ixwp_sc_session;
-            $ixwp_sc_session->invalidate();
+            global $pms_session;
+            $pms_session->invalidate();
             header('Location: ' . $referrer);
         }
     }
@@ -34,7 +34,7 @@ abstract class Ixwp_Social_Network_Authenticator extends Ixwp_Social_Comments_Ta
     protected function get_oauth_callback()
     {
         $sn_id = $this->get_id();
-        return admin_url('admin-ajax.php?action=ixwp-' . $sn_id . '-access-token');
+        return admin_url('admin-ajax.php?action=pms-' . $sn_id . '-access-token');
     }
 
     function request_token()

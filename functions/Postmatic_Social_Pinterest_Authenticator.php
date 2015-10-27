@@ -1,10 +1,10 @@
 <?php
 
-class Ixwp_Pinterest_Authenticator extends Ixwp_Social_Network_Authenticator
+class Postmatic_Social_Pinterest_Authenticator extends Postmatic_Social_Network_Authenticator
 {
 
-    private static $ENABLED = 'ixwp_enabled';
-    private static $API_URL = 'ixwp_api_url';
+    private static $ENABLED = 'pms_enabled';
+    private static $API_URL = 'pms_api_url';
 
     public function __construct()
     {
@@ -16,17 +16,17 @@ class Ixwp_Pinterest_Authenticator extends Ixwp_Social_Network_Authenticator
         return array("id" => "pinterest",
             "title" => '<i class="fa fa-pinterest"></i> Pinterest',
             "fields" => array(
-                Ixwp_Pinterest_Authenticator::$ENABLED => array(
-                    'title' => __('Status', IXWP_SOCIAL_COMMENTS_NAME),
+                Postmatic_Social_Pinterest_Authenticator::$ENABLED => array(
+                    'title' => __('Status', 'postmatic-social'),
                     'type' => 'select',
                     'default_value' => 'off',
                     'possible_values' => array(
-                        'on' => __('Enabled', IXWP_SOCIAL_COMMENTS_NAME),
-                        'off' => __('Disabled', IXWP_SOCIAL_COMMENTS_NAME)
+                        'on' => __('Enabled', 'postmatic-social'),
+                        'off' => __('Disabled', 'postmatic-social')
                     )
                 ),
-                Ixwp_Pinterest_Authenticator::$API_URL => array(
-                    'title' => __('API URL', IXWP_SOCIAL_COMMENTS_NAME),
+                Postmatic_Social_Pinterest_Authenticator::$API_URL => array(
+                    'title' => __('API URL', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => 'https://pinterest.com/'
                 ),
