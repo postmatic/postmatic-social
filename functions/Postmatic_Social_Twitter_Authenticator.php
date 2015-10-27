@@ -6,11 +6,11 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
 {
     public $network = "twitter";
 
-    private static $ENABLED = 'ixwp_enabled';
-    private static $API_URL = 'ixwp_api_url';
+    private static $ENABLED = 'pms_enabled';
+    private static $API_URL = 'pms_api_url';
     private static $API_VERSION = '1.1';
-    private static $CONSUMER_KEY = 'ixwp_consumer_key';
-    private static $CONSUMER_SECRET = 'ixwp_consumer_secret';
+    private static $CONSUMER_KEY = 'pms_consumer_key';
+    private static $CONSUMER_SECRET = 'pms_consumer_secret';
 
     public function __construct()
     {
@@ -87,8 +87,8 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
             array_key_exists('oauth_verifier', $_REQUEST) &&
             array_key_exists('post_id', $_REQUEST)
         ) {
-            global $ixwp_sc_session;
-            global $ixwp_sc_post_protected;
+            global $pms_session;
+            global $pms_post_protected;
             $oauth_token = $_REQUEST['oauth_token'];
             $oauth_verifier = $_REQUEST['oauth_verifier'];
             $post_id = $_REQUEST['post_id'];
@@ -135,8 +135,8 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
                     $oauth_token = $response_body_arguments['oauth_token'];
                     $oauth_token_secret = $response_body_arguments['oauth_token_secret'];
                     $user_details = $this->get_user_details($oauth_token, $oauth_token_secret);
-                    $ixwp_sc_session['user'] = $user_details;
-                    $ixwp_sc_post_protected = true;
+                    $pms_session['user'] = $user_details;
+                    $pms_post_protected = true;
                     comment_form(array(), $post_id);
                 } else {
                     throw new Exception(__('Missing the oauth_token or oauth_verifier parameters', 'postmatic-social'));
@@ -269,7 +269,7 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
     function get_auth_button($settings = array())
     {
         $default_settings = $this->get_default_settings();
-        $website_url = admin_url('admin-ajax.php') . '?action=ixwp-twitter-request-token';
+        $website_url = admin_url('admin-ajax.php') . '?action=pms-twitter-request-token';
         $btn = '<a class="postmatic-sc-button postmatic-sc-twitter-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="Twitter" href="' . $website_url . '"><i class="fa fa-twitter"></i></a>';
         return $btn;
 

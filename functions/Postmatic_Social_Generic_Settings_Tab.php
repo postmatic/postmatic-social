@@ -5,8 +5,8 @@ require_once('Postmatic_Social_Comments_Tab.php');
 class Postmatic_Social_Generic_Settings_Tab extends Postmatic_Social_Comments_Tab
 {
     static $ID = 'settings';
-    static $PLUGIN_STATUS = 'ixwp_plugin_status';
-    static $POSTS_ID = 'ixwp_posts_id';
+    static $PLUGIN_STATUS = 'pms_plugin_status';
+    static $POSTS_ID = 'pms_posts_id';
 
     public function __construct()
     {

@@ -72,7 +72,7 @@ class Postmatic_Social_Comments_Session implements ArrayAccess
 
     private function get_transient_id()
     {
-        return '_ixwpsc_' . $this->session_id;
+        return '_pms_' . $this->session_id;
     }
 
     public function offsetSet($offset, $value)

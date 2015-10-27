@@ -65,8 +65,8 @@ class Postmatic_Social_Comments_Plugin {
 		echo '<div style="position: absolute;right: 25px; top: 25px;"><a href="https://gopostmatic.com" target="_blank"><img src="http://gopostmatic.com/wp-content/uploads/2015/03/logo.png" width="125"></a></div>';
 		echo '<div class="icon32" id="icon-themes"></div>';
 		echo '<h2 style="margin: 25px 0;">' . __( 'Postmatic Social Commenting', 'postmatic-social' ) . '</h2>';
-		echo '<div class="updated below-h2 ixwp-flexslider-list-message" style="display: none;"><p></p></div>';
-		echo '<div class="error below-h2 ixwp-flexslider-list-message" style="display: none;"><p></p></div>';
+		echo '<div class="updated below-h2 pms-flexslider-list-message" style="display: none;"><p></p></div>';
+		echo '<div class="error below-h2 pms-flexslider-list-message" style="display: none;"><p></p></div>';
 
 		$selected_tab_id = '';
 		if ( array_key_exists( 'tab', $_REQUEST ) ) {
@@ -128,14 +128,14 @@ class Postmatic_Social_Comments_Plugin {
 
 
 	function comments_open( $open, $post_id ) {
-		global $ixwp_sc_post_protected;
+		global $pms_post_protected;
 		if ( is_user_logged_in() ) {
 			return $open;
 		}
 		if ( $open ) {
 			// FK Enable plugin by default
 			// FK Always show comments
-			$ixwp_sc_post_protected = true;
+			$pms_post_protected = true;
 			return true;
 
 		} else {
@@ -145,13 +145,13 @@ class Postmatic_Social_Comments_Plugin {
 
 	function add_social_options( $field ) {
 
-		// global $ixwp_sc_session;
-		// var_dump($ixwp_sc_session["debug"]);
+		// global $pms_session;
+		// var_dump($pms_session["debug"]);
 
-		global $ixwp_sc_post_protected;
+		global $pms_post_protected;
 
 		// If not comments Enabled and logged in leave alone
-		if ( !$ixwp_sc_post_protected ) {
+		if ( !$pms_post_protected ) {
 			return $field;
 		}
 
@@ -166,7 +166,7 @@ class Postmatic_Social_Comments_Plugin {
 			}
 			$referrer = esc_attr( get_permalink( $post_id ) );
 			$logout_url = admin_url(
-				'admin-ajax.php?action=ixwp-sc-logout&amp;_wp_http_referer=' . $referrer .
+				'admin-ajax.php?action=pms-logout&amp;_wp_http_referer=' . $referrer .
 				'#postmatic-social-comment-wrapper'
 			);
 			$content .= '<div id="postmatic-social-comment-wrapper">';
@@ -188,11 +188,11 @@ class Postmatic_Social_Comments_Plugin {
 			$content .= '<div class="postmatic-social-comment-buttons">';
 			$tabs = $this->tabs;
 			// Get Settings
-			$settings = get_option( "ixwp_social_comments" );
+			$settings = get_option( "pms_comments" );
 			foreach ( $tabs as $id => $instance ) {
 				if (
 					$instance instanceof Postmatic_Social_Network_Authenticator and
-					$settings[$instance->network]['ixwp_enabled'] == "on"
+					$settings[$instance->network]['pms_enabled'] == "on"
 				) {
 					$content .= $instance->get_auth_button();
 				}
@@ -222,8 +222,8 @@ class Postmatic_Social_Comments_Plugin {
 	}
 
 	function wp_get_current_commenter( $wp_commenter ) {
-		global $ixwp_sc_post_protected;
-		if ( $ixwp_sc_post_protected ) {
+		global $pms_post_protected;
+		if ( $pms_post_protected ) {
 			$sc_commenter = $this->sc_get_current_commenter();
 			return array(
 				'comment_author' => empty( $sc_commenter['display_name'] ) ? $wp_commenter['comment_author'] : $sc_commenter['display_name'],
@@ -236,8 +236,8 @@ class Postmatic_Social_Comments_Plugin {
 	}
 
 	function sc_get_current_commenter() {
-		global $ixwp_sc_session;
-		$commenter = $ixwp_sc_session[POSTMATIC_SOCIAL_SESSION_USER];
+		global $pms_session;
+		$commenter = $pms_session[POSTMATIC_SOCIAL_SESSION_USER];
 		return isset( $commenter ) ? $commenter : NULL;
 	}
 

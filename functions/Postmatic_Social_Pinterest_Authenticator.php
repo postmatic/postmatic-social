@@ -3,8 +3,8 @@
 class Postmatic_Social_Pinterest_Authenticator extends Postmatic_Social_Network_Authenticator
 {
 
-    private static $ENABLED = 'ixwp_enabled';
-    private static $API_URL = 'ixwp_api_url';
+    private static $ENABLED = 'pms_enabled';
+    private static $API_URL = 'pms_api_url';
 
     public function __construct()
     {

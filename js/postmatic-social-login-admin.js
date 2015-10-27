@@ -11,7 +11,7 @@
     this.b.animate)))};f.fn.toggles=function(b){return this.each(function(){new k(f(this),b)})}}"function"===typeof define&&define.amd?define(["jquery"],l):l(h.jQuery||h.Zepto||h.ender||h.$||$)})(this);
 
 jQuery(document).ready(function ($) {
-    $('.ixwp-sc-toggle').each(function(){
+    $('.pms-toggle').each(function(){
         var $this = $(this);
         var inputEl = $('#'+($this.data('inputId')));
         var toggleOn = (inputEl.val() === 'on');

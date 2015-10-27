@@ -14,7 +14,7 @@
  Ixtendo Social Comments
  http://www.ixtendo.com
  */
-function ixwpscLoadCommentForm($, accessTokenRequestUrl) {
+function pmsLoadCommentForm($, accessTokenRequestUrl) {
     var container = $( '#respond' );
     var comment = $( '#comment' ).val();
     $.get(accessTokenRequestUrl, function (data) {
@@ -23,14 +23,14 @@ function ixwpscLoadCommentForm($, accessTokenRequestUrl) {
     });
 }
 
-function ixwpscGooglePlusSigninCallback(authResult) {
+function pmsGooglePlusSigninCallback(authResult) {
     if (authResult.access_token) {
         var $ = jQuery;
         var gplusButton = $('#postmatic-sc-googleplus-button');
         var accessTokenRequestUrl = gplusButton.data('accessTokenRequestUrl');
         var postId = gplusButton.data('postId');
         accessTokenRequestUrl = accessTokenRequestUrl + '&access_token=' + authResult.access_token + '&post_id=' + postId;
-        ixwpscLoadCommentForm($, accessTokenRequestUrl);
+        pmsLoadCommentForm($, accessTokenRequestUrl);
     }
 }
 
@@ -52,7 +52,7 @@ jQuery(document).ready(function ($) {
                 try {
                     if (popup && popup.location) {
                         var accessTokenRequestUrl = popup.location.href;
-                        if (accessTokenRequestUrl.indexOf('action=ixwp-' + scId + '-access-token') > 0) {
+                        if (accessTokenRequestUrl.indexOf('action=pms-' + scId + '-access-token') > 0) {
                             clearInterval(handle);
                             popup.close();
 
@@ -62,7 +62,7 @@ jQuery(document).ready(function ($) {
                                 accessTokenRequestUrl = accessTokenRequestUrl.slice(0,q);
 
                             accessTokenRequestUrl = accessTokenRequestUrl + '&post_id=' + postId;
-                            ixwpscLoadCommentForm($, accessTokenRequestUrl);
+                            pmsLoadCommentForm($, accessTokenRequestUrl);
                         }
                     }
                 } catch (e) {

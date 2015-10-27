@@ -6,9 +6,9 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
 {
     public $network = "gplus";
 
-    private static $ENABLED = 'ixwp_enabled';
-    private static $CLIENT_ID = 'ixwp_client_id';
-    private static $CLIENT_SECRET = 'ixwp_client_secret';
+    private static $ENABLED = 'pms_enabled';
+    private static $CLIENT_ID = 'pms_client_id';
+    private static $CLIENT_SECRET = 'pms_client_secret';
 
     private static $REQUEST_URL = 'https://accounts.google.com/o/oauth2/auth';
     private static $ACCESS_URL = 'https://www.googleapis.com/oauth2/v3/token';
@@ -82,8 +82,8 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
     {
         if (array_key_exists('code', $_REQUEST) && array_key_exists('post_id', $_REQUEST)) {
 
-            global $ixwp_sc_post_protected;
-            global $ixwp_sc_session;
+            global $pms_post_protected;
+            global $pms_session;
 
             $post_id = intval($_REQUEST['post_id']);
             $settings = $this->get_settings();
@@ -110,8 +110,8 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
                 ) {
                     $access_token = $response_body['access_token'];
                     $user_details = $this->get_user_details($access_token);
-                    $ixwp_sc_session['user'] = $user_details;
-                    $ixwp_sc_post_protected = true;
+                    $pms_session['user'] = $user_details;
+                    $pms_post_protected = true;
                     comment_form(array(), $post_id);
                     die();
                 } else {
@@ -125,7 +125,7 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
 
     protected function get_user_details($access_token)
     {
-        // global $ixwp_sc_session;
+        // global $pms_session;
         $settings = $this->get_settings();
         $url = Postmatic_Social_Gplus_Authenticator::$API_URL;
         $response = wp_remote_get($url,
@@ -165,7 +165,7 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
     function get_auth_button($settings = array())
     {
         $oauth_callback = $this->get_oauth_callback();
-        $website_url = admin_url('admin-ajax.php') . '?action=ixwp-gplus-request-token';
+        $website_url = admin_url('admin-ajax.php') . '?action=pms-gplus-request-token';
         $btn = '<div id="postmatic-sc-googleplus-button" data-sc-id="gplus" class="postmatic-sc-button postmatic-sc-googleplus-button" data-post-id="' . get_the_ID() . '" data-access-token-request-url="' . esc_attr($oauth_callback) . '" href="'.$website_url.'"><i class="fa fa-google-plus"></i></div>';
         return $btn;
     }

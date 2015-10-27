@@ -33,7 +33,7 @@ abstract class Postmatic_Social_Comments_Tab
                 $sn_settings[$field_id] = $field_meta['default_value'];
             }
         }
-        return apply_filters('ixwp_social_comments_settings', $sn_settings, $tab_id);
+        return apply_filters('pms_comments_settings', $sn_settings, $tab_id);
     }
 
     function save_settings()
@@ -88,7 +88,7 @@ abstract class Postmatic_Social_Comments_Tab
             {
                 echo '<tr>';
                 echo '<th><label for="' . $field_id . '_id">' . $field_meta['title'] . '</label></th>';
-                echo '<td><div class="ixwp-sc-toggle toggle-modern toggle" data-input-id="' . $field_id . '_id"></div><input type="hidden" id="' . $field_id . '_id" name="' . $field_id . '" value="' . $field_value . '"></td>';
+                echo '<td><div class="pms-toggle toggle-modern toggle" data-input-id="' . $field_id . '_id"></div><input type="hidden" id="' . $field_id . '_id" name="' . $field_id . '" value="' . $field_value . '"></td>';
                 echo '</tr>';
                 break;
             }

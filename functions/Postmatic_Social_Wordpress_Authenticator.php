@@ -6,10 +6,10 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
 {
     public $network = "wordpress";
 
-    private static $ENABLED = 'ixwp_enabled';
-    private static $API_URL = 'ixwp_api_url';
-    private static $CLIENT_ID = 'ixwp_client_id';
-    private static $CLIENT_SECRET = 'ixwp_client_secret';
+    private static $ENABLED = 'pms_enabled';
+    private static $API_URL = 'pms_api_url';
+    private static $CLIENT_ID = 'pms_client_id';
+    private static $CLIENT_SECRET = 'pms_client_secret';
 
     public function __construct()
     {
@@ -35,8 +35,8 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
     protected function process_access_token_request()
     {
         if (array_key_exists('code', $_REQUEST) && array_key_exists('post_id', $_REQUEST)) {
-            global $ixwp_sc_post_protected;
-            global $ixwp_sc_session;
+            global $pms_post_protected;
+            global $pms_session;
             $post_id = intval($_REQUEST['post_id']);
             $settings = $this->get_settings();
             $api_url = $settings[Postmatic_Social_Wordpress_Authenticator::$API_URL];
@@ -63,8 +63,8 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
                 ) {
                     $access_token = $response_body['access_token'];
                     $user_details = $this->get_user_details($access_token);
-                    $ixwp_sc_session['user'] = $user_details;
-                    $ixwp_sc_post_protected = true;
+                    $pms_session['user'] = $user_details;
+                    $pms_post_protected = true;
                     comment_form(array(), $post_id);
                     die();
                 } else {
@@ -164,7 +164,7 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
     function get_auth_button($settings = array())
     {
         $default_settings = $this->get_default_settings();
-        $website_url = admin_url('admin-ajax.php') . '?action=ixwp-wordpress-request-token';
+        $website_url = admin_url('admin-ajax.php') . '?action=pms-wordpress-request-token';
         $btn = '<a class="postmatic-sc-button postmatic-sc-wordpress-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="WordPress" href="' . $website_url . '"><i class="fa fa-wordpress"></i></a>';
         return $btn;
     }
