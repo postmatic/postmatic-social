@@ -139,16 +139,16 @@ class Postmatic_Social {
 	*/
 	public function plugins_loaded() {
 		$GLOBALS['ixwp_sc_post_protected'] = false;
-        $GLOBALS['ixwp_sc_session'] = Ixwp_Social_Comments_Session::get_instance();
+        $GLOBALS['ixwp_sc_session'] = Postmatic_Social_Comments_Session::get_instance();
         load_plugin_textdomain('postmatic-social', false, 'languages');
-        $GLOBALS['postmatic-social'] = new Ixwp_Social_Comments_Plugin(array("wordpress", "gplus", "twitter","facebook"));	
+        $GLOBALS['postmatic-social'] = new Postmatic_Social_Comments_Plugin(array("wordpress", "gplus", "twitter","facebook"));	
 	}
 }
 
 define('POSTMATIC_SOCIAL_SESSION_USER', 'user');
 define('POSTMATIC_SOCIAL_HELP_URL', 'http://docs.gopostmatic.com/article/185-setup');
 
-require_once( Postmatic_Social::get_plugin_dir( '/functions/Ixwp_Social_Comments_Session.php' ) );
-require_once( Postmatic_Social::get_plugin_dir( '/functions/Ixwp_Social_Comments_Plugin.php') );
+require_once( Postmatic_Social::get_plugin_dir( '/functions/Postmatic_Social_Comments_Session.php' ) );
+require_once( Postmatic_Social::get_plugin_dir( '/functions/Postmatic_Social_Comments_Plugin.php') );
 
 Postmatic_Social::get_instance();

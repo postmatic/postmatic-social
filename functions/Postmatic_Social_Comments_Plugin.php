@@ -1,8 +1,8 @@
 <?php
 
-require_once( 'Ixwp_Generic_Settings_Tab.php' );
+require_once( 'Postmatic_Social_Generic_Settings_Tab.php' );
 
-class Ixwp_Social_Comments_Plugin {
+class Postmatic_Social_Comments_Plugin {
 
 	private $messages;
 	private $tabs;
@@ -15,11 +15,11 @@ class Ixwp_Social_Comments_Plugin {
 	protected function init( $supported_sn ) {
 		$this->messages = array();
 		$this->tabs = array();
-		$generic_settings_tab = new Ixwp_Generic_Settings_Tab();
+		$generic_settings_tab = new Postmatic_Social_Generic_Settings_Tab();
 		// FK Hide general settings page
 		$this->tabs[$generic_settings_tab->get_id()] = $generic_settings_tab;
 		foreach ( $supported_sn as $sn_id ) {
-			$class_name = 'Ixwp_' . ucfirst( $sn_id ) . '_Authenticator';
+			$class_name = 'Postmatic_Social_' . ucfirst( $sn_id ) . '_Authenticator';
 			include_once( $class_name . '.php' );
 			if ( class_exists( $class_name ) ) {
 				$this->tabs[$sn_id] = new $class_name();
@@ -191,7 +191,7 @@ class Ixwp_Social_Comments_Plugin {
 			$settings = get_option( "ixwp_social_comments" );
 			foreach ( $tabs as $id => $instance ) {
 				if (
-					$instance instanceof Ixwp_Social_Network_Authenticator and
+					$instance instanceof Postmatic_Social_Network_Authenticator and
 					$settings[$instance->network]['ixwp_enabled'] == "on"
 				) {
 					$content .= $instance->get_auth_button();

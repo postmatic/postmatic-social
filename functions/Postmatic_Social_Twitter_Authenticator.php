@@ -1,8 +1,8 @@
 <?php
 
-require_once('Ixwp_Social_Network_Authenticator.php');
+require_once('Postmatic_Social_Network_Authenticator.php');
 
-class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
+class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Authenticator
 {
     public $network = "twitter";
 
@@ -39,9 +39,9 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
     protected function process_token_request()
     {
         $settings = $this->get_settings();
-        $api_url = $settings[Ixwp_Twitter_Authenticator::$API_URL];
-        $consumer_key = $settings[Ixwp_Twitter_Authenticator::$CONSUMER_KEY];
-        $consumer_secret = $settings[Ixwp_Twitter_Authenticator::$CONSUMER_SECRET];
+        $api_url = $settings[Postmatic_Social_Twitter_Authenticator::$API_URL];
+        $consumer_key = $settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY];
+        $consumer_secret = $settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET];
         $request_token_url = $api_url . 'oauth/request_token';
         $authenticate_url = $api_url . 'oauth/authenticate';
 
@@ -93,9 +93,9 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
             $oauth_verifier = $_REQUEST['oauth_verifier'];
             $post_id = $_REQUEST['post_id'];
             $twitter_settings = $this->get_settings();
-            $api_url = $twitter_settings[Ixwp_Twitter_Authenticator::$API_URL];
-            $consumer_key = $twitter_settings[Ixwp_Twitter_Authenticator::$CONSUMER_KEY];
-            $consumer_secret = $twitter_settings[Ixwp_Twitter_Authenticator::$CONSUMER_SECRET];
+            $api_url = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$API_URL];
+            $consumer_key = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY];
+            $consumer_secret = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET];
             $access_token_url = $api_url . 'oauth/access_token';
 
             $oauth_request_params = array(
@@ -150,10 +150,10 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
     protected function get_user_details($oauth_token, $oauth_token_secret)
     {
         $twitter_settings = $this->get_settings();
-        $api_url = $twitter_settings[Ixwp_Twitter_Authenticator::$API_URL];
-        $api_version = Ixwp_Twitter_Authenticator::$API_VERSION;
-        $consumer_key = $twitter_settings[Ixwp_Twitter_Authenticator::$CONSUMER_KEY];
-        $consumer_secret = $twitter_settings[Ixwp_Twitter_Authenticator::$CONSUMER_SECRET];
+        $api_url = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$API_URL];
+        $api_version = Postmatic_Social_Twitter_Authenticator::$API_VERSION;
+        $consumer_key = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY];
+        $consumer_secret = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET];
         $verify_credentials_url = $api_url . $api_version . '/account/verify_credentials.json';
 
         $oauth_request_params = array(
@@ -222,22 +222,22 @@ class Ixwp_Twitter_Authenticator extends Ixwp_Social_Network_Authenticator
         return array("id" => "twitter",
             "title" => '<i class="fa fa-twitter"></i> Twitter',
             "fields" => array(
-                Ixwp_Twitter_Authenticator::$ENABLED => array(
+                Postmatic_Social_Twitter_Authenticator::$ENABLED => array(
                     'title' => __('Status', 'postmatic-social'),
                     'type' => 'switch',
                     'default_value' => 'off'
                 ),
-                Ixwp_Twitter_Authenticator::$API_URL => array(
+                Postmatic_Social_Twitter_Authenticator::$API_URL => array(
                     'title' => __('API URL', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => 'https://api.twitter.com/'
                 ),
-                Ixwp_Twitter_Authenticator::$CONSUMER_KEY => array(
+                Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY => array(
                     'title' => __('Consumer Key (API Key)', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 ),
-                Ixwp_Twitter_Authenticator::$CONSUMER_SECRET => array(
+                Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET => array(
                     'title' => __('Consumer Secret (API Secret)', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''

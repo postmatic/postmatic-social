@@ -1,8 +1,8 @@
 <?php
 
-require_once('Ixwp_Social_Network_Authenticator.php');
+require_once('Postmatic_Social_Network_Authenticator.php');
 
-class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
+class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_Authenticator
 {
     public $network = "wordpress";
 
@@ -19,8 +19,8 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
     protected function process_token_request()
     {
         $settings = $this->get_settings();
-        $api_url = $settings[Ixwp_Wordpress_Authenticator::$API_URL];
-        $client_id = $settings[Ixwp_Wordpress_Authenticator::$CLIENT_ID];
+        $api_url = $settings[Postmatic_Social_Wordpress_Authenticator::$API_URL];
+        $client_id = $settings[Postmatic_Social_Wordpress_Authenticator::$CLIENT_ID];
 
         $query_string = $this->to_query_string(array(
             'client_id' => $client_id,
@@ -39,9 +39,9 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
             global $ixwp_sc_session;
             $post_id = intval($_REQUEST['post_id']);
             $settings = $this->get_settings();
-            $api_url = $settings[Ixwp_Wordpress_Authenticator::$API_URL];
-            $client_id = $settings[Ixwp_Wordpress_Authenticator::$CLIENT_ID];
-            $client_secret = $settings[Ixwp_Wordpress_Authenticator::$CLIENT_SECRET];
+            $api_url = $settings[Postmatic_Social_Wordpress_Authenticator::$API_URL];
+            $client_id = $settings[Postmatic_Social_Wordpress_Authenticator::$CLIENT_ID];
+            $client_secret = $settings[Postmatic_Social_Wordpress_Authenticator::$CLIENT_SECRET];
             $request_token_url = $api_url . 'oauth2/token';
 
             $query_string = $this->to_query_string(array(
@@ -79,7 +79,7 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
     protected function get_user_details($access_token)
     {
         $settings = $this->get_settings();
-        $api_url = $settings[Ixwp_Wordpress_Authenticator::$API_URL];
+        $api_url = $settings[Postmatic_Social_Wordpress_Authenticator::$API_URL];
         $user_details_url = $api_url . 'rest/v1/me/';
         $response = wp_remote_get($user_details_url,
             array('timeout' => 120,
@@ -111,22 +111,22 @@ class Ixwp_Wordpress_Authenticator extends Ixwp_Social_Network_Authenticator
         return array("id" => "wordpress",
             "title" => '<i class="fa fa-wordpress"></i> WordPress',
             "fields" => array(
-                Ixwp_Wordpress_Authenticator::$ENABLED => array(
+                Postmatic_Social_Wordpress_Authenticator::$ENABLED => array(
                     'title' => __('Status', 'postmatic-social'),
                     'type' => 'switch',
                     'default_value' => 'off'
                 ),
-                Ixwp_Wordpress_Authenticator::$API_URL => array(
+                Postmatic_Social_Wordpress_Authenticator::$API_URL => array(
                     'title' => __('API URL', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => 'https://public-api.wordpress.com/'
                 ),
-                Ixwp_Wordpress_Authenticator::$CLIENT_ID => array(
+                Postmatic_Social_Wordpress_Authenticator::$CLIENT_ID => array(
                     'title' => __('Client ID', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 ),
-                Ixwp_Wordpress_Authenticator::$CLIENT_SECRET => array(
+                Postmatic_Social_Wordpress_Authenticator::$CLIENT_SECRET => array(
                     'title' => __('Client Secret', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''

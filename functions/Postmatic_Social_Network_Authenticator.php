@@ -1,8 +1,8 @@
 <?php
 
-require_once('Ixwp_Social_Comments_Tab.php');
+require_once('Postmatic_Social_Comments_Tab.php');
 
-abstract class Ixwp_Social_Network_Authenticator extends Ixwp_Social_Comments_Tab
+abstract class Postmatic_Social_Network_Authenticator extends Postmatic_Social_Comments_Tab
 {
 
     public function __construct()

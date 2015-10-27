@@ -1,6 +1,6 @@
 <?php
 
-abstract class Ixwp_Social_Comments_Tab
+abstract class Postmatic_Social_Comments_Tab
 {
     protected $admin_ajax_url;
 

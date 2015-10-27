@@ -1,18 +1,15 @@
 <?php
 
-require_once('Ixwp_Social_Network_Authenticator.php');
+require_once('Postmatic_Social_Network_Authenticator.php');
 
-class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
+class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_Authenticator
 {
-    public $network = "gplus";
+    public $network = "facebook";
 
     private static $ENABLED = 'ixwp_enabled';
+    private static $API_URL = 'ixwp_api_url';
     private static $CLIENT_ID = 'ixwp_client_id';
     private static $CLIENT_SECRET = 'ixwp_client_secret';
-
-    private static $REQUEST_URL = 'https://accounts.google.com/o/oauth2/auth';
-    private static $ACCESS_URL = 'https://www.googleapis.com/oauth2/v3/token';
-    private static $API_URL = 'https://www.googleapis.com/plus/v1/people/me';
 
     public function __construct()
     {
@@ -21,38 +18,53 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
 
     function get_default_settings()
     {
-        return array("id" => "gplus",
-            "title" => '<i class="fa fa-google-plus"></i> Google+',
+        return array("id" => "facebook",
+            "title" => '<i class="fa fa-facebook"></i> Facebook',
             "fields" => array(
-                Ixwp_Gplus_Authenticator::$ENABLED => array(
+                Postmatic_Social_Facebook_Authenticator::$ENABLED => array(
                     'title' => __('Status', 'postmatic-social'),
                     'type' => 'switch',
-                    'default_value' => 'off'
+                    'default_value' => 'off',
+                    'possible_values' => array(
+                        'on' => __('Enabled', 'postmatic-social'),
+                        'off' => __('Disabled', 'postmatic-social')
+                    )
                 ),
-                Ixwp_Gplus_Authenticator::$CLIENT_ID => array(
+                Postmatic_Social_Facebook_Authenticator::$API_URL => array(
+                    'title' => __('API URL', 'postmatic-social'),
+                    'type' => 'text',
+                    'default_value' => 'https://www.facebook.com/dialog/oauth'
+                ),
+                Postmatic_Social_Facebook_Authenticator::$CLIENT_ID => array(
                     'title' => __('Client ID', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
                 ),
-                Ixwp_Gplus_Authenticator::$CLIENT_SECRET => array(
+                Postmatic_Social_Facebook_Authenticator::$CLIENT_SECRET => array(
                     'title' => __('Client Secret', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
-                ),
+                )
             )
         );
     }
 
     function render_settings_admin_page()
     {
-        $default_settings = $this->get_default_settings();
+       $default_settings = $this->get_default_settings();
         $sc_id = $default_settings['id'];
         $settings = $this->get_settings();
         echo '<table class="form-table"><tbody>';
 
+        // echo '<tr>';
+        // echo '<th><label>' . __('Need help?', 'postmatic-social') . '</label></th>';
+        // echo '<td><a href="http://docs.gopostmatic.com/article/185-setup">How to enable wordpress.com authentication.</a></td>';
+        // echo '</tr>';
+
+        $oauth_callback = $this->get_oauth_callback();
         echo '<tr>';
-        echo '<th><label>' . __('Documentation', 'postmatic-social') . '</label></th>';
-        echo '<td><a href="' . POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config" target="_blank">' . POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config</a></td>';
+        echo '<th><label>' . __('Redirection URL', 'postmatic-social') . '</label></th>';
+        echo '<td><strong>' . htmlentities($oauth_callback) . '</strong></td>';
         echo '</tr>';
 
         foreach ($default_settings["fields"] as $field_id => $field_meta) {
@@ -66,41 +78,38 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
     protected function process_token_request()
     {
         $settings = $this->get_settings();
-        $url = Ixwp_Gplus_Authenticator::$REQUEST_URL;
-        $client_id = $settings[Ixwp_Gplus_Authenticator::$CLIENT_ID];
+        $api_url = $settings[Postmatic_Social_Facebook_Authenticator::$API_URL];
+        $client_id = $settings[Postmatic_Social_Facebook_Authenticator::$CLIENT_ID];
+
         $query_string = $this->to_query_string(array(
             'response_type' => 'code',
             'client_id' => $client_id,
             'redirect_uri' => $this->get_oauth_callback(),
-            'scope' => 'email',
+            'scope' => 'user_about_me,email',
         ));
-        $authorize_url = $url . '?' . $query_string;
+        $authorize_url = $api_url . '?' . $query_string;
         header('Location: ' . $authorize_url);
     }
 
     protected function process_access_token_request()
     {
         if (array_key_exists('code', $_REQUEST) && array_key_exists('post_id', $_REQUEST)) {
-
             global $ixwp_sc_post_protected;
             global $ixwp_sc_session;
-
             $post_id = intval($_REQUEST['post_id']);
             $settings = $this->get_settings();
-            $url = Ixwp_Gplus_Authenticator::$ACCESS_URL;
-            $client_id = $settings[Ixwp_Gplus_Authenticator::$CLIENT_ID];
-            $client_secret = $settings[Ixwp_Gplus_Authenticator::$CLIENT_SECRET];
-            $query_string = $this->to_query_string(array(
-                'code' => $_REQUEST['code'] ,
-                'client_id' => $client_id,
-                'client_secret' => $client_secret,
-                'redirect_uri' => $this->get_oauth_callback(),
-                'grant_type' => 'authorization_code'
-            ));
-            $response = wp_remote_post($url, array(
-                'body' => $query_string,
-                'sslverify' => false));
+            $client_id = $settings[Postmatic_Social_Facebook_Authenticator::$CLIENT_ID];
+            $client_secret = $settings[Postmatic_Social_Facebook_Authenticator::$CLIENT_SECRET];
+            $request_token_url = "https://graph.facebook.com/v2.4/oauth/access_token";
 
+            $query_string = $this->to_query_string(array(
+                'client_id' => $client_id,
+                'redirect_uri' => $this->get_oauth_callback(),
+                'client_secret' => $client_secret,
+                'code' => $_REQUEST['code'] ,
+                // 'grant_type' => 'authorization_code'
+            ));
+            $response = wp_remote_get($request_token_url . "?" . $query_string);
             if (is_wp_error($response)) {
                 $error_string = $response->get_error_message();
                 throw new Exception($error_string);
@@ -123,38 +132,27 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
         }
     }
 
+
     protected function get_user_details($access_token)
     {
-        // global $ixwp_sc_session;
         $settings = $this->get_settings();
-        $url = Ixwp_Gplus_Authenticator::$API_URL;
-        $response = wp_remote_get($url,
+        $user_details_url = "https://graph.facebook.com/me?fields=id,name,email,picture{url}" ;
+        $response = wp_remote_get($user_details_url,
             array('timeout' => 120,
                 'headers' => array('Authorization' => 'Bearer ' . $access_token),
                 'sslverify' => false));
-        
         if (is_wp_error($response)) {
             $error_string = $response->get_error_message();
             throw new Exception($error_string);
         } else {
             $response_body = json_decode($response['body'], true);
-            if ($response_body && is_array($response_body) && array_key_exists('displayName', $response_body)) {
-                $email = '';
-                if (array_key_exists('emails', $response_body) &&
-                    is_array($response_body['emails']) &&
-                    count($response_body['emails']) > 0
-                ) {
-                    $emails = $response_body['emails'];
-                    $email = $emails[0]['value'];
-                }
+            if ($response_body && is_array($response_body)) {
                 return array(
-                    // By FK include network
-                    'network' => 'Google Plus',
-                    'display_name' => $response_body['displayName'],
-                    'username' => $response_body['name']['givenName'],
-                    'email' => $email,
-                    'avatar_url' => $response_body['image']['url'],
-                    'profile_url' => $response_body['url']
+                    'network' => "Facebook",
+                    'display_name' => $response_body['name'],
+                    'username' => $response_body['id'],
+                    'email' => $response_body['email'],
+                    'avatar_url' => $response_body['picture']['url'],
                 );
             } else {
                 throw new Exception(__('Could not get the user details', 'postmatic-social'));
@@ -164,14 +162,9 @@ class Ixwp_Gplus_Authenticator extends Ixwp_Social_Network_Authenticator
 
     function get_auth_button($settings = array())
     {
-        $oauth_callback = $this->get_oauth_callback();
-        $website_url = admin_url('admin-ajax.php') . '?action=ixwp-gplus-request-token';
-        $btn = '<div id="postmatic-sc-googleplus-button" data-sc-id="gplus" class="postmatic-sc-button postmatic-sc-googleplus-button" data-post-id="' . get_the_ID() . '" data-access-token-request-url="' . esc_attr($oauth_callback) . '" href="'.$website_url.'"><i class="fa fa-google-plus"></i></div>';
+        $default_settings = $this->get_default_settings();
+        $website_url = admin_url('admin-ajax.php') . '?action=postmatic-facebook-request-token';
+        $btn = '<a class="postmatic-sc-button postmatic-sc-facebook-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="Facebook" href="' . $website_url . '"><i class="fa fa-facebook"></i></a>';
         return $btn;
     }
-    /**
-     * 1 create app
-     * 2 configure Consent screen
-     * 3 enable Google+ API
-     */
 }

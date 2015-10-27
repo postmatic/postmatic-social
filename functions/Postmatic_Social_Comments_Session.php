@@ -1,8 +1,8 @@
 <?php
 
-class Ixwp_Social_Comments_Session implements ArrayAccess
+class Postmatic_Social_Comments_Session implements ArrayAccess
 {
-    private static $COOKIE_SESSION_NAME = "_ixwp_sc_session";
+    private static $COOKIE_SESSION_NAME = "_postmatic_social_sc_session";
     private $data = array();
     private $session_id;
     private $session_expire;
@@ -18,14 +18,14 @@ class Ixwp_Social_Comments_Session implements ArrayAccess
 
     private function __construct()
     {
-        if (isset($_COOKIE[Ixwp_Social_Comments_Session::$COOKIE_SESSION_NAME])) {
-            $this->session_id = stripslashes($_COOKIE[Ixwp_Social_Comments_Session::$COOKIE_SESSION_NAME]);
+        if (isset($_COOKIE[Postmatic_Social_Comments_Session::$COOKIE_SESSION_NAME])) {
+            $this->session_id = stripslashes($_COOKIE[Postmatic_Social_Comments_Session::$COOKIE_SESSION_NAME]);
         } else {
             $this->session_id = $this->generate_session_id();
         }
         $this->session_expire = intval(24 * 60);
         $this->load();
-        setcookie(Ixwp_Social_Comments_Session::$COOKIE_SESSION_NAME, $this->session_id, time() + $this->session_expire, COOKIEPATH, COOKIE_DOMAIN);
+        setcookie(Postmatic_Social_Comments_Session::$COOKIE_SESSION_NAME, $this->session_id, time() + $this->session_expire, COOKIEPATH, COOKIE_DOMAIN);
         add_action('shutdown', array($this, 'save'));
     }
 
@@ -67,7 +67,7 @@ class Ixwp_Social_Comments_Session implements ArrayAccess
             delete_transient($old_transient_id);
         }
         $this->session_id = $this->generate_session_id();
-        setcookie(Ixwp_Social_Comments_Session::$COOKIE_SESSION_NAME, $this->session_id, time() + $this->session_expire, COOKIEPATH, COOKIE_DOMAIN);
+        setcookie(Postmatic_Social_Comments_Session::$COOKIE_SESSION_NAME, $this->session_id, time() + $this->session_expire, COOKIEPATH, COOKIE_DOMAIN);
     }
 
     private function get_transient_id()
