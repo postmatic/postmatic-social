@@ -91,11 +91,11 @@ class Postmatic_Social_Comments_Session implements ArrayAccess
 
     public function offsetUnset( $offset )
     {
-        unset($this->data[ $offset ] );
+        unset( $this->data[ $offset ] );
     }
 
     public function offsetGet( $offset )
     {
-        return isset($this->data[ $offset ]) ? $this->data[ $offset ] : null;
+        return isset( $this->data[ $offset ] ) ? $this->data[ $offset ] : null;
     }
 }
