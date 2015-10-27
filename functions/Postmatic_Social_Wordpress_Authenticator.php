@@ -109,7 +109,7 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
     function get_default_settings()
     {
         return array("id" => "wordpress",
-            "title" => '<i class="fa fa-wordpress"></i> WordPress',
+            "title" => '<i class="fa fa-wordpress"></i> ' . esc_html__( 'WordPress', 'postmatic-social' ),
             "fields" => array(
                 Postmatic_Social_Wordpress_Authenticator::$ENABLED => array(
                     'title' => __('Status', 'postmatic-social'),
