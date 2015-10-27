@@ -145,11 +145,9 @@ class Postmatic_Social_Comments_Plugin {
 
 	function add_social_options( $field ) {
 
-		// global $pms_session;
-		// var_dump($pms_session["debug"]);
+		global $pms_session;
 
 		global $pms_post_protected;
-
 		// If not comments Enabled and logged in leave alone
 		if ( !$pms_post_protected ) {
 			return $field;
@@ -188,7 +186,7 @@ class Postmatic_Social_Comments_Plugin {
 			$content .= '<div class="postmatic-social-comment-buttons">';
 			$tabs = $this->tabs;
 			// Get Settings
-			$settings = get_option( "pms_comments" );
+			$settings = get_option( "postmatic-social" );
 			foreach ( $tabs as $id => $instance ) {
 				if (
 					$instance instanceof Postmatic_Social_Network_Authenticator and
