@@ -117,15 +117,14 @@ class Postmatic_Social {
 	*
 	*/
 	public function plugins_loaded() {
-		$GLOBALS['pms_post_protected'] = false;
-        $GLOBALS['pms_session'] = Postmatic_Social_Comments_Session::get_instance();
-        load_plugin_textdomain('postmatic-social', false, 'languages');
-        $GLOBALS['postmatic-social'] = new Postmatic_Social_Comments_Plugin(array("wordpress", "gplus", "twitter","facebook"));	
+		$GLOBALS[ 'pms_post_protected' ] = false;
+        $GLOBALS[ 'pms_session' ] = Postmatic_Social_Comments_Session::get_instance();
+        $GLOBALS[ 'postmatic-social' ] = new Postmatic_Social_Comments_Plugin( array( 'wordpress', 'gplus', 'twitter', 'facebook' ) );	
 	}
 }
-
-define('POSTMATIC_SOCIAL_SESSION_USER', 'user');
-define('POSTMATIC_SOCIAL_HELP_URL', 'http://docs.gopostmatic.com/article/185-setup');
+define( 'POSTMATIC_SOCIAL_SESSION_USER', 'user' );
+//todo - Update this link
+define( 'POSTMATIC_SOCIAL_HELP_URL', 'http://docs.gopostmatic.com/article/185-setup' );
 
 require_once( Postmatic_Social::get_plugin_dir( '/functions/Postmatic_Social_Comments_Session.php' ) );
 require_once( Postmatic_Social::get_plugin_dir( '/functions/Postmatic_Social_Comments_Plugin.php') );
