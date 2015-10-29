@@ -183,8 +183,8 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
             $verify_credentials_url_params[] = $key . '=' . rawurlencode( $value );
         }
 
-        $response = wp_remote_get( esc_url_raw( $verify_credentials_url . '?' . implode('&', $verify_credentials_url_params) ) ),
-            array('timeout' => 120,
+        $response = wp_remote_get( esc_url_raw( $verify_credentials_url . '?' . implode('&', $verify_credentials_url_params ) ) , 
+        array('timeout' => 120,
                 'headers' => $oauth_header,
                 'sslverify' => false));
         if ( is_wp_error( $response ) ) {

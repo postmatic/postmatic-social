@@ -52,7 +52,7 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
 
         echo '<tr>';
         echo '<th><label>' . esc_html__( 'Documentation', 'postmatic-social' ) . '</label></th>';
-        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ); . '</a></td>';
+        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '</a></td>';
         echo '</tr>';
 
         foreach ( $default_settings[ "fields" ] as $field_id => $field_meta ) {
