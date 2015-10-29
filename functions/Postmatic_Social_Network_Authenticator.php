@@ -14,10 +14,10 @@ abstract class Postmatic_Social_Network_Authenticator extends Postmatic_Social_C
     {
         $sn_id = $this->get_id();
         if (!is_user_logged_in()) {
-            add_action('wp_ajax_nopriv_pms-' . $sn_id . '-request-token', array($this, 'request_token'));
-            add_action('wp_ajax_nopriv_pms-' . $sn_id . '-access-token', array($this, 'access_token'));
-            add_action('wp_ajax_nopriv_pms-logout', array($this, 'logout'));
-            add_action('wp_footer', array($this, 'custom_footer'));
+            add_action( 'wp_ajax_nopriv_pms-' . $sn_id . '-request-token', array( $this, 'request_token' ) );
+            add_action( 'wp_ajax_nopriv_pms-' . $sn_id . '-access-token', array( $this, 'access_token' ) );
+            add_action( 'wp_ajax_nopriv_pms-logout', array($this, 'logout' ) );
+            add_action( 'wp_footer', array($this, 'custom_footer' ) );
         }
     }
 
@@ -27,7 +27,7 @@ abstract class Postmatic_Social_Network_Authenticator extends Postmatic_Social_C
         if ($referrer) {
             global $pms_session;
             $pms_session->invalidate();
-            header('Location: ' . $referrer);
+            header('Location: ' . esc_url_raw( $referrer ) );
         }
     }
 
@@ -41,8 +41,8 @@ abstract class Postmatic_Social_Network_Authenticator extends Postmatic_Social_C
     {
         try {
             $this->process_token_request();
-        } catch (Exception $ex) {
-            die($ex->getMessage());
+        } catch ( Exception $ex ) {
+            die( $ex->getMessage() );
         }
     }
 
@@ -50,8 +50,8 @@ abstract class Postmatic_Social_Network_Authenticator extends Postmatic_Social_C
     {
         try {
             $this->process_access_token_request();
-        } catch (Exception $ex) {
-            die($ex->getMessage());
+        } catch ( Exception $ex ) {
+            die( $ex->getMessage() );
         }
     }
 
@@ -66,29 +66,29 @@ abstract class Postmatic_Social_Network_Authenticator extends Postmatic_Social_C
 
     }
 
-    protected function starts_with($haystack, $needle)
+    protected function starts_with( $haystack, $needle )
     {
-        $length = strlen($needle);
-        return (substr($haystack, 0, $length) === $needle);
+        $length = strlen( $needle );
+        return ( substr( $haystack, 0, $length ) === $needle );
     }
 
-    protected function ends_with($haystack, $needle)
+    protected function ends_with( $haystack, $needle )
     {
-        $length = strlen($needle);
+        $length = strlen( $needle );
         if ($length == 0) {
             return true;
         }
 
-        return (substr($haystack, -$length) === $needle);
+        return ( substr( $haystack, -$length ) === $needle );
     }
 
-    protected function to_query_string($params)
+    protected function to_query_string( $params )
     {
         $url_params = array();
-        foreach ($params as $key => $value) {
+        foreach ( $params as $key => $value ) {
             $url_params[] = $key . '=' . rawurlencode($value);
         }
-        return implode('&', $url_params);
+        return implode( '&', $url_params );
     }
 
 } 
