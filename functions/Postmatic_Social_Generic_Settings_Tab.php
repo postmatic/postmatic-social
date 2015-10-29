@@ -15,8 +15,8 @@ class Postmatic_Social_Generic_Settings_Tab extends Postmatic_Social_Comments_Ta
 
     function get_default_settings()
     {
-        return array("id" => Postmatic_Social_Generic_Settings_Tab::$ID,
-            "title" => '<i class="fa fa-home"></i> ' . __("Introduction", 'postmatic-social'),
+        return array( "id" => Postmatic_Social_Generic_Settings_Tab::$ID,
+            "title" => '<i class="fa fa-home"></i> ' . esc_html__( "Introduction", 'postmatic-social' ),
             "fields" => array()
         );
     }
