@@ -163,7 +163,7 @@ class Postmatic_Social_Comments_Plugin {
 		if ( isset( $commenter ) ) {
 
 			if ( array_key_exists( 'post_id', $_REQUEST ) ) {
-				$post_id = $_REQUEST[ 'post_id'];
+				$post_id = $_REQUEST[ 'post_id' ];
 			} else {
 				$post_id = get_the_ID();
 			}
