@@ -13,8 +13,8 @@ class Postmatic_Social_Pinterest_Authenticator extends Postmatic_Social_Network_
 
     function get_default_settings()
     {
-        return array( "id" => "pinterest",
-            "title" => '<i class="fa fa-pinterest"></i> Pinterest',
+        return array("id" => "pinterest",
+            "title" => '<i class="fa fa-pinterest"></i> ', esc_html__( 'Pinterest', 'postmatic-social' ),
             "fields" => array(
                 Postmatic_Social_Pinterest_Authenticator::$ENABLED => array(
                     'title' => __( 'Status', 'postmatic-social' ),

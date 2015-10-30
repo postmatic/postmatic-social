@@ -17,12 +17,12 @@ class Postmatic_Social_Comments_Plugin {
 		$this->tabs = array();
 		$generic_settings_tab = new Postmatic_Social_Generic_Settings_Tab();
 		// FK Hide general settings page
-		$this->tabs[$generic_settings_tab->get_id()] = $generic_settings_tab;
+		$this->tabs[ $generic_settings_tab->get_id() ] = $generic_settings_tab;
 		foreach ( $supported_sn as $sn_id ) {
 			$class_name = 'Postmatic_Social_' . ucfirst( $sn_id ) . '_Authenticator';
 			include_once( $class_name . '.php' );
 			if ( class_exists( $class_name ) ) {
-				$this->tabs[$sn_id] = new $class_name();
+				$this->tabs[ $sn_id ] = new $class_name();
 			}
 		}
 	}
@@ -62,7 +62,7 @@ class Postmatic_Social_Comments_Plugin {
 		$tabs = $this->tabs;
 		echo '<div class="wrap">';
 		// FK add postmatic image
-		echo '<div style="position: absolute;right: 25px; top: 25px;"><a href="https://gopostmatic.com" target="_blank"><img src="http://gopostmatic.com/wp-content/uploads/2015/03/logo.png" width="125"></a></div>';
+		printf( '<div style="position: absolute;right: 25px; top: 25px;"><a href="https://gopostmatic.com" target="_blank"><img src="%s" width="125"></a></div>', esc_url( Postmatic_Social::get_plugin_url( '/images/postmatic-logo.png' ) ) );
 		echo '<div class="icon32" id="icon-themes"></div>';
 		echo '<h2 style="margin: 25px 0;">' . __( 'Postmatic Social Commenting', 'postmatic-social' ) . '</h2>';
 		echo '<div class="updated below-h2 pms-flexslider-list-message" style="display: none;"><p></p></div>';
@@ -79,14 +79,19 @@ class Postmatic_Social_Comments_Plugin {
 		echo '<h2 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab_id => $tab_instance ) {
 			$tab_title = $tab_instance->get_title();
-			echo '<a class="nav-tab' . ( $selected_tab_id == $tab_id ? ' nav-tab-active' : '' ) . '" href="' . admin_url( "options-general.php?page=$page_id&amp;tab=$tab_id" ) . '">' . $tab_title . '</a>';
+			$selected_tab = '';
+			if( $selected_tab_id == $tab_id ) {
+    			$selected_tab = 'nav-tab-active';
+            }
+            $tab_url = add_query_arg( array( 'page' => $page_id, 'tab' => $tab_id ), admin_url( 'options-general.php' ) );
+			printf( '<a class="nav-tab %s" href="%s">%s</a>', $selected_tab, esc_url( $tab_url ), $tab_title );
 		}
 		echo '</h2>';
 		echo '<div style="margin-left: 10px; margin-top: 10px;">';
-		echo '<form id="theme-settings-form" method="post" action="' . admin_url( "admin-ajax.php?action=$form_action" ) . '">';
-		echo '<input type="hidden" name="tab" value="' . $selected_tab_id . '">';
+		echo '<form id="theme-settings-form" method="post" action="' . esc_url( admin_url( "admin-ajax.php?action=$form_action" ) ) . '">';
+		echo '<input type="hidden" name="tab" value="' . esc_attr( $selected_tab_id ) . '">';
 		wp_nonce_field( $form_action, $page_id );
-		$tabs[$selected_tab_id]->render_settings_admin_page();
+		$tabs[ $selected_tab_id ]->render_settings_admin_page();
 		echo '<p><input type="submit" class="button-primary" value="' . __( 'Save Settings', 'postmatic-social' ) . '"></p>';
 		echo '</form>';
 		echo '</div>';
@@ -158,7 +163,7 @@ class Postmatic_Social_Comments_Plugin {
 		if ( isset( $commenter ) ) {
 
 			if ( array_key_exists( 'post_id', $_REQUEST ) ) {
-				$post_id = $_REQUEST['post_id'];
+				$post_id = $_REQUEST[ 'post_id '];
 			} else {
 				$post_id = get_the_ID();
 			}
@@ -171,10 +176,10 @@ class Postmatic_Social_Comments_Plugin {
 			$content .= '<p class="postmatic-social-comment-logout">';
 			$content .= sprintf(
 				__( 'You are authenticated as %s via %s.', 'postmatic-social' ),
-				$commenter['display_name'],
-				$commenter['network']
+				$commenter[ 'display_name' ],
+				$commenter[ 'network' ]
 			);
-			$content .= '<a href="' . $logout_url . '">' . __( 'Disconnect', 'postmatic-social' ) . '</a>';
+			$content .= '<a href="' . esc_url( $logout_url ) . '">' . __( 'Disconnect', 'postmatic-social' ) . '</a>';
 			$content .= '</p>';
 			$content .= '</div>';
 
@@ -188,10 +193,7 @@ class Postmatic_Social_Comments_Plugin {
 			// Get Settings
 			$settings = get_option( "postmatic-social" );
 			foreach ( $tabs as $id => $instance ) {
-				if (
-					$instance instanceof Postmatic_Social_Network_Authenticator and
-					$settings[$instance->network]['pms_enabled'] == "on"
-				) {
+				if ( $instance instanceof Postmatic_Social_Network_Authenticator && $settings[$instance->network]['pms_enabled'] == "on" ) {
 					$content .= $instance->get_auth_button();
 				}
 			}

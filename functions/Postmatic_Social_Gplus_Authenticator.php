@@ -21,8 +21,8 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
 
     function get_default_settings()
     {
-        return array( "id" => "gplus",
-            "title" => '<i class="fa fa-google-plus"></i> Google+',
+        return array("id" => "gplus",
+            "title" => '<i class="fa fa-google-plus"></i> ' . esc_html__( 'Google+', 'postmatic-social' ),
             "fields" => array(
                 Postmatic_Social_Gplus_Authenticator::$ENABLED => array(
                     'title' => __( 'Status', 'postmatic-social' ),

@@ -18,8 +18,8 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
 
     function get_default_settings()
     {
-        return array( "id" => "facebook",
-            "title" => '<i class="fa fa-facebook"></i> Facebook',
+        return array("id" => "facebook",
+            "title" => '<i class="fa fa-facebook"></i> ' . esc_html__( 'Facebook', 'postmatic-social' ),
             "fields" => array(
                 Postmatic_Social_Facebook_Authenticator::$ENABLED => array(
                     'title' => __( 'Status', 'postmatic-social' ),

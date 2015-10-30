@@ -220,8 +220,8 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
 
     function get_default_settings()
     {
-        return array( "id" => "twitter",
-            "title" => '<i class="fa fa-twitter"></i> Twitter',
+        return array("id" => "twitter",
+            "title" => '<i class="fa fa-twitter"></i> ' . esc_html__( 'Twitter', 'postmatic-social' ),
             "fields" => array(
                 Postmatic_Social_Twitter_Authenticator::$ENABLED => array(
                     'title' => __( 'Status', 'postmatic-social' ),
