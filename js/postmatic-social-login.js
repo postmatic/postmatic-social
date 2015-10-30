@@ -75,16 +75,3 @@ jQuery(document).ready(function ($) {
     });
 
 });
-
-function init_helpscout_beacon() {
-		HS.beacon.config({
-				modal: false,
-				topArticles: true,
-				color: '#DE4F0F',
-				icon: 'question',
-				attachment: true,
-				poweredBy: false
-	});
-}
-
-
