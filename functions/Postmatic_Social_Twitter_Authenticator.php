@@ -52,6 +52,7 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => time(),
             'oauth_version' => '1.0');
+            
 
         $oauth_signature_data = $this->build_signature_data( $request_token_url, 'POST', $oauth_request_params );
         $oauth_signature_key = rawurlencode( $consumer_secret ) . '&';
@@ -62,7 +63,7 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
             'Authorization' => $this->build_authorization_header( $oauth_request_params ),
             'Expect' => ''
         );
-        $response = wp_remote_post( esc_url_raw( $request_token_url ),
+        $response = wp_remote_post( $request_token_url,
             array('timeout' => 120,
                 'headers' => $oauth_request_header,
                 'sslverify' => false ) );
