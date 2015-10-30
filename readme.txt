@@ -1,4 +1,4 @@
-=== Postmatic Social ===
+=== Postmatic Social Commenting ===
 Contributors: Postmatic
 Tags: comments, authentication, social networks, wordpress
 Requires at least: 3.0

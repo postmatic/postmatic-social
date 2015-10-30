@@ -28,7 +28,7 @@ class Postmatic_Social_Comments_Plugin {
 	}
 
 	function get_title() {
-		return __( 'Postmatic Social', 'postmatic-social' );
+		return __( 'Postmatic Social Commenting', 'postmatic-social' );
 	}
 
 	function get_slug() {

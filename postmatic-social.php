@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Postmatic Social
+Plugin Name: Postmatic Social Commenting
 Plugin URI: https://wordpress.org/plugins/postmatic-social/
 Description: This plugin allows you to add authentication using social media networks (Twitter, WordPress, Google+, etc.) for the users who want to comment on your blog. To get started: 1) Click the "Activate" link at the left of this description, 2) Click the "Social Login" link under the Comments left menu.
 Author: Postmatic
