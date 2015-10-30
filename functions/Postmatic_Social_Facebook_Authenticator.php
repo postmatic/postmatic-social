@@ -21,17 +21,8 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
         return array("id" => "facebook",
             "title" => '<i class="fa fa-facebook"></i> ' . esc_html__( 'Facebook', 'postmatic-social' ),
             "fields" => array(
-                Postmatic_Social_Facebook_Authenticator::$ENABLED => array(
-                    'title' => __( 'Status', 'postmatic-social' ),
-                    'type' => 'switch',
-                    'default_value' => 'off',
-                    'possible_values' => array(
-                        'on' => __( 'Enabled', 'postmatic-social' ),
-                        'off' => __( 'Disabled', 'postmatic-social' )
-                    )
-                ),
                 Postmatic_Social_Facebook_Authenticator::$API_URL => array(
-                    'title' => __( 'API URL', 'postmatic-social' ),
+                    'title' => __( 'API URL (you probably will not need to change this)', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => 'https://www.facebook.com/dialog/oauth'
                 ),
@@ -44,22 +35,32 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
                     'title' => __( 'Client Secret', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => ''
+                ),
+               Postmatic_Social_Facebook_Authenticator::$ENABLED => array(
+                    'title' => __( 'Status', 'postmatic-social' ),
+                    'type' => 'switch',
+                    'default_value' => 'off',
+                    'possible_values' => array(
+                        'on' => __( 'Enabled', 'postmatic-social' ),
+                        'off' => __( 'Disabled', 'postmatic-social' )
+                    )
                 )
             )
         );
     }
 
     function render_settings_admin_page()
+     
     {
        $default_settings = $this->get_default_settings();
         $sc_id = $default_settings[ 'id' ];
         $settings = $this->get_settings();
         echo '<table class="form-table"><tbody>';
 
-        // echo '<tr>';
-        // echo '<th><label>' . __('Need help?', 'postmatic-social') . '</label></th>';
-        // echo '<td><a href="http://docs.gopostmatic.com/article/185-setup">How to enable wordpress.com authentication.</a></td>';
-        // echo '</tr>';
+        echo '<tr>';
+        echo '<th><label>' . esc_html__('Need help?', 'postmatic-social') . '</label></th>';
+        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">Videos and walkthroughs for configuring your Facebook app are available here'. '</a> or use the help icon below by searching for <em>connect Facebook</em>.</td>';
+        echo '</tr>';
 
         $oauth_callback = $this->get_oauth_callback();
         echo '<tr>';

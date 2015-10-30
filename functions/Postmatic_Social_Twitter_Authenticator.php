@@ -223,13 +223,8 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
         return array("id" => "twitter",
             "title" => '<i class="fa fa-twitter"></i> ' . esc_html__( 'Twitter', 'postmatic-social' ),
             "fields" => array(
-                Postmatic_Social_Twitter_Authenticator::$ENABLED => array(
-                    'title' => __( 'Status', 'postmatic-social' ),
-                    'type' => 'switch',
-                    'default_value' => 'off'
-                ),
                 Postmatic_Social_Twitter_Authenticator::$API_URL => array(
-                    'title' => __( 'API URL', 'postmatic-social' ),
+                    'title' => __( 'API URL (you probably will not need to change this)', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => 'https://api.twitter.com/'
                 ),
@@ -243,6 +238,11 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
                     'type' => 'text',
                     'default_value' => ''
                 ),
+                Postmatic_Social_Twitter_Authenticator::$ENABLED => array(
+                    'title' => __( 'Status', 'postmatic-social' ),
+                    'type' => 'switch',
+                    'default_value' => 'off'
+                ),
             )
         );
     }
@@ -255,8 +255,8 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
         echo '<table class="form-table"><tbody>';
 
         echo '<tr>';
-        echo '<th><label>' . esc_html__('Documentation', 'postmatic-social') . '</label></th>';
-        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '"</a></td>';
+        echo '<th><label>' . esc_html__('Need help?', 'postmatic-social') . '</label></th>';
+        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">Videos and walkthroughs for configuring your Twitter app are available here'. '</a> or use the help icon below by searching for <em>connect twitter</em>.</td>';
         echo '</tr>';
 
         foreach ( $default_settings[ "fields" ] as $field_id => $field_meta ) {

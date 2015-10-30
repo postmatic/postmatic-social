@@ -24,11 +24,6 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
         return array("id" => "gplus",
             "title" => '<i class="fa fa-google-plus"></i> ' . esc_html__( 'Google+', 'postmatic-social' ),
             "fields" => array(
-                Postmatic_Social_Gplus_Authenticator::$ENABLED => array(
-                    'title' => __( 'Status', 'postmatic-social' ),
-                    'type' => 'switch',
-                    'default_value' => 'off'
-                ),
                 Postmatic_Social_Gplus_Authenticator::$CLIENT_ID => array(
                     'title' => __( 'Client ID', 'postmatic-social' ),
                     'type' => 'text',
@@ -38,6 +33,11 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
                     'title' => __( 'Client Secret', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => ''
+                ),
+                Postmatic_Social_Gplus_Authenticator::$ENABLED => array(
+                    'title' => __( 'Status', 'postmatic-social' ),
+                    'type' => 'switch',
+                    'default_value' => 'off'
                 ),
             )
         );
@@ -49,10 +49,9 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
         $sc_id = $default_settings[ 'id' ];
         $settings = $this->get_settings();
         echo '<table class="form-table"><tbody>';
-
         echo '<tr>';
-        echo '<th><label>' . esc_html__( 'Documentation', 'postmatic-social' ) . '</label></th>';
-        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '</a></td>';
+        echo '<th><label>' . esc_html__('Need help?', 'postmatic-social') . '</label></th>';
+        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">Videos and walkthroughs for configuring your Google app are available here'. '</a> or use the help icon below by searching for <em>connect Google</em>.</td>';
         echo '</tr>';
 
         foreach ( $default_settings[ "fields" ] as $field_id => $field_meta ) {
