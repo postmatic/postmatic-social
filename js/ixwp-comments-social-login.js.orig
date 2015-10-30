@@ -15,13 +15,9 @@
  http://www.ixtendo.com
  */
 function ixwpscLoadCommentForm($, accessTokenRequestUrl) {
-<<<<<<< HEAD
-    var container = $('#respond');
-=======
     var container = $('#postmatic-social-comment-wrapper');
     container.find('.postmatic-social-comment-buttons').hide();
     container.find('.postmatic-social-comment-wait').show();
->>>>>>> origin/master
     $.get(accessTokenRequestUrl, function (data) {
         container.replaceWith($(data));
     });
@@ -36,6 +32,17 @@ function ixwpscGooglePlusSigninCallback(authResult) {
         accessTokenRequestUrl = accessTokenRequestUrl + '&access_token=' + authResult.access_token + '&post_id=' + postId;
         ixwpscLoadCommentForm($, accessTokenRequestUrl);
     }
+}
+
+function init_helpscout_beacon() {
+		HS.beacon.config({
+				modal: false,
+				topArticles: true,
+				color: '#DE4F0F',
+				icon: 'question',
+				attachment: true,
+				poweredBy: false
+	});
 }
 
 jQuery(document).ready(function ($) {
