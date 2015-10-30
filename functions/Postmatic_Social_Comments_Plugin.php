@@ -193,7 +193,7 @@ class Postmatic_Social_Comments_Plugin {
 			// Get Settings
 			$settings = get_option( "postmatic-social" );
 			foreach ( $tabs as $id => $instance ) {
-				if ( $instance instanceof Postmatic_Social_Network_Authenticator && $settings[$instance->network]['pms_enabled'] == "on" ) {
+				if ( $instance instanceof Postmatic_Social_Network_Authenticator && isset( $settings[ $instance->network ][ 'pms_enabled' ] ) && $settings[ $instance->network ][ 'pms_enabled' ] == "on" ) {
 					$content .= $instance->get_auth_button();
 				}
 			}
