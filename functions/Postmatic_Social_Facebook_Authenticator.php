@@ -27,12 +27,12 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
                     'default_value' => 'https://www.facebook.com/dialog/oauth'
                 ),
                 Postmatic_Social_Facebook_Authenticator::$CLIENT_ID => array(
-                    'title' => __( 'Client ID', 'postmatic-social' ),
+                    'title' => __( 'App ID', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => ''
                 ),
                 Postmatic_Social_Facebook_Authenticator::$CLIENT_SECRET => array(
-                    'title' => __( 'Client Secret', 'postmatic-social' ),
+                    'title' => __( 'App Secret', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => ''
                 ),
