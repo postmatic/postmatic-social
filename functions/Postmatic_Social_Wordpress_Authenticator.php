@@ -111,13 +111,8 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
         return array("id" => "wordpress",
             "title" => '<i class="fa fa-wordpress"></i> ' . esc_html__( 'WordPress', 'postmatic-social' ),
             "fields" => array(
-                Postmatic_Social_Wordpress_Authenticator::$ENABLED => array(
-                    'title' => __('Status', 'postmatic-social'),
-                    'type' => 'switch',
-                    'default_value' => 'off'
-                ),
                 Postmatic_Social_Wordpress_Authenticator::$API_URL => array(
-                    'title' => __('API URL', 'postmatic-social'),
+                    'title' => __('API URL (you probably will not need to change this)', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => 'https://public-api.wordpress.com/'
                 ),
@@ -130,7 +125,12 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
                     'title' => __('Client Secret', 'postmatic-social'),
                     'type' => 'text',
                     'default_value' => ''
-                )
+                ),
+              Postmatic_Social_Wordpress_Authenticator::$ENABLED => array(
+                    'title' => __('Status', 'postmatic-social'),
+                    'type' => 'switch',
+                    'default_value' => 'off'
+                ),
             )
         );
     }
@@ -144,7 +144,7 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
 
         echo '<tr>';
         echo '<th><label>' . esc_html__('Need help?', 'postmatic-social') . '</label></th>';
-        echo '<td><a href="http://docs.gopostmatic.com/article/185-setup">' . esc_html__( 'How to enable wordpress.com authentication.', 'postmatic-social' ) . '</a></td>';
+        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">Videos and walkthroughs for configuring your WordPress app are available here'. '</a> or use the help icon below by searching for <em>connect WordPress</em>.</td>';
         echo '</tr>';
 
         $oauth_callback = $this->get_oauth_callback();
