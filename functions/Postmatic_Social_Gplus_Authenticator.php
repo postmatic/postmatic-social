@@ -25,17 +25,17 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
             "title" => '<i class="fa fa-google-plus"></i> ' . esc_html__( 'Google+', 'postmatic-social' ),
             "fields" => array(
                 Postmatic_Social_Gplus_Authenticator::$ENABLED => array(
-                    'title' => __('Status', 'postmatic-social'),
+                    'title' => __( 'Status', 'postmatic-social' ),
                     'type' => 'switch',
                     'default_value' => 'off'
                 ),
                 Postmatic_Social_Gplus_Authenticator::$CLIENT_ID => array(
-                    'title' => __('Client ID', 'postmatic-social'),
+                    'title' => __( 'Client ID', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => ''
                 ),
                 Postmatic_Social_Gplus_Authenticator::$CLIENT_SECRET => array(
-                    'title' => __('Client Secret', 'postmatic-social'),
+                    'title' => __( 'Client Secret', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => ''
                 ),
@@ -46,18 +46,18 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
     function render_settings_admin_page()
     {
         $default_settings = $this->get_default_settings();
-        $sc_id = $default_settings['id'];
+        $sc_id = $default_settings[ 'id' ];
         $settings = $this->get_settings();
         echo '<table class="form-table"><tbody>';
 
         echo '<tr>';
-        echo '<th><label>' . __('Documentation', 'postmatic-social') . '</label></th>';
-        echo '<td><a href="' . POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config" target="_blank">' . POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config</a></td>';
+        echo '<th><label>' . esc_html__( 'Documentation', 'postmatic-social' ) . '</label></th>';
+        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '</a></td>';
         echo '</tr>';
 
-        foreach ($default_settings["fields"] as $field_id => $field_meta) {
-            $field_value = $settings[$field_id];
-            $this->render_form_field($field_id, $field_value, $field_meta);
+        foreach ( $default_settings[ "fields" ] as $field_id => $field_meta ) {
+            $field_value = $settings[ $field_id ];
+            $this->render_form_field( $field_id, $field_value, $field_meta );
         }
 
         echo '</tbody></table>';
@@ -67,7 +67,7 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
     {
         $settings = $this->get_settings();
         $url = Postmatic_Social_Gplus_Authenticator::$REQUEST_URL;
-        $client_id = $settings[Postmatic_Social_Gplus_Authenticator::$CLIENT_ID];
+        $client_id = $settings[ Postmatic_Social_Gplus_Authenticator::$CLIENT_ID ];
         $query_string = $this->to_query_string(array(
             'response_type' => 'code',
             'client_id' => $client_id,
@@ -75,7 +75,7 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
             'scope' => 'email',
         ));
         $authorize_url = $url . '?' . $query_string;
-        header('Location: ' . $authorize_url);
+        header('Location: ' . esc_url_raw( $authorize_url ));
     }
 
     protected function process_access_token_request()
@@ -85,37 +85,37 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
             global $pms_post_protected;
             global $pms_session;
 
-            $post_id = intval($_REQUEST['post_id']);
+            $post_id = intval( $_REQUEST['post_id'] );
             $settings = $this->get_settings();
             $url = Postmatic_Social_Gplus_Authenticator::$ACCESS_URL;
-            $client_id = $settings[Postmatic_Social_Gplus_Authenticator::$CLIENT_ID];
-            $client_secret = $settings[Postmatic_Social_Gplus_Authenticator::$CLIENT_SECRET];
+            $client_id = $settings[ Postmatic_Social_Gplus_Authenticator::$CLIENT_ID ];
+            $client_secret = $settings[ Postmatic_Social_Gplus_Authenticator::$CLIENT_SECRET ];
             $query_string = $this->to_query_string(array(
-                'code' => $_REQUEST['code'] ,
+                'code' => $_REQUEST[ 'code' ] ,
                 'client_id' => $client_id,
                 'client_secret' => $client_secret,
                 'redirect_uri' => $this->get_oauth_callback(),
                 'grant_type' => 'authorization_code'
             ));
-            $response = wp_remote_post($url, array(
+            $response = wp_remote_post( esc_url_raw( $url ), array(
                 'body' => $query_string,
                 'sslverify' => false));
 
-            if (is_wp_error($response)) {
+            if ( is_wp_error( $response ) ) {
                 $error_string = $response->get_error_message();
-                throw new Exception($error_string);
+                throw new Exception( $error_string );
             } else {
-                $response_body = json_decode($response['body'], true);
-                if ($response_body && is_array($response_body) && array_key_exists('access_token', $response_body)
+                $response_body = json_decode( $response['body'], true );
+                if ( $response_body && is_array( $response_body ) && array_key_exists( 'access_token', $response_body )
                 ) {
-                    $access_token = $response_body['access_token'];
-                    $user_details = $this->get_user_details($access_token);
+                    $access_token = $response_body[ 'access_token' ];
+                    $user_details = $this->get_user_details( $access_token );
                     $pms_session['user'] = $user_details;
                     $pms_post_protected = true;
-                    comment_form(array(), $post_id);
+                    comment_form( array(), $post_id );
                     die();
                 } else {
-                    throw new Exception(__('Missing the access_token parameter', 'postmatic-social'));
+                    throw new Exception( __( 'Missing the access_token parameter', 'postmatic-social' ) );
                 }
             }
         } else {
@@ -128,36 +128,36 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
         // global $pms_session;
         $settings = $this->get_settings();
         $url = Postmatic_Social_Gplus_Authenticator::$API_URL;
-        $response = wp_remote_get($url,
+        $response = wp_remote_get( esc_url_raw( $url ),
             array('timeout' => 120,
-                'headers' => array('Authorization' => 'Bearer ' . $access_token),
-                'sslverify' => false));
+                'headers' => array( 'Authorization' => 'Bearer ' . $access_token ),
+                'sslverify' => false ) );
         
-        if (is_wp_error($response)) {
+        if ( is_wp_error( $response ) ) {
             $error_string = $response->get_error_message();
-            throw new Exception($error_string);
+            throw new Exception( $error_string );
         } else {
-            $response_body = json_decode($response['body'], true);
-            if ($response_body && is_array($response_body) && array_key_exists('displayName', $response_body)) {
+            $response_body = json_decode( $response[ 'body' ], true );
+            if ( $response_body && is_array( $response_body ) && array_key_exists( 'displayName', $response_body ) ) {
                 $email = '';
-                if (array_key_exists('emails', $response_body) &&
-                    is_array($response_body['emails']) &&
-                    count($response_body['emails']) > 0
+                if ( array_key_exists( 'emails', $response_body ) &&
+                    is_array( $response_body['emails'] ) &&
+                    count( $response_body[ 'emails' ] ) > 0
                 ) {
-                    $emails = $response_body['emails'];
-                    $email = $emails[0]['value'];
+                    $emails = $response_body[ 'emails' ];
+                    $email = $emails[ 0 ][ 'value' ];
                 }
                 return array(
                     // By FK include network
                     'network' => 'Google Plus',
-                    'display_name' => $response_body['displayName'],
-                    'username' => $response_body['name']['givenName'],
+                    'display_name' => $response_body[ 'displayName' ],
+                    'username' => $response_body[ 'name' ][ 'givenName' ],
                     'email' => $email,
-                    'avatar_url' => $response_body['image']['url'],
-                    'profile_url' => $response_body['url']
+                    'avatar_url' => $response_body[ 'image' ][ 'url' ],
+                    'profile_url' => $response_body[ 'url' ]
                 );
             } else {
-                throw new Exception(__('Could not get the user details', 'postmatic-social'));
+                throw new Exception( __( 'Could not get the user details', 'postmatic-social' ) );
             }
         }
     }
@@ -166,7 +166,7 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
     {
         $oauth_callback = $this->get_oauth_callback();
         $website_url = admin_url('admin-ajax.php') . '?action=pms-gplus-request-token';
-        $btn = '<div id="postmatic-sc-googleplus-button" data-sc-id="gplus" class="postmatic-sc-button postmatic-sc-googleplus-button" data-post-id="' . get_the_ID() . '" data-access-token-request-url="' . esc_attr($oauth_callback) . '" href="'.$website_url.'"><i class="fa fa-google-plus"></i></div>';
+        $btn = '<div id="postmatic-sc-googleplus-button" data-sc-id="gplus" class="postmatic-sc-button postmatic-sc-googleplus-button" data-post-id="' . esc_attr( get_the_ID() ) . '" data-access-token-request-url="' . esc_url_raw( $oauth_callback ) . '" href="'. esc_url_raw( $website_url ) .'"><i class="fa fa-google-plus"></i></div>';
         return $btn;
     }
     /**

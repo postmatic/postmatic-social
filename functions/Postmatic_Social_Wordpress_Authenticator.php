@@ -19,8 +19,8 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
     protected function process_token_request()
     {
         $settings = $this->get_settings();
-        $api_url = $settings[Postmatic_Social_Wordpress_Authenticator::$API_URL];
-        $client_id = $settings[Postmatic_Social_Wordpress_Authenticator::$CLIENT_ID];
+        $api_url = $settings[ Postmatic_Social_Wordpress_Authenticator::$API_URL ];
+        $client_id = $settings[ Postmatic_Social_Wordpress_Authenticator::$CLIENT_ID ];
 
         $query_string = $this->to_query_string(array(
             'client_id' => $client_id,
@@ -29,46 +29,46 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
             'scope' => 'auth',
         ));
         $authorize_url = $api_url . 'oauth2/authorize?' . $query_string;
-        header('Location: ' . $authorize_url);
+        header('Location: ' . esc_url_raw( $authorize_url ) );
     }
 
     protected function process_access_token_request()
     {
-        if (array_key_exists('code', $_REQUEST) && array_key_exists('post_id', $_REQUEST)) {
+        if (array_key_exists( 'code', $_REQUEST ) && array_key_exists( 'post_id', $_REQUEST ) ) {
             global $pms_post_protected;
             global $pms_session;
             $post_id = intval($_REQUEST['post_id']);
             $settings = $this->get_settings();
-            $api_url = $settings[Postmatic_Social_Wordpress_Authenticator::$API_URL];
-            $client_id = $settings[Postmatic_Social_Wordpress_Authenticator::$CLIENT_ID];
-            $client_secret = $settings[Postmatic_Social_Wordpress_Authenticator::$CLIENT_SECRET];
+            $api_url = $settings[ Postmatic_Social_Wordpress_Authenticator::$API_URL ];
+            $client_id = $settings[ Postmatic_Social_Wordpress_Authenticator::$CLIENT_ID ];
+            $client_secret = $settings[ Postmatic_Social_Wordpress_Authenticator::$CLIENT_SECRET ];
             $request_token_url = $api_url . 'oauth2/token';
 
             $query_string = $this->to_query_string(array(
                 'client_id' => $client_id,
                 'redirect_uri' => $this->get_oauth_callback(),
                 'client_secret' => $client_secret,
-                'code' => $_REQUEST['code'],
+                'code' => $_REQUEST[ 'code' ],
                 'grant_type' => 'authorization_code'
             ));
-            $response = wp_remote_post($request_token_url, array(
+            $response = wp_remote_post( esc_url_raw( $request_token_url ), array(
                 'body' => $query_string,
                 'sslverify' => false));
-            if (is_wp_error($response)) {
+            if ( is_wp_error( $response ) ) {
                 $error_string = $response->get_error_message();
-                throw new Exception($error_string);
+                throw new Exception( $error_string );
             } else {
-                $response_body = json_decode($response['body'], true);
-                if ($response_body && is_array($response_body) && array_key_exists('access_token', $response_body)
+                $response_body = json_decode( $response[ 'body' ], true );
+                if ( $response_body && is_array( $response_body ) && array_key_exists( 'access_token', $response_body )
                 ) {
-                    $access_token = $response_body['access_token'];
-                    $user_details = $this->get_user_details($access_token);
+                    $access_token = $response_body[ 'access_token' ];
+                    $user_details = $this->get_user_details( $access_token );
                     $pms_session['user'] = $user_details;
                     $pms_post_protected = true;
-                    comment_form(array(), $post_id);
+                    comment_form( array(), $post_id );
                     die();
                 } else {
-                    throw new Exception(__('Missing the access_token parameter', 'postmatic-social'));
+                    throw new Exception(__( 'Missing the access_token parameter', 'postmatic-social' ) );
                 }
             }
         } else {
@@ -79,28 +79,28 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
     protected function get_user_details($access_token)
     {
         $settings = $this->get_settings();
-        $api_url = $settings[Postmatic_Social_Wordpress_Authenticator::$API_URL];
+        $api_url = $settings[ Postmatic_Social_Wordpress_Authenticator::$API_URL ];
         $user_details_url = $api_url . 'rest/v1/me/';
-        $response = wp_remote_get($user_details_url,
+        $response = wp_remote_get( esc_url_raw( $user_details_url ),
             array('timeout' => 120,
                 'headers' => array('Authorization' => 'Bearer ' . $access_token),
-                'sslverify' => false));
-        if (is_wp_error($response)) {
+                'sslverify' => false ) );
+        if ( is_wp_error( $response ) ) {
             $error_string = $response->get_error_message();
-            throw new Exception($error_string);
+            throw new Exception( $error_string );
         } else {
-            $response_body = json_decode($response['body'], true);
-            if ($response_body && is_array($response_body)) {
+            $response_body = json_decode( $response[ 'body' ], true );
+            if ( $response_body && is_array( $response_body ) ) {
                 return array(
                     'network' => "WordPress",
-                    'display_name' => $response_body['display_name'],
-                    'username' => $response_body['username'],
-                    'email' => $response_body['email'],
-                    'avatar_url' => $response_body['avatar_URL'],
-                    'profile_url' => $response_body['profile_URL']
+                    'display_name' => $response_body[ 'display_name' ],
+                    'username' => $response_body[ 'username' ],
+                    'email' => $response_body[ 'email' ],
+                    'avatar_url' => $response_body[ 'avatar_URL' ],
+                    'profile_url' => $response_body[ 'profile_URL' ]
                 );
             } else {
-                throw new Exception(__('Could not get the user details', 'postmatic-social'));
+                throw new Exception( __( 'Could not get the user details', 'postmatic-social' ) );
             }
         }
     }
@@ -138,24 +138,24 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
     function render_settings_admin_page()
     {
         $default_settings = $this->get_default_settings();
-        $sc_id = $default_settings['id'];
+        $sc_id = $default_settings[ 'id' ];
         $settings = $this->get_settings();
         echo '<table class="form-table"><tbody>';
 
         echo '<tr>';
-        echo '<th><label>' . __('Need help?', 'postmatic-social') . '</label></th>';
-        echo '<td><a href="http://docs.gopostmatic.com/article/185-setup">How to enable wordpress.com authentication.</a></td>';
+        echo '<th><label>' . esc_html__('Need help?', 'postmatic-social') . '</label></th>';
+        echo '<td><a href="http://docs.gopostmatic.com/article/185-setup">' . esc_html__( 'How to enable wordpress.com authentication.', 'postmatic-social' ) . '</a></td>';
         echo '</tr>';
 
         $oauth_callback = $this->get_oauth_callback();
         echo '<tr>';
-        echo '<th><label>' . __('Redirection URL', 'postmatic-social') . '</label></th>';
-        echo '<td><strong>' . htmlentities($oauth_callback) . '</strong></td>';
+        echo '<th><label>' . esc_html__('Redirection URL', 'postmatic-social') . '</label></th>';
+        echo '<td><strong>' . esc_html( $oauth_callback ) . '</strong></td>';
         echo '</tr>';
 
-        foreach ($default_settings["fields"] as $field_id => $field_meta) {
-            $field_value = $settings[$field_id];
-            $this->render_form_field($field_id, $field_value, $field_meta);
+        foreach ($default_settings[ "fields" ] as $field_id => $field_meta) {
+            $field_value = $settings[ $field_id ];
+            $this->render_form_field( $field_id, $field_value, $field_meta );
         }
 
         echo '</tbody></table>';
@@ -165,7 +165,7 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
     {
         $default_settings = $this->get_default_settings();
         $website_url = admin_url('admin-ajax.php') . '?action=pms-wordpress-request-token';
-        $btn = '<a class="postmatic-sc-button postmatic-sc-wordpress-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="WordPress" href="' . $website_url . '"><i class="fa fa-wordpress"></i></a>';
+        $btn = '<a class="postmatic-sc-button postmatic-sc-wordpress-button" data-sc-id="' . esc_attr( $default_settings['id'] ) . '" data-post-id="' . esc_attr( get_the_ID() ) . '" name="WordPress" href="' . esc_url( $website_url ) . '"><i class="fa fa-wordpress"></i></a>';
         return $btn;
     }
 

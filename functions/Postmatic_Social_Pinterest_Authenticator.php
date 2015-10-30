@@ -17,16 +17,16 @@ class Postmatic_Social_Pinterest_Authenticator extends Postmatic_Social_Network_
             "title" => '<i class="fa fa-pinterest"></i> ', esc_html__( 'Pinterest', 'postmatic-social' ),
             "fields" => array(
                 Postmatic_Social_Pinterest_Authenticator::$ENABLED => array(
-                    'title' => __('Status', 'postmatic-social'),
+                    'title' => __( 'Status', 'postmatic-social' ),
                     'type' => 'select',
                     'default_value' => 'off',
                     'possible_values' => array(
-                        'on' => __('Enabled', 'postmatic-social'),
-                        'off' => __('Disabled', 'postmatic-social')
+                        'on' => __( 'Enabled', 'postmatic-social' ),
+                        'off' => __( 'Disabled', 'postmatic-social' )
                     )
                 ),
                 Postmatic_Social_Pinterest_Authenticator::$API_URL => array(
-                    'title' => __('API URL', 'postmatic-social'),
+                    'title' => __( 'API URL', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => 'https://pinterest.com/'
                 ),

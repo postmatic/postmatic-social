@@ -17,31 +17,31 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
         parent::__construct();
     }
 
-    private function build_signature_data($baseURI, $method, $params)
+    private function build_signature_data( $baseURI, $method, $params )
     {
         $args = array();
-        ksort($params);
-        foreach ($params as $key => $value) {
-            $args[] = $key . '=' . rawurlencode($value);
+        ksort( $params );
+        foreach ( $params as $key => $value ) {
+            $args[] = $key . '=' . rawurlencode( $value );
         }
-        return $method . "&" . rawurlencode($baseURI) . '&' . rawurlencode(implode('&', $args));
+        return $method . "&" . rawurlencode( $baseURI ) . '&' . rawurlencode( implode( '&', $args ) );
     }
 
-    private function build_authorization_header($oauth)
+    private function build_authorization_header( $oauth )
     {
         $values = array();
-        foreach ($oauth as $key => $value) {
-            $values[] = "$key=\"" . rawurlencode($value) . "\"";
+        foreach ( $oauth as $key => $value ) {
+            $values[] = "$key=\"" . rawurlencode( $value ) . "\"";
         }
-        return 'OAuth ' . implode(', ', $values);
+        return 'OAuth ' . implode( ', ', $values );
     }
 
     protected function process_token_request()
     {
         $settings = $this->get_settings();
-        $api_url = $settings[Postmatic_Social_Twitter_Authenticator::$API_URL];
-        $consumer_key = $settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY];
-        $consumer_secret = $settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET];
+        $api_url = $settings[ Postmatic_Social_Twitter_Authenticator::$API_URL ];
+        $consumer_key = $settings[ Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY ];
+        $consumer_secret = $settings[ Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET ];
         $request_token_url = $api_url . 'oauth/request_token';
         $authenticate_url = $api_url . 'oauth/authenticate';
 
@@ -52,50 +52,51 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
             'oauth_signature_method' => 'HMAC-SHA1',
             'oauth_timestamp' => time(),
             'oauth_version' => '1.0');
+            
 
-        $oauth_signature_data = $this->build_signature_data($request_token_url, 'POST', $oauth_request_params);
-        $oauth_signature_key = rawurlencode($consumer_secret) . '&';
-        $oauth_signature = base64_encode(hash_hmac('sha1', $oauth_signature_data, $oauth_signature_key, true));
+        $oauth_signature_data = $this->build_signature_data( $request_token_url, 'POST', $oauth_request_params );
+        $oauth_signature_key = rawurlencode( $consumer_secret ) . '&';
+        $oauth_signature = base64_encode( hash_hmac( 'sha1', $oauth_signature_data, $oauth_signature_key, true ) );
         $oauth_request_params['oauth_signature'] = $oauth_signature;
 
         $oauth_request_header = array(
-            'Authorization' => $this->build_authorization_header($oauth_request_params),
+            'Authorization' => $this->build_authorization_header( $oauth_request_params ),
             'Expect' => ''
         );
-        $response = wp_remote_post($request_token_url,
+        $response = wp_remote_post( $request_token_url,
             array('timeout' => 120,
                 'headers' => $oauth_request_header,
-                'sslverify' => false));
-        if (is_wp_error($response)) {
+                'sslverify' => false ) );
+        if ( is_wp_error( $response ) ) {
             $error_string = $response->get_error_message();
-            throw new Exception($error_string);
+            throw new Exception( $error_string );
         } else {
             $response_body = $response['body'];
-            parse_str($response_body, $response_body_arguments);
-            if (array_key_exists('oauth_token', $response_body_arguments)) {
-                $oauth_token = $response_body_arguments['oauth_token'];
-                header('Location: ' . $authenticate_url . '?oauth_token=' . $oauth_token);
+            parse_str( $response_body, $response_body_arguments );
+            if (array_key_exists( 'oauth_token', $response_body_arguments ) ) {
+                $oauth_token = $response_body_arguments[ 'oauth_token' ];
+                header('Location: ' . esc_url_raw( $authenticate_url . '?oauth_token=' . $oauth_token ) );
             } else {
-                throw new Exception(__('Missing the oauth_token parameter', 'postmatic-social'));
+                throw new Exception( __( 'Missing the oauth_token parameter', 'postmatic-social' ) );
             }
         }
     }
 
     protected function process_access_token_request()
     {
-        if (array_key_exists('oauth_token', $_REQUEST) &&
-            array_key_exists('oauth_verifier', $_REQUEST) &&
-            array_key_exists('post_id', $_REQUEST)
+        if (array_key_exists( 'oauth_token', $_REQUEST ) &&
+            array_key_exists( 'oauth_verifier', $_REQUEST ) &&
+            array_key_exists( 'post_id', $_REQUEST )
         ) {
             global $pms_session;
             global $pms_post_protected;
-            $oauth_token = $_REQUEST['oauth_token'];
-            $oauth_verifier = $_REQUEST['oauth_verifier'];
-            $post_id = $_REQUEST['post_id'];
+            $oauth_token = $_REQUEST[ 'oauth_token' ];
+            $oauth_verifier = $_REQUEST[ 'oauth_verifier' ];
+            $post_id = $_REQUEST[ 'post_id' ];
             $twitter_settings = $this->get_settings();
-            $api_url = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$API_URL];
-            $consumer_key = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY];
-            $consumer_secret = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET];
+            $api_url = $twitter_settings[ Postmatic_Social_Twitter_Authenticator::$API_URL ];
+            $consumer_key = $twitter_settings[ Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY ];
+            $consumer_secret = $twitter_settings[ Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET ];
             $access_token_url = $api_url . 'oauth/access_token';
 
             $oauth_request_params = array(
@@ -106,40 +107,40 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
                 'oauth_timestamp' => time(),
                 'oauth_version' => '1.0');
 
-            $oauth_signature_data = $this->build_signature_data($access_token_url, 'POST', $oauth_request_params);
-            $oauth_signature_key = rawurlencode($consumer_secret) . '&';
-            $oauth_signature = base64_encode(hash_hmac('sha1', $oauth_signature_data, $oauth_signature_key, true));
-            $oauth_request_params['oauth_signature'] = $oauth_signature;
+            $oauth_signature_data = $this->build_signature_data( $access_token_url, 'POST', $oauth_request_params );
+            $oauth_signature_key = rawurlencode( $consumer_secret ) . '&';
+            $oauth_signature = base64_encode( hash_hmac( 'sha1', $oauth_signature_data, $oauth_signature_key, true ) );
+            $oauth_request_params[ 'oauth_signature' ] = $oauth_signature;
 
             $oauth_request_header = array(
-                'Authorization' => $this->build_authorization_header($oauth_request_params),
+                'Authorization' => $this->build_authorization_header( $oauth_request_params ),
                 'Expect' => ''
             );
-            $response = wp_remote_post($access_token_url,
+            $response = wp_remote_post( esc_url_raw( $access_token_url ),
                 array('timeout' => 120,
                     'headers' => $oauth_request_header,
                     'body' => array(
                         'oauth_verifier' => $oauth_verifier
                     ),
                     'sslverify' => false));
-            if (is_wp_error($response)) {
+            if ( is_wp_error( $response ) ) {
                 $error_string = $response->get_error_message();
-                throw new Exception($error_string);
+                throw new Exception( $error_string );
             } else {
-                $response_body = $response['body'];
-                parse_str($response_body, $response_body_arguments);
-                if (array_key_exists('oauth_token', $response_body_arguments) &&
-                    array_key_exists('oauth_token_secret', $response_body_arguments) &&
-                    array_key_exists('user_id', $response_body_arguments)
+                $response_body = $response[ 'body' ];
+                parse_str( $response_body, $response_body_arguments );
+                if (array_key_exists( 'oauth_token', $response_body_arguments ) &&
+                    array_key_exists( 'oauth_token_secret', $response_body_arguments ) &&
+                    array_key_exists( 'user_id', $response_body_arguments )
                 ) {
-                    $oauth_token = $response_body_arguments['oauth_token'];
-                    $oauth_token_secret = $response_body_arguments['oauth_token_secret'];
-                    $user_details = $this->get_user_details($oauth_token, $oauth_token_secret);
-                    $pms_session['user'] = $user_details;
+                    $oauth_token = $response_body_arguments[ 'oauth_token' ];
+                    $oauth_token_secret = $response_body_arguments[ 'oauth_token_secret' ];
+                    $user_details = $this->get_user_details( $oauth_token, $oauth_token_secret );
+                    $pms_session[ 'user' ] = $user_details;
                     $pms_post_protected = true;
-                    comment_form(array(), $post_id);
+                    comment_form( array(), $post_id );
                 } else {
-                    throw new Exception(__('Missing the oauth_token or oauth_verifier parameters', 'postmatic-social'));
+                    throw new Exception( __( 'Missing the oauth_token or oauth_verifier parameters', 'postmatic-social' ) );
                 }
             }
         } else {
@@ -147,13 +148,13 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
         }
     }
 
-    protected function get_user_details($oauth_token, $oauth_token_secret)
+    protected function get_user_details( $oauth_token, $oauth_token_secret )
     {
         $twitter_settings = $this->get_settings();
-        $api_url = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$API_URL];
+        $api_url = $twitter_settings[ Postmatic_Social_Twitter_Authenticator::$API_URL ];
         $api_version = Postmatic_Social_Twitter_Authenticator::$API_VERSION;
-        $consumer_key = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY];
-        $consumer_secret = $twitter_settings[Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET];
+        $consumer_key = $twitter_settings[ Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY ];
+        $consumer_secret = $twitter_settings[ Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET ];
         $verify_credentials_url = $api_url . $api_version . '/account/verify_credentials.json';
 
         $oauth_request_params = array(
@@ -168,51 +169,51 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
             );
 
 
-        $oauth_signature_data = $this->build_signature_data($verify_credentials_url, 'GET', $oauth_request_params);
-        $oauth_signature_key = rawurlencode($consumer_secret) . '&' . rawurlencode($oauth_token_secret);
-        $oauth_signature = base64_encode(hash_hmac('sha1', $oauth_signature_data, $oauth_signature_key, true));
+        $oauth_signature_data = $this->build_signature_data( $verify_credentials_url, 'GET', $oauth_request_params );
+        $oauth_signature_key = rawurlencode( $consumer_secret ) . '&' . rawurlencode($oauth_token_secret);
+        $oauth_signature = base64_encode( hash_hmac( 'sha1', $oauth_signature_data, $oauth_signature_key, true ) );
         $oauth_params['oauth_signature'] = $oauth_signature;
 
         $oauth_header = array(
-            'Authorization' => $this->build_authorization_header($oauth_params),
+            'Authorization' => $this->build_authorization_header( $oauth_params ),
             'Expect' => ''
         );
 
         $verify_credentials_url_params = array();
-        foreach ($oauth_request_params as $key => $value) {
-            $verify_credentials_url_params[] = $key . '=' . rawurlencode($value);
+        foreach ( $oauth_request_params as $key => $value ) {
+            $verify_credentials_url_params[] = $key . '=' . rawurlencode( $value );
         }
 
-        $response = wp_remote_get($verify_credentials_url . '?' . implode('&', $verify_credentials_url_params),
-            array('timeout' => 120,
+        $response = wp_remote_get( esc_url_raw( $verify_credentials_url . '?' . implode('&', $verify_credentials_url_params ) ) , 
+        array('timeout' => 120,
                 'headers' => $oauth_header,
                 'sslverify' => false));
-        if (is_wp_error($response)) {
+        if ( is_wp_error( $response ) ) {
             $error_string = $response->get_error_message();
-            throw new Exception($error_string);
+            throw new Exception( $error_string );
         } else {
-            $response_body = json_decode($response['body'], true);
-            if ($response_body && is_array($response_body)) {
+            $response_body = json_decode( $response[ 'body' ], true );
+            if ( $response_body && is_array( $response_body ) ) {
                 // By FK Get email or Generate instead
-                if (isset($response_body['email']) && !empty($response_body['email'])) {
-                    $email = $response_body['email'];
+                if ( isset( $response_body[ 'email' ] ) && !empty( $response_body[ 'email' ] ) ) {
+                    $email = $response_body[ 'email' ];
                 }
                 else {
-                    $email = $response_body['screen_name'] . wp_rand(10000,99000) ."@twitter.com";
+                    $email = $response_body[ 'screen_name' ] . wp_rand(10000,99000) ."@twitter.com";
                 }
 
                 return array(
                     // By FK include network
                     'network' => 'Twitter',
-                    'display_name' => $response_body['screen_name'],
-                    'username' => $response_body['name'],
+                    'display_name' => $response_body[ 'screen_name' ],
+                    'username' => $response_body[ 'name' ],
                     // By FK include email
                     'email' => $email,
-                    'avatar_url' => $response_body['profile_image_url'],
-                    'profile_url' => $response_body['url']
+                    'avatar_url' => $response_body[ 'profile_image_url' ],
+                    'profile_url' => $response_body[ 'url' ]
                 );
             } else {
-                throw new Exception(__('Could not get the user details', 'postmatic-social'));
+                throw new Exception( __( 'Could not get the user details', 'postmatic-social' ) );
             }
         }
     }
@@ -223,22 +224,22 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
             "title" => '<i class="fa fa-twitter"></i> ' . esc_html__( 'Twitter', 'postmatic-social' ),
             "fields" => array(
                 Postmatic_Social_Twitter_Authenticator::$ENABLED => array(
-                    'title' => __('Status', 'postmatic-social'),
+                    'title' => __( 'Status', 'postmatic-social' ),
                     'type' => 'switch',
                     'default_value' => 'off'
                 ),
                 Postmatic_Social_Twitter_Authenticator::$API_URL => array(
-                    'title' => __('API URL', 'postmatic-social'),
+                    'title' => __( 'API URL', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => 'https://api.twitter.com/'
                 ),
                 Postmatic_Social_Twitter_Authenticator::$CONSUMER_KEY => array(
-                    'title' => __('Consumer Key (API Key)', 'postmatic-social'),
+                    'title' => __( 'Consumer Key (API Key)', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => ''
                 ),
                 Postmatic_Social_Twitter_Authenticator::$CONSUMER_SECRET => array(
-                    'title' => __('Consumer Secret (API Secret)', 'postmatic-social'),
+                    'title' => __( 'Consumer Secret (API Secret)', 'postmatic-social' ),
                     'type' => 'text',
                     'default_value' => ''
                 ),
@@ -254,13 +255,13 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
         echo '<table class="form-table"><tbody>';
 
         echo '<tr>';
-        echo '<th><label>' . __('Documentation', 'postmatic-social') . '</label></th>';
-        echo '<td><a href="' . POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config" target="_blank">' . POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config</a></td>';
+        echo '<th><label>' . esc_html__('Documentation', 'postmatic-social') . '</label></th>';
+        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '"</a></td>';
         echo '</tr>';
 
-        foreach ($default_settings["fields"] as $field_id => $field_meta) {
-            $field_value = $settings[$field_id];
-            $this->render_form_field($field_id, $field_value, $field_meta);
+        foreach ( $default_settings[ "fields" ] as $field_id => $field_meta ) {
+            $field_value = $settings[ $field_id ];
+            $this->render_form_field( $field_id, $field_value, $field_meta );
         }
 
         echo '</tbody></table>';
@@ -270,7 +271,7 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
     {
         $default_settings = $this->get_default_settings();
         $website_url = admin_url('admin-ajax.php') . '?action=pms-twitter-request-token';
-        $btn = '<a class="postmatic-sc-button postmatic-sc-twitter-button" data-sc-id="' . $default_settings['id'] . '" data-post-id="' . get_the_ID() . '" name="Twitter" href="' . $website_url . '"><i class="fa fa-twitter"></i></a>';
+        $btn = '<a class="postmatic-sc-button postmatic-sc-twitter-button" data-sc-id="' . esc_attr( $default_settings['id'] ) . '" data-post-id="' . esc_attr( get_the_ID() ) . '" name="Twitter" href="' . esc_url( $website_url ) . '"><i class="fa fa-twitter"></i></a>';
         return $btn;
 
     }
