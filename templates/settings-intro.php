@@ -1,3 +1,18 @@
+<div id="postmatic" style="float: right; width: 30%; margin-left: 25px;">
+<h1><?php _e( 'All about Postmatic', 'postmatic-social' ); ?></h1>
+<p><?php _e( 'We are a group of WordPress developers dedicated to making commenting <em>awesome</em> again. Here are some of our other free plugins. You\'ll probably want them all:', 'postmatic-social' ); ?></p>
+
+<h3><?php _e( '<a href="http://wordpress.org/plugins/postmatic">Postmatic</a>', 'postmatic-social' ); ?> - Post and comment subscriptions that invite you to hit reply</h3>
+<p><?php _e( 'Ever get notification of a new post or comment and think <em>I wish I could just hit reply to this thing</em>? That\'s what Postmatic makes happen. Post and comment subscriptions that are 100% replyable. Get a comment in your inbox, hit reply to send one back. The way it always should have been.', 'postmatic-social' ); ?></p>
+
+<h3><?php _e( '<a href="http://wordpress.org/plugins/epoch">Epoch</a>', 'postmatic-social' ); ?> - A native Disqus alternative with a focus on speed and privacy</h3>
+<p><?php _e( 'Epoch fixes just about everything wrong with WordPress native commenting. Realtime, beautiful, native, CDN and cache compatible fully responsive commenting. Really you just should install it. Trust us.', 'postmatic-social' ); ?></p>
+
+<h3><?php _e( '<a href="http://wordpress.org/plugins/crowd-control">Crowd Control</a>', 'postmatic-social' ); ?> - Comment moderation decentralized</h3>
+<p><?php _e( 'Comment moderation is a drag. Have your users lend a hand by flagging offensive comments and scrubbing your site clean.', 'postmatic-social' ); ?></p>
+
+</div>
+
 <div id="social-welcome">
 <p><?php _e( 'Postmatic Social Commenting takes a lighter weight approach than traditional Social Login plugins.', 'postmatic-social' ); ?></p>
 
