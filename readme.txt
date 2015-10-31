@@ -25,6 +25,10 @@ No WordPress users are created. Nobody is logged in. This is not social <em>logi
 
 == Frequently Asked Questions ==
 
+= Can my users log in using this plugin? =
+
+Proudly, no. This isn't a heavy weight <em>take over your site and break every few weeks</em> kind of plugin. No users. No logins. If you want your users to be able to comment without filling out a name, email, and website this is your plugin is your new best friend. If you want more than that try WordPress Social Login.
+
 = Do I have to generate api keys for each network I want to use? =
 
 Yes, sorry. You will have to create new apps, configure them, and get keys. We've taken the pain out of it though by including a bunch of videos and tutorials to walk you through it. You'll find them on the setting screen for each network.
