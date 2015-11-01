@@ -120,8 +120,29 @@ class Postmatic_Social {
 		$GLOBALS[ 'pms_post_protected' ] = false;
         $GLOBALS[ 'pms_session' ] = Postmatic_Social_Comments_Session::get_instance();
         $GLOBALS[ 'postmatic-social' ] = new Postmatic_Social_Comments_Plugin( array( 'wordpress', 'gplus', 'twitter', 'facebook' ) );	
-	}
+        add_action( 'comment_form_after_fields', array( $this, 'twitter_extra_fields' ) );
+        add_filter( 'pre_comment_author_email', array( $this, 'twitter_author' ) );
+            
+        }
+        
+        public function twitter_author( $email ) {
+            if ( empty( $_POST ) ) return $email;
+            
+            $comment_cookie_lifetime = apply_filters( 'comment_cookie_lifetime', 30000000 );
+            setcookie( 'comment_author_email_' . COOKIEHASH, $_POST[ 'email' ], time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN );
+            return $_POST[ 'email' ];
+        }
+        
+        public function twitter_extra_fields() {
+            echo '<div class="comment-form-pms-twitter-extra">';
+            esc_html_e( 'Please enter an E-mail Address (Optional)' );
+            echo '<input type="text"name="pms-email" value="" />';
+            echo '</div>';
+        }
+	
 }
+
+
 define( 'POSTMATIC_SOCIAL_SESSION_USER', 'user' );
 //todo - Update this link
 define( 'POSTMATIC_SOCIAL_HELP_URL', 'http://docs.gopostmatic.com/article/185-setup' );

@@ -109,3 +109,7 @@
 	position: relative;
 	top: -10px;
 }
+
+.comment-form-pms-twitter-extra {
+    display: none;   
+}
