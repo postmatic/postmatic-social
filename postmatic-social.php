@@ -134,6 +134,7 @@ class Postmatic_Social {
             } else {
                 $comment_cookie_lifetime = apply_filters( 'comment_cookie_lifetime', 30000000 );
                 setcookie( 'comment_author_email_' . COOKIEHASH, $_POST[ 'email' ], time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN );
+                setcookie( 'pms_comment_author_email', $_POST[ 'email' ], time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN );
                 return $_POST[ 'email' ];
             }
             return $email;

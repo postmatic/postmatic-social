@@ -29,6 +29,17 @@ function pmsLoadCommentForm($, accessTokenRequestUrl) {
     });
 }
 
+function pmsReadCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
 function pmsGooglePlusSigninCallback(authResult) {
     if (authResult.access_token) {
         var $ = jQuery;
@@ -42,6 +53,7 @@ function pmsGooglePlusSigninCallback(authResult) {
 
 jQuery(document).ready(function ($) {
     
+    /* postmatic opt-in form --> */
     $( 'body' ).on( 'click', '#pms_comment_subscribe', function(  e ) {
         if ( $( this ).is( ':checked' ) ) {
             $( '.pms-optin-form' ).show();
@@ -49,6 +61,14 @@ jQuery(document).ready(function ($) {
             $( '.pms-optin-form' ).hide();
         }
     } );
+    
+    /* Postmatic email hack */
+    postmatic_email = pmsReadCookie( 'pms_comment_author_email' );
+    if ( postmatic_email != null ) {
+        postmatic_email = postmatic_email.replace( '%40', '@' );
+        jQuery( '#email' ).val( postmatic_email );
+    }
+    
     
     
     $('.postmatic-sc-toggle').toggles();
