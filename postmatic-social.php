@@ -143,9 +143,15 @@ class Postmatic_Social {
         
         public function twitter_extra_fields() {
             echo '<div class="comment-form-pms-twitter-extra">';
+            echo '<div class="pms-optin">';
+            printf( '<input type="checkbox" name="pms_comment_subscribe" value="1" id="pms_comment_subscribe">&nbsp;&nbsp;' );
+            printf( '<label for="pms_comment_subscribe">%s</label>', esc_html__( 'Participate in this conversation via email', 'postmatic-social' ) );
+            echo '</div><!-- .pms-optin -->';
+            echo '<div class="pms-optin-form">';
             esc_html_e( 'Please enter an E-mail Address (Optional)', 'postmatic-social' );
             echo '<input type="text"name="pms-email" value="" />';
-            echo '</div>';
+            echo '</div><!-- .pms-optin-form -->';
+            echo '</div><!-- .pms-opttin -->';
         }
 	
 }

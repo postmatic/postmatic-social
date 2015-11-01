@@ -41,7 +41,16 @@ function pmsGooglePlusSigninCallback(authResult) {
 }
 
 jQuery(document).ready(function ($) {
-
+    
+    $( 'body' ).on( 'click', '#pms_comment_subscribe', function(  e ) {
+        if ( $( this ).is( ':checked' ) ) {
+            $( '.pms-optin-form' ).show();
+        } else {
+            $( '.pms-optin-form' ).hide();
+        }
+    } );
+    
+    
     $('.postmatic-sc-toggle').toggles();
 
     $('.postmatic-sc-button').on('click', function (evt) {
