@@ -127,6 +127,7 @@ class Postmatic_Social {
         
         public function twitter_author( $email ) {
             if ( empty( $_POST ) || empty( $_COOKIE ) ) return $email;
+            if ( !isset( $_POST[ 'email' ] ) ) return $email;
             
             if ( isset( $_COOKIE[ 'comment_author_email' . COOKIEHASH ] ) ) {
                 $email = $_COOKIE[ 'comment_author_email' . COOKIEHASH ];
