@@ -199,7 +199,12 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
                     $email = $response_body[ 'email' ];
                 }
                 else {
-                    $email = $response_body[ 'screen_name' ] . wp_rand(10000,99000) ."@twitter.com";
+                    if ( isset( $_COOKIE[ 'comment_author_email' . COOKIEHASH ] ) ) {
+                        $email = $_COOKIE[ 'comment_author_email' . COOKIEHASH ]; 
+                    } else {
+                       $email = $response_body[ 'screen_name' ] . wp_rand(10000,99000) ."@twitter.com";
+                    }
+                    
                 }
 
                 return array(

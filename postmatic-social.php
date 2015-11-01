@@ -126,16 +126,24 @@ class Postmatic_Social {
         }
         
         public function twitter_author( $email ) {
-            if ( empty( $_POST ) ) return $email;
+            if ( empty( $_POST ) || empty( $_COOKIE ) ) return $email;
             
-            $comment_cookie_lifetime = apply_filters( 'comment_cookie_lifetime', 30000000 );
-            setcookie( 'comment_author_email_' . COOKIEHASH, $_POST[ 'email' ], time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN );
-            return $_POST[ 'email' ];
+            if ( isset( $_COOKIE[ 'comment_author_email' . COOKIEHASH ] ) ) {
+                $email = $_COOKIE[ 'comment_author_email' . COOKIEHASH ];
+                return $email; 
+            } else {
+                $comment_cookie_lifetime = apply_filters( 'comment_cookie_lifetime', 30000000 );
+                setcookie( 'comment_author_email_' . COOKIEHASH, $_POST[ 'email' ], time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN );
+                return $_POST[ 'email' ];
+            }
+            return $email;
+            
+            
         }
         
         public function twitter_extra_fields() {
             echo '<div class="comment-form-pms-twitter-extra">';
-            esc_html_e( 'Please enter an E-mail Address (Optional)' );
+            esc_html_e( 'Please enter an E-mail Address (Optional)', 'postmatic-social' );
             echo '<input type="text"name="pms-email" value="" />';
             echo '</div>';
         }
