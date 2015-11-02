@@ -15,8 +15,25 @@ function pmsLoadCommentForm($, accessTokenRequestUrl) {
     var comment = $( '#comment' ).val();
     $.get(accessTokenRequestUrl, function (data) {
         container.replaceWith($(data));
+        
+        var patt = new RegExp( "twitter" );
+        if ( patt.test( accessTokenRequestUrl ) ) {
+            $( '.comment-form-pms-twitter-extra' ).show().find( 'input' ).attr( 'name', 'email' );
+            $( '.comment-form-email' ).remove();
+        }
         $( '#comment' ).val( comment ).focus();
     });
+}
+
+function pmsReadCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
 }
 
 function pmsGooglePlusSigninCallback(authResult) {
@@ -31,7 +48,25 @@ function pmsGooglePlusSigninCallback(authResult) {
 }
 
 jQuery(document).ready(function ($) {
-
+    
+    /* postmatic opt-in form --> */
+    $( 'body' ).on( 'click', '#pms_comment_subscribe', function(  e ) {
+        if ( $( this ).is( ':checked' ) ) {
+            $( '.pms-optin-form' ).show();
+        } else {
+            $( '.pms-optin-form' ).hide();
+        }
+    } );
+    
+    /* Postmatic email hack */
+    postmatic_email = pmsReadCookie( 'pms_comment_author_email' );
+    if ( postmatic_email != null ) {
+        postmatic_email = postmatic_email.replace( '%40', '@' );
+        jQuery( '#email' ).val( postmatic_email );
+    }
+    
+    
+    
     $('.postmatic-sc-toggle').toggles();
 
     $('.postmatic-sc-button').on('click', function (evt) {

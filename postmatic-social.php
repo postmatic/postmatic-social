@@ -120,8 +120,45 @@ class Postmatic_Social {
 		$GLOBALS[ 'pms_post_protected' ] = false;
         $GLOBALS[ 'pms_session' ] = Postmatic_Social_Comments_Session::get_instance();
         $GLOBALS[ 'postmatic-social' ] = new Postmatic_Social_Comments_Plugin( array( 'wordpress', 'gplus', 'twitter', 'facebook' ) );	
-	}
+        add_action( 'comment_form_after_fields', array( $this, 'twitter_extra_fields' ) );
+        add_filter( 'pre_comment_author_email', array( $this, 'twitter_author' ) );
+            
+        }
+        
+        public function twitter_author( $email ) {
+            if ( empty( $_POST ) || empty( $_COOKIE ) ) return $email;
+            if ( !isset( $_POST[ 'email' ] ) ) return $email;
+            
+            if ( isset( $_COOKIE[ 'comment_author_email' . COOKIEHASH ] ) ) {
+                $email = $_COOKIE[ 'comment_author_email' . COOKIEHASH ];
+                return $email; 
+            } else {
+                $comment_cookie_lifetime = apply_filters( 'comment_cookie_lifetime', 30000000 );
+                setcookie( 'comment_author_email_' . COOKIEHASH, $_POST[ 'email' ], time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN );
+                setcookie( 'pms_comment_author_email', $_POST[ 'email' ], time() + $comment_cookie_lifetime, COOKIEPATH, COOKIE_DOMAIN );
+                return $_POST[ 'email' ];
+            }
+            return $email;
+            
+            
+        }
+        
+        public function twitter_extra_fields() {
+            echo '<div class="comment-form-pms-twitter-extra">';
+            echo '<div class="pms-optin">';
+            printf( '<input type="checkbox" name="pms_comment_subscribe" value="1" id="pms_comment_subscribe">&nbsp;&nbsp;' );
+            printf( '<label for="pms_comment_subscribe">%s</label>', esc_html__( 'Participate in this conversation via email', 'postmatic-social' ) );
+            echo '</div><!-- .pms-optin -->';
+            echo '<div class="pms-optin-form">';
+            esc_html_e( 'Please enter an E-mail Address (Optional)', 'postmatic-social' );
+            echo '<input type="text"name="pms-email" value="" />';
+            echo '</div><!-- .pms-optin-form -->';
+            echo '</div><!-- .pms-opttin -->';
+        }
+	
 }
+
+
 define( 'POSTMATIC_SOCIAL_SESSION_USER', 'user' );
 //todo - Update this link
 define( 'POSTMATIC_SOCIAL_HELP_URL', 'http://docs.gopostmatic.com/article/185-setup' );
