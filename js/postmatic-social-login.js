@@ -23,6 +23,7 @@ function pmsLoadCommentForm($, accessTokenRequestUrl) {
         var patt = new RegExp( "twitter" );
         if ( patt.test( accessTokenRequestUrl ) ) {
             $( '.comment-form-pms-twitter-extra' ).show().find( 'input' ).attr( 'name', 'email' );
+            $( '#prompt-comment-subscribe' ).hide();
             $( '.comment-form-email' ).remove();
         }
         $( '#comment' ).val( comment ).focus();
