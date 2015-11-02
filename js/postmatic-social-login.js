@@ -20,9 +20,10 @@ function pmsLoadCommentForm($, accessTokenRequestUrl) {
     $.get(accessTokenRequestUrl, function (data) {
         container.replaceWith($(data));
         
-        var patt = new RegExp( "twitter" );
-        if ( patt.test( accessTokenRequestUrl ) ) {
-            $( '.comment-form-pms-twitter-extra' ).show().find( 'input' ).attr( 'name', 'email' );
+        var twitter = new RegExp( "twitter" );
+        var facebook = new RegExp( 'facebook' );
+        if ( twitter.test( accessTokenRequestUrl )  || facebook.test( accessTokenRequestUrl ) ) {
+            $( '.comment-form-pms-extra' ).show().find( 'input' ).attr( 'name', 'email' );
             $( '#prompt-comment-subscribe' ).hide();
             $( '.comment-form-email' ).remove();
         }
