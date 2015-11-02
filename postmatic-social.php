@@ -120,7 +120,7 @@ class Postmatic_Social {
 		$GLOBALS[ 'pms_post_protected' ] = false;
         $GLOBALS[ 'pms_session' ] = Postmatic_Social_Comments_Session::get_instance();
         $GLOBALS[ 'postmatic-social' ] = new Postmatic_Social_Comments_Plugin( array( 'wordpress', 'gplus', 'twitter', 'facebook' ) );	
-        add_action( 'comment_form_after_fields', array( $this, 'twitter_extra_fields' ) );
+        add_action( 'comment_form_after_fields', array( $this, 'comment_extra_fields' ) );
         add_filter( 'pre_comment_author_email', array( $this, 'twitter_author' ) );
             
         }
@@ -143,9 +143,10 @@ class Postmatic_Social {
             
         }
         
-        public function twitter_extra_fields() {
-            echo '<div class="comment-form-pms-twitter-extra">';
+        public function comment_extra_fields() {
+            echo '<div class="comment-form-pms-extra">';
             echo '<div class="pms-optin">';
+            printf( '<input type="hidden" name="prompt_comment_subscribe" value="1">' );
             printf( '<input type="checkbox" name="pms_comment_subscribe" value="1" id="pms_comment_subscribe">&nbsp;&nbsp;' );
             printf( '<label for="pms_comment_subscribe">%s</label>', esc_html__( 'Participate in this conversation via email', 'postmatic-social' ) );
             echo '</div><!-- .pms-optin -->';
