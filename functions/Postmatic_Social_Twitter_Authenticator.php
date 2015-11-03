@@ -261,7 +261,7 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
 
         echo '<tr>';
         echo '<th><label>' . esc_html__('Need help?', 'postmatic-social') . '</label></th>';
-        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">Videos and walkthroughs for configuring your Twitter app are available here'. '</a> or use the help icon below by searching for <em>connect twitter</em>.</td>';
+        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">Videos and walkthroughs for configuring your Twitter app are available here'. '</a>.</td>';
         echo '</tr>';
 
         foreach ( $default_settings[ "fields" ] as $field_id => $field_meta ) {

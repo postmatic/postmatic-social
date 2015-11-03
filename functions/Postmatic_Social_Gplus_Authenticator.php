@@ -51,7 +51,7 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
         echo '<table class="form-table"><tbody>';
         echo '<tr>';
         echo '<th><label>' . esc_html__('Need help?', 'postmatic-social') . '</label></th>';
-        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">Videos and walkthroughs for configuring your Google app are available here'. '</a> or use the help icon below by searching for <em>connect Google</em>.</td>';
+        echo '<td><a href="' . esc_url( POSTMATIC_SOCIAL_HELP_URL . '#' . $sc_id . '-config' ) . '" target="_blank">Videos and walkthroughs for configuring your Google app are available here'. '</a>.</td>';
         echo '</tr>';
 
         $oauth_callback = $this->get_oauth_callback();
