@@ -150,10 +150,10 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
             if ( $response_body && is_array( $response_body ) ) {
                 return array(
                     'network' => "Facebook",
-                    'display_name' => $response_body[ 'name' ],
-                    'username' => $response_body[ 'id' ],
-                    'email' => $response_body[ 'email' ],
-                    'avatar_url' => $response_body[ 'picture' ][ 'url' ],
+                    'display_name' => isset( $response_body[ 'name' ] ) ? $response_body[ 'name' ] : '',
+                    'username' => isset( $response_body[ 'id' ] ) ? $response_body[ 'id' ] : '',
+                    'email' => isset( $response_body[ 'email' ] ) ? $response_body[ 'email' ] : '',
+                    'avatar_url' => isset( $response_body[ 'picture' ][ 'url' ] ) ? $response_body[ 'picture' ][ 'url' ] : '',
                 );
             } else {
                 throw new Exception(__( 'Could not get the user details', 'postmatic-social' ) );
