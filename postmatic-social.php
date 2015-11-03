@@ -22,6 +22,15 @@ class Postmatic_Social {
 	private static $instance = null;
 	
 	/**
+	* Holds the URL to the admin panel page
+	*
+	* @since 1.0.0
+	* @access static
+	* @var string $url
+	*/
+	private static $url = '';
+	
+	/**
 	* Retrieve a class instance.
 	*
 	* Retrieve a class instance.
@@ -122,8 +131,51 @@ class Postmatic_Social {
         $GLOBALS[ 'postmatic-social' ] = new Postmatic_Social_Comments_Plugin( array( 'wordpress', 'gplus', 'twitter', 'facebook' ) );	
         add_action( 'comment_form_after_fields', array( $this, 'comment_extra_fields' ) );
         add_filter( 'pre_comment_author_email', array( $this, 'twitter_author' ) );
+        
+        //Add settings link to plugins screen
+		$prefix = is_multisite() ? 'network_admin_' : '';
+		add_action( $prefix . 'plugin_action_links_' . Postmatic_Social::get_plugin_basename(), array( $this, 'plugin_settings_link' ) );
             
         }
+        
+        /**
+    	* Outputs admin interface for sub-menu.
+    	*
+    	* Outputs admin interface for sub-menu.
+    	*
+    	* @since 1.0.0
+    	* @access public
+    	* @see __construct
+    	* @internal Uses $prefix . "plugin_action_links_$plugin_file" action
+    	* @return array Array of settings
+    	*/
+        public function plugin_settings_link( $settings ) {
+            $admin_anchor = sprintf( '<a href="%s">%s</a>', esc_url( $this->get_url() ), esc_html__( 'Configure', 'postmatic-social' ) );
+            return array_merge( array( $admin_anchor ), $settings ); 
+        }
+        
+        /**
+    	* Return the URL to the admin panel page.
+    	*
+    	* Return the URL to the admin panel page.
+    	*
+    	* @since 1.0.0
+    	* @access static
+    	*
+    	* @return string URL to the admin panel page.
+    	*/
+        public static function get_url() {
+    		$url = self::$url;
+    		if ( empty( $url ) ) {
+    			if ( is_multisite() ) {
+    				$url = add_query_arg( array( 'page' => 'postmatic-social' ), network_admin_url( 'options-general.php' ) );	
+    			} else {
+    				$url = add_query_arg( array( 'page' =>  'postmatic-social' ), admin_url( 'options-general.php' ) );
+    			}
+    			self::$url = $url;
+    		}
+    		return $url;
+    	}
         
         public function twitter_author( $email ) {
             if ( empty( $_POST ) || empty( $_COOKIE ) ) return $email;
