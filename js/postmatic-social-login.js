@@ -19,7 +19,7 @@ function pmsLoadCommentForm($, accessTokenRequestUrl) {
         var twitter = new RegExp( "twitter" );
         var facebook = new RegExp( 'facebook' );
         if ( twitter.test( accessTokenRequestUrl )  || facebook.test( accessTokenRequestUrl ) ) {
-            $( '.comment-form-pms-extra' ).show().find( 'input' );
+            $( '.comment-form-pms-extra' ).show();
             $( '#prompt-comment-subscribe' ).hide();
         }
         $( '#comment' ).val( comment ).focus();
@@ -56,6 +56,11 @@ jQuery(document).ready(function ($) {
             $( '.pms-optin-form' ).show();
         } else {
             $( '.pms-optin-form' ).hide();
+        }
+    } );
+    $( 'body' ).on( 'submit', '#commentform', function( e ) {
+        if( jQuery( '#pms-email' ).val() != '' ) {
+            jQuery( '.comment-form-email' ).find( 'input' ).val( jQuery( '#pms-email' ).val() );
         }
     } );
     
