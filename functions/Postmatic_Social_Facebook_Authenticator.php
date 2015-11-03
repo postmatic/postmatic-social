@@ -136,7 +136,7 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
     protected function get_user_details($access_token)
     {
         $settings = $this->get_settings();
-        $user_details_url = "https://graph.facebook.com/me?fields=id,name,email,picture{url}" ;
+        $user_details_url = "https://graph.facebook.com/me?fields=id,name,email,picture" ;
         $response = wp_remote_get( esc_url_raw( $user_details_url ),
             array('timeout' => 120,
                 'headers' => array( 'Authorization' => 'Bearer ' . $access_token ),
@@ -146,6 +146,7 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
             throw new Exception( $error_string );
         } else {
             $response_body = json_decode( $response[ 'body' ], true );
+            
             if ( $response_body && is_array( $response_body ) ) {
                 return array(
                     'network' => "Facebook",
