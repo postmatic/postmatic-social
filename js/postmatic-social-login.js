@@ -22,6 +22,9 @@ function pmsLoadCommentForm($, accessTokenRequestUrl) {
             $( '.comment-form-pms-extra' ).show();
             $( '#prompt-comment-subscribe' ).hide();
         }
+        if ( facebook.test( accessTokenRequestUrl ) ) {
+            jQuery( '#pms-email' ).val( jQuery( '.comment-form-email' ).find( 'input' ).val() );   
+        }
         $( '#comment' ).val( comment ).focus();
     });
 }
