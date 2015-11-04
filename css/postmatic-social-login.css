@@ -109,3 +109,11 @@
 	position: relative;
 	top: -10px;
 }
+
+comment-form .pms-optin label {
+	display: inline-block;
+}
+
+.comment-form-pms-extra, .pms-optin-form {
+    display: none;   
+} 
