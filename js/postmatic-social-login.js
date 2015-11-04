@@ -75,12 +75,21 @@ function pmsMoveAboveSubmit( $element ) {
 	$submit_area.before( $element );
 }
 
-jQuery(document).ready(function ($) {
-
+function pmsPositionExtraFields( $ ) {
     var $pms_extra = $( '#commentform' ).find( '.comment-form-pms-extra' );
     if ( $pms_extra.length > 0 ) {
         pmsMoveAboveSubmit( $pms_extra );
     }
+
+    if ( (/(facebook|twitter)/i).test( $( '#postmatic-social-comment-wrapper' ).data( 'network' ) ) ) {
+        $pms_extra.show();
+        $( '#prompt-comment-subscribe' ).remove();
+    }
+}
+
+jQuery(document).ready(function ($) {
+
+    pmsPositionExtraFields( $ );
 
     /* postmatic opt-in form --> */
     $( 'body' ).on( 'click', '#pms_comment_subscribe', function(  e ) {

@@ -172,7 +172,10 @@ class Postmatic_Social_Comments_Plugin {
 				'admin-ajax.php?action=pms-logout&amp;_wp_http_referer=' . $referrer .
 				'#postmatic-social-comment-wrapper'
 			);
-			$content .= '<div id="postmatic-social-comment-wrapper">';
+			$content .= sprintf(
+				'<div id="postmatic-social-comment-wrapper" data-network="%s">',
+				$commenter['network']
+			);
 			$content .= '<p class="postmatic-social-comment-logout">';
 			$content .= sprintf(
 				__( 'You are authenticated as %s via %s.', 'postmatic-social' ),
