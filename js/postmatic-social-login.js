@@ -19,8 +19,9 @@ function pmsLoadCommentForm($, accessTokenRequestUrl) {
         var twitter = new RegExp( "twitter" );
         var facebook = new RegExp( 'facebook' );
         if ( twitter.test( accessTokenRequestUrl )  || facebook.test( accessTokenRequestUrl ) ) {
-            $( '.comment-form-pms-extra' ).show();
             $( '#prompt-comment-subscribe' ).hide();
+            $( '.comment-form-pms-extra' ).show();
+            $( '#prompt-comment-subscribe' ).remove();
         }
         if ( facebook.test( accessTokenRequestUrl ) ) {
             jQuery( '#pms-email' ).val( jQuery( '.comment-form-email' ).find( 'input' ).val() );   
