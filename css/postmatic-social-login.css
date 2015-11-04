@@ -62,7 +62,7 @@
 	color: #DC4E41 !important;
 }
 .postmatic-sc-facebook-button {
-    color: #3b599 !important8;
+    color: #3b5998 !important;
 }
 
 .postmatic-sc-wordpress-button:hover {
@@ -108,11 +108,4 @@
 	float: right;
 	position: relative;
 	top: -10px;
-}
-.comment-form .pms-optin label {
-    display: inline-block;
-}
-.comment-form-pms-extra,
-.pms-optin-form {
-    display: none;   
 }
