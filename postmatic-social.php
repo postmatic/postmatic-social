@@ -199,8 +199,7 @@ class Postmatic_Social {
             echo '<div class="comment-form-pms-extra">';
             echo '<div class="pms-optin">';
             printf( '<input type="hidden" name="prompt_comment_subscribe" value="1">' );
-            printf( '<input typ
-            e="checkbox" name="pms_comment_subscribe" value="1" id="pms_comment_subscribe">&nbsp;&nbsp;' );
+            printf( '<input type="checkbox" name="pms_comment_subscribe" value="1" id="pms_comment_subscribe">&nbsp;&nbsp;' );
             printf( '<label for="pms_comment_subscribe">%s</label>', esc_html__( 'Participate in this conversation via email', 'postmatic-social' ) );
             echo '</div><!-- .pms-optin -->';
             echo '<div class="pms-optin-form">';
