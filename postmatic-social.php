@@ -2,8 +2,8 @@
 /*
 Plugin Name: Postmatic Social Commenting
 Plugin URI: https://wordpress.org/plugins/postmatic-social/
-Description: This plugin allows you to add authentication using social media networks (Twitter, WordPress, Google+, etc.) for the users who want to comment on your blog. To get started: 1) Click the "Activate" link at the left of this description, 2) Click the "Social Login" link under the Comments left menu.
-Author: Postmatic
+Description: A tiny, fast, and convenient way to let your readers comment using their social profiles.
+Author: Postmatic, ronalfy
 Author URI: https://gopostmatic.com/
 Version: 1.0
 * Text Domain: postmatic-social
@@ -199,7 +199,8 @@ class Postmatic_Social {
             echo '<div class="comment-form-pms-extra">';
             echo '<div class="pms-optin">';
             printf( '<input type="hidden" name="prompt_comment_subscribe" value="1">' );
-            printf( '<input type="checkbox" name="pms_comment_subscribe" value="1" id="pms_comment_subscribe">&nbsp;&nbsp;' );
+            printf( '<input typ
+            e="checkbox" name="pms_comment_subscribe" value="1" id="pms_comment_subscribe">&nbsp;&nbsp;' );
             printf( '<label for="pms_comment_subscribe">%s</label>', esc_html__( 'Participate in this conversation via email', 'postmatic-social' ) );
             echo '</div><!-- .pms-optin -->';
             echo '<div class="pms-optin-form">';
