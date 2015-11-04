@@ -52,8 +52,36 @@ function pmsGooglePlusSigninCallback(authResult) {
     }
 }
 
+function pmsMoveAboveSubmit( $element ) {
+
+	var $form = $element.parents( 'form' );
+
+	if ( $form.length === 0 ) {
+		return;
+	}
+
+	var $submit = $form.find( 'input[type="submit"]' );
+
+	if ( $submit.length === 0 ) {
+		return;
+	}
+
+	var $submit_area = $submit.parent( 'p,div' );
+
+	if ( $submit_area.length === 0 ) {
+		$submit_area = $submit;
+	}
+
+	$submit_area.before( $element );
+}
+
 jQuery(document).ready(function ($) {
-    
+
+    var $pms_extra = $( '#commentform' ).find( '.comment-form-pms-extra' );
+    if ( $pms_extra.length > 0 ) {
+        pmsMoveAboveSubmit( $pms_extra );
+    }
+
     /* postmatic opt-in form --> */
     $( 'body' ).on( 'click', '#pms_comment_subscribe', function(  e ) {
         if ( $( this ).is( ':checked' ) ) {
