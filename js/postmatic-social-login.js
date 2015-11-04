@@ -20,7 +20,7 @@ function pmsLoadCommentForm($, accessTokenRequestUrl) {
         var facebook = new RegExp( 'facebook' );
         if ( twitter.test( accessTokenRequestUrl )  || facebook.test( accessTokenRequestUrl ) ) {
             $( '#prompt-comment-subscribe' ).hide();
-            $( '.comment-form-pms-extra' ).show();
+            pmsMoveAboveSubmit( $( '.comment-form-pms-extra' ).show() );
             $( '#prompt-comment-subscribe' ).remove();
         }
         if ( facebook.test( accessTokenRequestUrl ) ) {
