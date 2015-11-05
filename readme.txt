@@ -1,5 +1,5 @@
 === Postmatic Social Commenting ===
-Contributors: postmatic, ronalfy
+Contributors: postmatic, ronalfy, cyberhobo
 Tags: social, social login, oauth, twitter, facebook, google, wordpress.com, comments, authenticate
 Requires at least: 3.0
 Tested up to: 4.4
