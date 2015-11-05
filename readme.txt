@@ -45,13 +45,12 @@ Totally. When the user connects with their social network we grab their email ad
 
 The usual. Install. Activate. Head for Settings > Postmatic Social Commenting
 
-== Configuration ==
-
 Like most all social plugins, this thing takes some work to get up and running. We wish it were otherwise. 
 
 You must create an app for each network. We've included some fantastic tutorials and videos to help you through the process. It's not difficult work, but it's not exactly fun. Luckily you only have to do it once and then it's high fives from all of your commenters. Forever.
 
 == Screenshots ==
+
 1. Activated social networks are displayed as subtle icons on your comment form.
 2. Authenticating leaves no boxes to fill out except the important one: the comment.
 3. The admin ui. Simple and clean with plenty of tutorials and videos to walk you through setting up each network.
