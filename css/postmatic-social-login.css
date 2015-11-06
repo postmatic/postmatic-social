@@ -35,7 +35,7 @@
 	margin: 0 0 5px 2px;	
 	padding: 7px;
 	border-radius: 20px;
-	text-decoration: none;
+	text-decoration: none !important;
     line-height: normal;
     cursor: pointer;
     outline: none;
@@ -43,6 +43,11 @@
 	vertical-align: middle;
 	min-width:30px;
 	background:#fff;
+}
+
+
+.postmatic-sc-button:hover {
+	text-decoration: none !important;
 }
 
 .postmatic-sc-button .fa {
@@ -102,12 +107,14 @@
 .postmatic-social-comment-logout a:hover {
 	color: #fff !important;
 	background: #c0392b !important;
+	text-decoration: none !important;
 }
 
 #epoch-wrap .postmatic-social-comment-logout a {
 	float: right;
 	position: relative;
 	top: -10px;
+	text-decoration: none !important;
 }
 
 .comment-form .pms-optin label {
