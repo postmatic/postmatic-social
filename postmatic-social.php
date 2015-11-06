@@ -75,6 +75,7 @@ class Postmatic_Social {
 		load_plugin_textdomain( 'postmatic-social', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+		add_action( 'prompt/core_loaded', array( $this, 'postmatic_loaded' ) );
 	} //end constructor
 
 	/**
@@ -129,13 +130,27 @@ class Postmatic_Social {
 		$GLOBALS[ 'pms_post_protected' ] = false;
 		$GLOBALS[ 'pms_session' ] = Postmatic_Social_Comments_Session::get_instance();
 		$GLOBALS[ 'postmatic-social' ] = new Postmatic_Social_Comments_Plugin( array( 'wordpress', 'gplus', 'twitter', 'facebook' ) );
-		add_action( 'comment_form_after_fields', array( $this, 'comment_extra_fields' ) );
 		add_filter( 'pre_comment_author_email', array( $this, 'twitter_author' ) );
 
 		//Add settings link to plugins screen
 		$prefix = is_multisite() ? 'network_admin_' : '';
 		add_action( $prefix . 'plugin_action_links_' . Postmatic_Social::get_plugin_basename(), array( $this, 'plugin_settings_link' ) );
 
+	}
+	
+	/**
+	 * Add Postmatic comment fields if Postmatic is active and has a key.
+	 *
+	 * @since 1.0.0
+	 * @access public
+	 * @see __construct
+	 * @internal Uses prompt/core_loaded action
+	 *
+	 */
+	public function postmatic_loaded() {
+		if ( Prompt_Core::$options->get( 'prompt_key' ) ) {
+		    add_action( 'comment_form_after_fields', array( $this, 'comment_extra_fields' ) );
+		}
 	}
 
 	/**
