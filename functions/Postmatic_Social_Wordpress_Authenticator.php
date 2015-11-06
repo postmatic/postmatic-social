@@ -65,7 +65,11 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
                     $user_details = $this->get_user_details( $access_token );
                     $pms_session['user'] = $user_details;
                     $pms_post_protected = true;
-                    comment_form( array(), $post_id );
+                    $user_details['disconnect_content'] = $GLOBALS['postmatic-social']->disconnect_content(
+                        $user_details,
+                        $post_id
+                    );
+                    wp_send_json( $user_details );
                     die();
                 } else {
                     throw new Exception(__( 'Missing the access_token parameter', 'postmatic-social' ) );
