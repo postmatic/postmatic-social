@@ -56,7 +56,15 @@ You must create an app for each network. We've included some fantastic tutorials
 3. The admin ui. Simple and clean with plenty of tutorials and videos to walk you through setting up each network.
 
 
-== ChangeLog ==   
+== ChangeLog ==  
+
+= 1.0.1 =
+
+- Fixed a seriously serious bug in which Akismet would get very upset with social comments. Should be all better now.
+- Better integration with Postmatic for gathering email subscriptions.
+- Better language when asking for an email address.
 
 = 1.0 =
-* Initial release
+
+- Initial release
+

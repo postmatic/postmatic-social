@@ -203,7 +203,7 @@ class Postmatic_Social {
             printf( '<label for="pms_comment_subscribe">%s</label>', esc_html__( 'Participate in this conversation via email', 'postmatic-social' ) );
             echo '</div><!-- .pms-optin -->';
             echo '<div class="pms-optin-form">';
-            esc_html_e( 'Please enter an E-mail Address (Optional)', 'postmatic-social' );
+            esc_html_e( 'Please enter an e-mail address', 'postmatic-social' );
             echo '<input type="text" name="pms-email" value="" id="pms-email" />';
             echo '</div><!-- .pms-optin-form -->';
             echo '</div><!-- .pms-opttin -->';
