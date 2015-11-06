@@ -138,7 +138,11 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
                     $user_details = $this->get_user_details( $oauth_token, $oauth_token_secret );
                     $pms_session[ 'user' ] = $user_details;
                     $pms_post_protected = true;
-                    comment_form( array(), $post_id );
+                    $user_details['disconnect_content'] = $GLOBALS['postmatic-social']->disconnect_content(
+                        $user_details,
+                        $post_id
+                    );
+                    wp_send_json( $user_details );
                 } else {
                     throw new Exception( __( 'Missing the oauth_token or oauth_verifier parameters', 'postmatic-social' ) );
                 }

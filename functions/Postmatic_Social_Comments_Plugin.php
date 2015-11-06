@@ -167,27 +167,8 @@ class Postmatic_Social_Comments_Plugin {
 			} else {
 				$post_id = get_the_ID();
 			}
-			$referrer = esc_attr( get_permalink( $post_id ) );
-			$logout_url = admin_url(
-				'admin-ajax.php?action=pms-logout&amp;_wp_http_referer=' . $referrer .
-				'#postmatic-social-comment-wrapper'
-			);
-			$content .= sprintf(
-				'<div id="postmatic-social-comment-wrapper" data-network="%s">',
-				$commenter['network']
-			);
-			$content .= '<p class="postmatic-social-comment-logout">';
-			$content .= sprintf(
-				__( 'You are authenticated as %s via %s.', 'postmatic-social' ),
-				$commenter[ 'display_name' ],
-				$commenter[ 'network' ]
-			);
-			$content .= '<a href="' . esc_url( $logout_url ) . '">' . __( 'Disconnect', 'postmatic-social' ) . '</a>';
-			$content .= '</p>';
-			$content .= '</div>';
-
-			// FK Hide completed comment fields
-			$content .= '<style>.comment-form-author, .comment-form-email, .comment-form-url {display:none;}</style>';
+			
+			$content .= $this->disconnect_content( $commenter, $post_id );
 
 		} else {
 			$content .= '<div id="postmatic-social-comment-wrapper">';
@@ -208,6 +189,32 @@ class Postmatic_Social_Comments_Plugin {
 		}
 
 		return $content . $field;
+	}
+	
+	function disconnect_content( $commenter, $post_id ) {
+		$referrer = esc_attr( get_permalink( $post_id ) );
+		$logout_url = admin_url(
+			'admin-ajax.php?action=pms-logout&amp;_wp_http_referer=' . $referrer .
+			'#postmatic-social-comment-wrapper'
+		);
+		$content = sprintf(
+			'<div id="postmatic-social-comment-wrapper" data-network="%s">',
+			$commenter['network']
+		);
+		$content .= '<p class="postmatic-social-comment-logout">';
+		$content .= sprintf(
+			__( 'You are authenticated as %s via %s.', 'postmatic-social' ),
+			$commenter[ 'display_name' ],
+			$commenter[ 'network' ]
+		);
+		$content .= '<a href="' . esc_url( $logout_url ) . '">' . __( 'Disconnect', 'postmatic-social' ) . '</a>';
+		$content .= '</p>';
+		$content .= '</div>';
+
+		// FK Hide completed comment fields
+		$content .= '<style>.comment-form-author, .comment-form-email, .comment-form-url {display:none;}</style>';
+		
+		return $content;
 	}
 
 	function preprocess_comment( $comment_data ) {

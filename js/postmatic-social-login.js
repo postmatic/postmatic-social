@@ -11,22 +11,23 @@
     this.b.animate)))};f.fn.toggles=function(b){return this.each(function(){new k(f(this),b)})}}"function"===typeof define&&define.amd?define(["jquery"],l):l(h.jQuery||h.Zepto||h.ender||h.$||$)})(this);
 
 function pmsLoadCommentForm($, accessTokenRequestUrl) {
-    var container = $( '#respond' );
-    var comment = $( '#comment' ).val();
-    $.get(accessTokenRequestUrl, function (data) {
-        container.replaceWith($(data));
+    $.getJSON(accessTokenRequestUrl, function (data) {
+        $( '#author' ).val( data.display_name );
+        $( '#email' ).val( data.email );
+        $( '#url' ).val( data.profile_url );
+        $( '#postmatic-social-comment-wrapper' ).replaceWith( data.disconnect_content );
         
         var twitter = new RegExp( "twitter" );
         var facebook = new RegExp( 'facebook' );
         if ( twitter.test( accessTokenRequestUrl )  || facebook.test( accessTokenRequestUrl ) ) {
             $( '#prompt-comment-subscribe' ).hide();
-            pmsMoveAboveSubmit( $( '.comment-form-pms-extra' ).show() );
+            $( '.comment-form-pms-extra' ).show();
             $( '#prompt-comment-subscribe' ).remove();
         }
         if ( facebook.test( accessTokenRequestUrl ) ) {
             jQuery( '#pms-email' ).val( jQuery( '.comment-form-email' ).find( 'input' ).val() );   
         }
-        $( '#comment' ).val( comment ).focus();
+        $( '#comment' ).focus();
     });
 }
 
