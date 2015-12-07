@@ -101,7 +101,7 @@ jQuery(document).ready(function ($) {
         }
     } );
     $( 'body' ).on( 'submit', '#commentform', function( e ) {
-        if( jQuery( '#pms-email' ).val() != '' ) {
+        if( jQuery( '#pms-email' ).val() ) {
             jQuery( '.comment-form-email' ).find( 'input' ).val( jQuery( '#pms-email' ).val() );
         }
     } );
