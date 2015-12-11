@@ -169,7 +169,7 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
     {
         $default_settings = $this->get_default_settings();
         $website_url = admin_url( 'admin-ajax.php' ) . '?action=pms-facebook-request-token';
-        $btn = '<a class="postmatic-sc-button postmatic-sc-facebook-button" data-sc-id="' . esc_attr( $default_settings['id'] ) . '" data-post-id="' . esc_attr( get_the_ID() ) . '" name="Facebook" href="' . esc_url( $website_url ) . '"><i class="fa fa-facebook"></i></a>';
+        $btn = '<a class="postmatic-sc-button postmatic-sc-facebook-button fa fa-facebook" title="Comment via Facebook" data-sc-id="' . esc_attr( $default_settings['id'] ) . '" data-post-id="' . esc_attr( get_the_ID() ) . '" name="Facebook" href="' . esc_url( $website_url ) . '"></a>';
         return $btn;
     }
 }

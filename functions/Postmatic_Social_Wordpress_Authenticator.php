@@ -169,7 +169,7 @@ class Postmatic_Social_Wordpress_Authenticator extends Postmatic_Social_Network_
     {
         $default_settings = $this->get_default_settings();
         $website_url = admin_url('admin-ajax.php') . '?action=pms-wordpress-request-token';
-        $btn = '<a class="postmatic-sc-button postmatic-sc-wordpress-button" data-sc-id="' . esc_attr( $default_settings['id'] ) . '" data-post-id="' . esc_attr( get_the_ID() ) . '" name="WordPress" href="' . esc_url( $website_url ) . '"><i class="fa fa-wordpress"></i></a>';
+        $btn = '<a class="postmatic-sc-button postmatic-sc-wordpress-button fa fa-wordpress" title="Comment via WordPress.com" data-sc-id="' . esc_attr( $default_settings['id'] ) . '" data-post-id="' . esc_attr( get_the_ID() ) . '" name="WordPress" href="' . esc_url( $website_url ) . '"></a>';
         return $btn;
     }
 
