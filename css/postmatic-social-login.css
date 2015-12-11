@@ -5,7 +5,7 @@
 }
 
 #epoch-wrap #postmatic-social-comment-wrapper {
-	margin: 0;
+	margin: -15px 0 0 0;
 	float: right;
 	font-size: inherit;
 }
@@ -78,6 +78,7 @@
 	margin-bottom: 0;
 	font-size: 85%;
 	opacity: .75;
+	margin-top: -15px;
 }
 
 .postmatic-social-comment-logout a {
@@ -96,9 +97,8 @@
 }
 
 #epoch-wrap .postmatic-social-comment-logout a {
-	float: right;
 	position: relative;
-	top: -10px;
+	top: 2px;
 	text-decoration: none !important;
 }
 
@@ -108,4 +108,5 @@
 
 .comment-form-pms-extra, .pms-optin-form {
     display: none;   
+    margin: 10px 0;
 } 
