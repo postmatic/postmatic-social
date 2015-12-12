@@ -280,7 +280,7 @@ class Postmatic_Social_Twitter_Authenticator extends Postmatic_Social_Network_Au
     {
         $default_settings = $this->get_default_settings();
         $website_url = admin_url('admin-ajax.php') . '?action=pms-twitter-request-token';
-        $btn = '<a class="postmatic-sc-button postmatic-sc-twitter-button" data-sc-id="' . esc_attr( $default_settings['id'] ) . '" data-post-id="' . esc_attr( get_the_ID() ) . '" name="Twitter" href="' . esc_url( $website_url ) . '"><i class="fa fa-twitter"></i></a>';
+        $btn = '<a class="postmatic-sc-button postmatic-sc-twitter-button fa fa-twitter" data-sc-id="' . esc_attr( $default_settings['id'] ) . '" data-post-id="' . esc_attr( get_the_ID() ) . '" name="Twitter" title="Comment via Twitter" href="' . esc_url( $website_url ) . '"></a>';
         return $btn;
 
     }

@@ -58,6 +58,13 @@ You must create an app for each network. We've included some fantastic tutorials
 
 == ChangeLog ==  
 
+= 1.0.2 =
+
+- New layout to play nicely with 4.4
+- Accessibility and semantic improvements
+- Fixed a bug in which Postmatic subscriptions would happen by mistake
+- Fixed a bug in which [email addresses would get funky](https://github.com/postmatic/postmatic-social/issues/49) when connecting with Twitter
+
 = 1.0.1 =
 
 - Fixed a seriously serious bug in which Akismet would get very upset with social comments. Should be all better now.

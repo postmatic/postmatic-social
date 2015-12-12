@@ -5,28 +5,13 @@
 }
 
 #epoch-wrap #postmatic-social-comment-wrapper {
-	margin: 10px 0;
-	float: none;
+	margin: -15px 0 0 0;
+	float: right;
 	font-size: inherit;
-}
-
-.postmatic-social-comment-buttons:before {
-	content: 'Social Connect:';
-	font-size: 85%;
-	top: -2px;
-	font-weight: normal;
-	position:relative;
-	margin-right: 5px;
-	opacity: .75;
-	
 }
 
 #epoch-wrap .postmatic-social-comment-buttons:before {
-	font-size: inherit;
-	top: 0;
-	display: block;
-	opacity: 1;
-	margin-bottom: 5px;
+
 }
 
 
@@ -93,6 +78,7 @@
 	margin-bottom: 0;
 	font-size: 85%;
 	opacity: .75;
+	margin-top: -15px;
 }
 
 .postmatic-social-comment-logout a {
@@ -111,9 +97,8 @@
 }
 
 #epoch-wrap .postmatic-social-comment-logout a {
-	float: right;
 	position: relative;
-	top: -10px;
+	top: 2px;
 	text-decoration: none !important;
 }
 
@@ -123,4 +108,5 @@
 
 .comment-form-pms-extra, .pms-optin-form {
     display: none;   
+    margin: 10px 0;
 } 

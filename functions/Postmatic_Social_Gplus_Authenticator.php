@@ -175,7 +175,7 @@ class Postmatic_Social_Gplus_Authenticator extends Postmatic_Social_Network_Auth
     {
         $oauth_callback = $this->get_oauth_callback();
         $website_url = admin_url('admin-ajax.php') . '?action=pms-gplus-request-token';
-        $btn = '<div id="postmatic-sc-googleplus-button" data-sc-id="gplus" class="postmatic-sc-button postmatic-sc-googleplus-button" data-post-id="' . esc_attr( get_the_ID() ) . '" data-access-token-request-url="' . esc_url_raw( $oauth_callback ) . '" href="'. esc_url_raw( $website_url ) .'"><i class="fa fa-google-plus"></i></div>';
+        $btn = '<div id="postmatic-sc-googleplus-button" data-sc-id="gplus" class="postmatic-sc-button postmatic-sc-googleplus-button fa fa-google-plus" title="Comment via Google+" data-post-id="' . esc_attr( get_the_ID() ) . '" data-access-token-request-url="' . esc_url_raw( $oauth_callback ) . '" href="'. esc_url_raw( $website_url ) .'"></div>';
         return $btn;
     }
     /**
