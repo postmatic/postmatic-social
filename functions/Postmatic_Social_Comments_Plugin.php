@@ -41,8 +41,10 @@ class Postmatic_Social_Comments_Plugin {
 			add_action( 'wp_ajax_' . $form_action, array( $this, 'process_form_submission' ) );
 			add_action( 'admin_menu', array( $this, 'register_menu' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'maybe_fontawesome' ), 900 );
 		} else {
 			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'maybe_fontawesome' ), 900 );
 			add_filter( 'wp_get_current_commenter', array( $this, 'wp_get_current_commenter' ) );
 			add_filter( 'comments_open', array( $this, 'comments_open' ), 10, 2 );
 			add_filter( 'comment_form_field_comment', array( $this, 'add_social_options' ) );
@@ -118,17 +120,28 @@ class Postmatic_Social_Comments_Plugin {
 
 	function admin_enqueue_scripts() {
 		wp_enqueue_script( 'postmatic-social-login-admin', Postmatic_Social::get_plugin_url( '/js/postmatic-social-login-admin.js' ), array( 'jquery' ), '20151026', true );
-		//styles
-		wp_enqueue_style( 'postmatic-social-font-awesome', Postmatic_Social::get_plugin_url( '/css/font-awesome.min.css' ), array(), '20151026' );
+		//styles		
 		wp_enqueue_style( 'postmatic-social-login-toggles', Postmatic_Social::get_plugin_url( '/css/toggles-full.css' ), array(), '20151026' );
 		wp_enqueue_style( 'postmatic-social-login', Postmatic_Social::get_plugin_url( '/css/postmatic-social-login.css' ), array( 'postmatic-social-font-awesome', 'postmatic-social-login-toggles' ),  '20151026' );
 	}
 
 	function wp_enqueue_scripts() {
 		wp_enqueue_script( 'postmatic-social-login', Postmatic_Social::get_plugin_url( '/js/postmatic-social-login.js' ), array( 'jquery' ), '20151125', true );
-		//styles
-		wp_enqueue_style( 'postmatic-social-font-awesome', Postmatic_Social::get_plugin_url( '/css/font-awesome.min.css' ), array(), '20151102' );
+		//styles		
 		wp_enqueue_style( 'postmatic-social-login', Postmatic_Social::get_plugin_url( '/css/postmatic-social-login.css' ), array( 'postmatic-social-font-awesome' ),  '20151102' );
+	}
+
+	function maybe_fontawesome() {
+		global $wp_styles;
+
+		// Get all styles
+		$style_paths = wp_list_pluck($wp_styles->registered, 'src');
+		// Get basename
+		$styles = array_map('basename', $style_paths );
+		// Enqueue if missing
+		if ( !in_array('font-awesome.css', $styles) && !in_array('font-awesome.min.css', $styles)  ) {
+			wp_enqueue_style( 'postmatic-social-font-awesome', Postmatic_Social::get_plugin_url( '/css/font-awesome.min.css' ), array(), '20151102' );
+		} 
 	}
 
 
