@@ -5,14 +5,25 @@
 }
 
 #epoch-wrap #postmatic-social-comment-wrapper {
-	margin: -15px 0 0 0;
-	float: right;
+	margin: 7px 0;
+	float: none;
 	font-size: inherit;
 }
 
-#epoch-wrap .postmatic-social-comment-buttons:before {
-
+#epoch-wrap .postmatic-social-comment-buttons {
+    float: right;
 }
+
+#epoch-wrap .postmatic-social-comment-logout a {
+	display: block;
+	border-radius: 5px;
+	padding: 5px 10px;
+	border: 1px solid #ddd;
+	text-align: center;
+	margin-top: -5px;
+	float: right;
+}
+
 
 
 .postmatic-sc-button {
