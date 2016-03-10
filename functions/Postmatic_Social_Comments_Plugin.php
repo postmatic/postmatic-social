@@ -47,7 +47,7 @@ class Postmatic_Social_Comments_Plugin {
 			add_action( 'wp_enqueue_scripts', array( $this, 'maybe_fontawesome' ), 900 );
 			add_filter( 'wp_get_current_commenter', array( $this, 'wp_get_current_commenter' ) );
 			add_filter( 'comments_open', array( $this, 'comments_open' ), 10, 2 );
-			add_filter( 'comment_form_field_comment', array( $this, 'add_social_options' ) );
+			add_filter( 'comment_form_field_comment', array( $this, 'add_social_options' ), 99 );
 			add_action( 'preprocess_comment', array( $this, 'preprocess_comment' ) );
 		}
 	}
