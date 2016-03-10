@@ -5,7 +5,7 @@ Plugin URI: https://wordpress.org/plugins/postmatic-social/
 Description: A tiny, fast, and convenient way to let your readers comment using their social profiles.
 Author: Postmatic, ronalfy
 Author URI: https://gopostmatic.com/
-Version: 1.0.2
+Version: 1.1.0
 * Text Domain: postmatic-social
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
