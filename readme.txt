@@ -58,6 +58,11 @@ You must create an app for each network. We've included some fantastic tutorials
 
 == ChangeLog ==  
 
+= 1.1 =
+
+- Improved layout compatability with Epoch
+- Fontawesome is not loaded unless needed
+
 = 1.0.2 =
 
 - New layout to play nicely with 4.4
