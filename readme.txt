@@ -3,7 +3,7 @@ Contributors: postmatic, ronalfy, cyberhobo
 Tags: social, social login, oauth, twitter, facebook, google, wordpress.com, comments, authenticate
 Requires at least: 3.0
 Tested up to: 4.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,10 @@ You must create an app for each network. We've included some fantastic tutorials
 
 
 == ChangeLog ==  
+
+= 1.1.1 =
+
+- Fixed stuborn stylesheet from 1.1
 
 = 1.1 =
 
