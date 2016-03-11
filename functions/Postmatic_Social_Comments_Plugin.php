@@ -119,16 +119,43 @@ class Postmatic_Social_Comments_Plugin {
 	}
 
 	function admin_enqueue_scripts() {
-		wp_enqueue_script( 'postmatic-social-login-admin', Postmatic_Social::get_plugin_url( '/js/postmatic-social-login-admin.js' ), array( 'jquery' ), '20151026', true );
+		wp_enqueue_script(
+			'postmatic-social-login-admin',
+			Postmatic_Social::get_plugin_url( '/js/postmatic-social-login-admin.js' ),
+			array( 'jquery' ),
+			'20151026',
+			true
+		);
 		//styles		
-		wp_enqueue_style( 'postmatic-social-login-toggles', Postmatic_Social::get_plugin_url( '/css/toggles-full.css' ), array(), '20151026' );
-		wp_enqueue_style( 'postmatic-social-login', Postmatic_Social::get_plugin_url( '/css/postmatic-social-login.css' ), array( 'postmatic-social-font-awesome', 'postmatic-social-login-toggles' ),  '20151026' );
+		wp_enqueue_style(
+			'postmatic-social-login-toggles',
+			Postmatic_Social::get_plugin_url( '/css/toggles-full.css' ),
+			array(),
+			'20151026'
+		);
+		wp_enqueue_style(
+			'postmatic-social-login',
+			Postmatic_Social::get_plugin_url( '/css/postmatic-social-login.css' ),
+			array( 'postmatic-social-login-toggles' ),
+			'20151026'
+		);
 	}
 
 	function wp_enqueue_scripts() {
-		wp_enqueue_script( 'postmatic-social-login', Postmatic_Social::get_plugin_url( '/js/postmatic-social-login.js' ), array( 'jquery' ), '20151125', true );
+		wp_enqueue_script(
+			'postmatic-social-login',
+			Postmatic_Social::get_plugin_url( '/js/postmatic-social-login.js' ),
+			array( 'jquery' ),
+			'20151125',
+			true
+		);
 		//styles		
-		wp_enqueue_style( 'postmatic-social-login', Postmatic_Social::get_plugin_url( '/css/postmatic-social-login.css' ), array( 'postmatic-social-font-awesome' ),  '20151102' );
+		wp_enqueue_style(
+			'postmatic-social-login',
+			Postmatic_Social::get_plugin_url( '/css/postmatic-social-login.css' ),
+			array(),
+			'20151102'
+		);
 	}
 
 	function maybe_fontawesome() {
@@ -141,7 +168,7 @@ class Postmatic_Social_Comments_Plugin {
 		// Enqueue if missing
 		if ( !in_array('font-awesome.css', $styles) && !in_array('font-awesome.min.css', $styles)  ) {
 			wp_enqueue_style( 'postmatic-social-font-awesome', Postmatic_Social::get_plugin_url( '/css/font-awesome.min.css' ), array(), '20151102' );
-		} 
+		}
 	}
 
 
@@ -180,7 +207,7 @@ class Postmatic_Social_Comments_Plugin {
 			} else {
 				$post_id = get_the_ID();
 			}
-			
+
 			$content .= $this->disconnect_content( $commenter, $post_id );
 
 		} else {
@@ -203,7 +230,7 @@ class Postmatic_Social_Comments_Plugin {
 
 		return $content . $field;
 	}
-	
+
 	function disconnect_content( $commenter, $post_id ) {
 		$referrer = esc_attr( get_permalink( $post_id ) );
 		$logout_url = admin_url(
@@ -226,7 +253,7 @@ class Postmatic_Social_Comments_Plugin {
 
 		// FK Hide completed comment fields
 		$content .= '<style>.comment-form-author, .comment-form-email, .comment-form-url {display:none;}</style>';
-		
+
 		return $content;
 	}
 
