@@ -161,13 +161,21 @@ class Postmatic_Social_Comments_Plugin {
 	function maybe_fontawesome() {
 		global $wp_styles;
 
-		// Get all styles
-		$style_paths = wp_list_pluck($wp_styles->registered, 'src');
-		// Get basename
-		$styles = array_map('basename', $style_paths );
-		// Enqueue if missing
-		if ( !in_array('font-awesome.css', $styles) && !in_array('font-awesome.min.css', $styles)  ) {
-			wp_enqueue_style( 'postmatic-social-font-awesome', Postmatic_Social::get_plugin_url( '/css/font-awesome.min.css' ), array(), '20151102' );
+		$registered_handle = '';
+
+		foreach ( $wp_styles->registered as $handle => $style ) {
+			if ( 'font-awesome.' == substr( $style->src, 0, 13 ) ) {
+				$registered_handle = $handle;
+			}
+		}
+
+		if ( ! $registered_handle or ! wp_script_is( $registered_handle, 'enqueued' ) ) {
+			wp_enqueue_style(
+				'postmatic-social-font-awesome',
+				Postmatic_Social::get_plugin_url( '/css/font-awesome.min.css' ),
+				array(),
+				'20151102'
+			);
 		}
 	}
 
