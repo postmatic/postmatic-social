@@ -86,7 +86,7 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
             'response_type' => 'code',
             'client_id' => $client_id,
             'redirect_uri' => $this->get_oauth_callback(),
-            'scope' => 'user_about_me,email',
+            'scope' => 'public_profile,email',
         ));
         $authorize_url = $api_url . '?' . $query_string;
         header('Location: ' . esc_url_raw( $authorize_url ) );
@@ -101,7 +101,7 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
             $settings = $this->get_settings();
             $client_id = $settings[ Postmatic_Social_Facebook_Authenticator::$CLIENT_ID ];
             $client_secret = $settings[ Postmatic_Social_Facebook_Authenticator::$CLIENT_SECRET ];
-            $request_token_url = "https://graph.facebook.com/v2.4/oauth/access_token";
+            $request_token_url = "https://graph.facebook.com/v2.8/oauth/access_token";
 
             $query_string = $this->to_query_string( array(
                 'client_id' => $client_id,
@@ -158,6 +158,7 @@ class Postmatic_Social_Facebook_Authenticator extends Postmatic_Social_Network_A
                     'username' => isset( $response_body[ 'id' ] ) ? $response_body[ 'id' ] : '',
                     'email' => isset( $response_body[ 'email' ] ) ? $response_body[ 'email' ] : '',
                     'avatar_url' => isset( $response_body[ 'picture' ][ 'url' ] ) ? $response_body[ 'picture' ][ 'url' ] : '',
+                    'profile_url' => isset( $response_body[ 'link' ]) ? $response_body[ 'link' ] : '',
                 );
             } else {
                 throw new Exception(__( 'Could not get the user details', 'postmatic-social' ) );
